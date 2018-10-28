@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		{% block head %}
+			<title>{% block title %}{% endblock %} - EBR</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+
+			<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+			<script type="text/javascript" src="{{url_for('static', filename='actions.js')}}"></script>
+			<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+		{% endblock %}
+
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+	</head>
+	<body>
+
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+			<a href="javascript:void(0)" id="toggleBtn" class="closebtn nav-link material-icons" onclick="closeNav()"><span class="navbar-toggler-icon"><span></a>
+			<a class="navbar-brand" href="#">EBR</a>
+		</nav>
+		<div id="homeNav" class="sidenav">
+			<div id="options">
+				{% block options %}{% endblock %}
+			</div>
+		</div>
+		<div id="content">{% block content %}{% endblock %}</div>
+
+	</body>
+</html>

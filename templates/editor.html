@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% block title %}Editor{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+
+{% block options %}
+	<br>
+	<p class="nav-link" data-toggle="modal" data-target="#myModal" href="">Crear Evaluacion</p>
+	<p class="nav-link" href="">Abrir Evaluacion</p>
+	<p class="nav-link" data-toggle="modal" href="" onclick="addQuestion()">Agregar pregunta</p>
+	<p class="nav-link" href="">Abrir Evaluacion</p>
+{% endblock %}
+
+
+{% block content %}
+	<div id="formatoPregunta" style="display: none">
+		<section class="pregunta">
+			<br>
+			<table style="width:100%">
+				<tr>
+					<td>
+						<label>Enunciado:</label>
+					</td>
+					<td>
+						<label><input type="checkbox">Algebraico?</label>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<textarea rows="2" class="form-control" id="name" name="name"></textarea>
+					</td>
+				</tr>
+				<div class="answers">
+					<tr>
+						<td>
+							<label class="form-l">Respuesta Correcta:</label>
+						</td>
+						<td>
+							<input type="text" class="form-control" id="name" name="name">
+						</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top">
+							<label class="form-l">Distractores:</label>
+						</td>
+						<td>
+							<input type="text" class="form-control" id="name" name="name">
+							<input type="text" class="form-control" id="name" name="name">
+							<input type="text" class="form-control" id="name" name="name">
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<p class="questionError" style="color:red"></p>
+						</td>
+					</tr>
+				</div>
+				<tr>
+					<td colspan="2">
+						<center>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Eliminar pregunta</button>
+						</center>
+					</td>
+				</tr>
+			</table>
+		</section>
+	</div>
+
+	<br><br>
+	<center><h1>Editando: {{ evalName }}</h1></center>
+
+	<form id="editor">
+		<!-- Aqui habra un if (ya tiene preguntas traidas de la BD) /entonces/ las despliego en el editor /else/ despliego -->
+		<script>addQuestion();</script>
+	</form>
+	<br>
+	<button type="button" class="btn btn-primary" data-dismiss="modal">Guardar cambios</button>
+
+	<br><br><button class="nav-link" href="" onclick="addQuestion()">Agregar pregunta</button>
+{% endblock %}
