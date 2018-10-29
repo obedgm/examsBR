@@ -21,10 +21,12 @@
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
 			<a href="javascript:void(0)" id="toggleBtn" class="closebtn nav-link material-icons" onclick="closeNav()"><span class="navbar-toggler-icon"><span></a>
 			<a class="navbar-brand" href="#">EBR</a>
+			<span class="navbar-text">Hola {{ user }}</span>
 		</nav>
 		<div id="homeNav" class="sidenav">
 			<div id="options">
 				{% block options %}{% endblock %}
+				<p class="nav-link" href="">Cerrar sesion</p>
 			</div>
 		</div>
 		<div id="content">{% block content %}{% endblock %}</div>

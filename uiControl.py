@@ -7,18 +7,20 @@ def index():
 
 @app.route('/main', methods=['POST'])
 def main():
-    return render_template('main.html')
+    u = request.form["user"];
+    return render_template('main.html', user = u)
 
 @app.route('/newEval', methods=['POST'])
 def newEval():
     n = request.form['name']
+    u = request.form["user"]
     # PENDIENTE CREAR OBJETO EVAL en BD
-    return redirect(url_for('openEval', name = n))
+    return redirect(url_for('openEval', name = n, user = u), code = 307)
 
-@app.route('/openEval/<name>', methods=['GET', 'POST'])
-def openEval(name):
+@app.route('/openEval/<name>/<user>', methods=['POST'])
+def openEval(name, user):
     # PENDIENTE traer la evaluacion y preguntas de BD
-    return render_template('editor.html', evalName = name)
+    return render_template('editor.html', evalName = name, user = user)
 
 if __name__ == '__main__':
     app.run(debug = True)

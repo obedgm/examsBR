@@ -2,6 +2,12 @@ function redirectMain() {
 	var f = document.createElement("form");
 	f.setAttribute('method',"post");
 	f.setAttribute('action',"main");
+    var input = document.createElement("input");
+    input.type = "text";
+    input.name = "user";
+    input.value = "usuario";
+    f.appendChild(input);
+    f.style.display = "none";
 	document.body.appendChild(f);
 	f.submit();
 }
@@ -21,8 +27,8 @@ function closeNav() {
 }
 
 function createEval() {
-    var form = document.getElementById("createEval").submit();
-    var name = form["name"];
+    form = document.getElementById("createEval").submit();
+    name = form["name"];
     if (name.length < 5 || name.length > 30) {
         document.getElementById("nameError").innerHTML = "El nombre debe ser de entre 5 y 30 caracteres";
     } else {
@@ -32,4 +38,19 @@ function createEval() {
 
 function addQuestion() {
     document.getElementById("editor").innerHTML += document.getElementById("formatoPregunta").innerHTML;
+}
+
+function toggleQuestion(checkbox) {
+    answersTable = checkbox.parentElement.parentElement.parentElement.nextElementSibling.firstChild;
+    if (checkbox.checked) {
+        answersTable.style.display = "none";
+    } else {
+        answersTable.style.display = "block";
+    }
+}
+
+function deleteQuestion(button) {
+    questionTable = button.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+    questionTable.innerHTML = "";
+    questionTable.style.display = "none";
 }

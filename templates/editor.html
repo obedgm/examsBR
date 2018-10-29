@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+ {% extends "layout.html" %}
 {% block title %}Editor{% endblock %}
 {% block head %}
 	{{ super() }}
@@ -6,10 +6,7 @@
 
 {% block options %}
 	<br>
-	<p class="nav-link" data-toggle="modal" data-target="#myModal" href="">Crear Evaluacion</p>
-	<p class="nav-link" href="">Abrir Evaluacion</p>
-	<p class="nav-link" data-toggle="modal" href="" onclick="addQuestion()">Agregar pregunta</p>
-	<p class="nav-link" href="">Abrir Evaluacion</p>
+	<p class="nav-link" data-toggle="modal" data-target="#myModal" href="">Opcion</p>
 {% endblock %}
 
 
@@ -22,16 +19,18 @@
 					<td>
 						<label>Enunciado:</label>
 					</td>
-					<td>
-						<label><input type="checkbox">Algebraico?</label>
-					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
 						<textarea rows="2" class="form-control" id="name" name="name"></textarea>
 					</td>
 				</tr>
-				<div class="answers">
+				<tr>
+					<td>
+						<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this)">Algebraico?</label>
+					</td>
+				</tr>
+				<tr><td colspan="2"><table style="width:100%">
 					<tr>
 						<td>
 							<label class="form-l">Respuesta Correcta:</label>
@@ -45,9 +44,9 @@
 							<label class="form-l">Distractores:</label>
 						</td>
 						<td>
-							<input type="text" class="form-control" id="name" name="name">
-							<input type="text" class="form-control" id="name" name="name">
-							<input type="text" class="form-control" id="name" name="name">
+							<input style="margin-bottom:2px" type="text" class="form-control" id="name" name="name">
+							<input style="margin-bottom:2px" type="text" class="form-control" id="name" name="name">
+							<input style="margin-bottom:2px" type="text" class="form-control" id="name" name="name">
 						</td>
 					</tr>
 					<tr>
@@ -56,11 +55,11 @@
 							<p class="questionError" style="color:red"></p>
 						</td>
 					</tr>
-				</div>
+				</table></td></tr>
 				<tr>
 					<td colspan="2">
 						<center>
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Eliminar pregunta</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteQuestion(this)">Eliminar pregunta</button>
 						</center>
 					</td>
 				</tr>
@@ -76,7 +75,7 @@
 		<script>addQuestion();</script>
 	</form>
 	<br>
-	<button type="button" class="btn btn-primary" data-dismiss="modal">Guardar cambios</button>
-
-	<br><br><button class="nav-link" href="" onclick="addQuestion()">Agregar pregunta</button>
+	<center><button class="btn btn-success" href="" onclick="addQuestion()">Agregar pregunta</button></center>
+	<br>
+	<button type="button" class="btn btn-primary" data-dismiss="modal">Guardar cambios</button style="float:right">
 {% endblock %}
