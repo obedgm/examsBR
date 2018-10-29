@@ -37,7 +37,7 @@ function createEval() {
 }
 
 function addQuestion() {
-    document.getElementById("editor").innerHTML += document.getElementById("formatoPregunta").innerHTML;
+    $("#editor").append(document.getElementById("formatoPregunta").innerHTML);
 }
 
 function toggleQuestion(checkbox) {
@@ -53,4 +53,57 @@ function deleteQuestion(button) {
     questionTable = button.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
     questionTable.innerHTML = "";
     questionTable.style.display = "none";
+}
+
+function save() {
+    /*var textInputs = new Array();
+    textInputs = document.getElementsByTagName('input');
+    var textAInputs = new Array();
+    textAInputs = document.getElementsByTagName('textarea');
+    save = true;
+    form = document.getElementById("editor");
+
+    for (i = 0; i < textInputs.length; i++) { 
+        if (textInputs[i].type == 'text') {
+            table = textInputs[i].parentElement.parentElement.parentElement.parentElement.parentElement.style;
+            console.log(table);
+            if (textInputs[i].value == 0) {
+                textInputs[i].classList.add("emptyField");
+                document.getElementById("messageError").innerHTML =
+                    "* Hay campos vacios.";
+                    save = false;
+            } else {
+                textInputs[i].classList.remove("emptyField");
+            }
+        }
+    }
+
+    for (i = 0; i < textAInputs.length; i++) {
+        console.log(textAInputs[i]);
+        if (textAInputs[i].value == 0) {
+            textAInputs[i].classList.add("emptyField");
+            document.getElementById("messageError").innerHTML =
+                "* Hay campos vacios.";
+                save = false;
+        } else {
+            textAInputs[i].classList.remove("emptyField");
+        }
+    }
+
+
+
+    /*
+    if (save) {
+        form.submit();
+    }*/
+
+    var elements = document.getElementById("editor").elements;
+
+    for (var i = 0, element; element = elements[i++];) {
+        if (element.type == "textarea" || element.type == "text" && element.value == "") {
+            element.classList.add("emptyField");
+            console.log("it's an empty textfield");
+        }
+            
+    }
 }

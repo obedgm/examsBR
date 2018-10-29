@@ -14,7 +14,7 @@
 	<div id="formatoPregunta" style="display: none">
 		<section class="pregunta">
 			<br>
-			<table style="width:100%">
+			<table style="width:100%; min-width:500px">
 				<tr>
 					<td>
 						<label>Enunciado:</label>
@@ -22,7 +22,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<textarea rows="2" class="form-control" id="name" name="name"></textarea>
+						<input type="text" id="question" class="form-control" id="name" name="name">
 					</td>
 				</tr>
 				<tr>
@@ -49,12 +49,6 @@
 							<input style="margin-bottom:2px" type="text" class="form-control" id="name" name="name">
 						</td>
 					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<p class="questionError" style="color:red"></p>
-						</td>
-					</tr>
 				</table></td></tr>
 				<tr>
 					<td colspan="2">
@@ -70,12 +64,16 @@
 	<br><br>
 	<center><h1>Editando: {{ evalName }}</h1></center>
 
-	<form id="editor">
+	<form id="editor" action="openEval" method="POST">
+		<input type="hidden" value={{ user }}>
 		<!-- Aqui habra un if (ya tiene preguntas traidas de la BD) /entonces/ las despliego en el editor /else/ despliego -->
 		<script>addQuestion();</script>
 	</form>
+
 	<br>
 	<center><button class="btn btn-success" href="" onclick="addQuestion()">Agregar pregunta</button></center>
 	<br>
-	<button type="button" class="btn btn-primary" data-dismiss="modal">Guardar cambios</button style="float:right">
+	<button type="button" class="btn btn-primary" data-dismiss="modal" style=":right" onclick="save()">Guardar cambios</button>
+	<p id="messageError" style="color:red"></p>
+	
 {% endblock %}

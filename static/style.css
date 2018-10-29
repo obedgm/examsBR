@@ -3,7 +3,7 @@
     height: 100%; /* 100% Full-height */
     width: 250px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: -1; /* Stay on top */
+    z-index: 2; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     background-color: #111; /* Black*/
@@ -42,8 +42,17 @@
     padding: 20px;
     margin-left: 250px;
     max-width: 1000px;
+    z-index: 1;
 }
 
 #options {
 	width: 250px;
+}
+
+#question {
+	height: 50px;
+}
+
+.emptyField {
+	border-color: red;
 }

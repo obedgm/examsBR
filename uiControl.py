@@ -17,6 +17,7 @@ def newEval():
     # PENDIENTE CREAR OBJETO EVAL en BD
     return redirect(url_for('openEval', name = n, user = u), code = 307)
 
+@app.route('/openEval', methods=['POST'])
 @app.route('/openEval/<name>/<user>', methods=['POST'])
 def openEval(name, user):
     # PENDIENTE traer la evaluacion y preguntas de BD
