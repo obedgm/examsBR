@@ -4,15 +4,15 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-		{% block head %}
-			<title>{% block title %}{% endblock %} - EBR</title>
-			<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% block head %}{% endblock %}
 
-			<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-			<script type="text/javascript" src="{{url_for('static', filename='actions.js')}}"></script>
-			<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
-		{% endblock %}
+		<title>{% block title %}{% endblock %} - EBR</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="{{url_for('static', filename='actions.js')}}"></script>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
 	</head>
 	<body>
 
@@ -27,7 +27,7 @@
 				<p class="nav-link" href="">Cerrar sesion</p>
 			</div>
 		</div>
-		<div id="content">{% block content %}{% endblock %}</div>
+		<div id="content"><br><br>{% block content %}{% endblock %}</div>
 
 	</body>
 </html>
