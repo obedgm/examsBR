@@ -27,7 +27,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this)">Algebraico?</label>
+						<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this, this.parentElement.parentElement.parentElement.nextElementSibling.firstChild)">Algebraico?</label>
 					</td>
 				</tr>
 				<tr><td colspan="2"><table style="width:100%">
@@ -53,7 +53,7 @@
 				<tr>
 					<td colspan="2">
 						<center>
-							<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteQuestion(this)">Eliminar pregunta</button>
+							<button type="button" class="btn btn-danger" onclick="deleteQuestion(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement)">Eliminar pregunta</button>
 						</center>
 					</td>
 				</tr>
@@ -64,7 +64,7 @@
 	<br><br>
 	<center><h1>Editando: {{ evalName }}</h1></center>
 
-	<form id="editor" action="openEval" method="POST">
+	<form id="editor" action="submitEval" method="POST">
 		<input type="hidden" value={{ user }}>
 		<!-- Aqui habra un if (ya tiene preguntas traidas de la BD) /entonces/ las despliego en el editor /else/ despliego -->
 		<script>addQuestion();</script>
@@ -73,7 +73,34 @@
 	<br>
 	<center><button class="btn btn-success" href="" onclick="addQuestion()">Agregar pregunta</button></center>
 	<br>
-	<button type="button" class="btn btn-primary" data-dismiss="modal" style=":right" onclick="save()">Guardar cambios</button>
+	<button type="button" class="btn btn-primary" data-dismiss="modal" style="float:right" onclick="save()">Guardar cambios</button>
 	<p id="messageError" style="color:red"></p>
 	
+
+	<div class="modal" id="deleteQuestionModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+			    <!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Crear nueva evalaucion</h4>
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+
+				  	<!-- Modal body -->
+				  	<div class="modal-body">
+	    				<label for="name">Desea elimiar la pregunta?</label>
+				  	</div>
+
+				  	<!-- Modal footer -->
+				  	<div class="modal-footer">
+				  		<button type="button" class="btn btn-primary" onclick="confirmDeleteQuestion()" data-dismiss="modal">Eliminar</button>
+				    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				  	</div>
+
+				  	<input type="hidden" value={{ user }} name="user">
+
+			</div>
+		</div>
+	</div>
 {% endblock %}
