@@ -27,17 +27,23 @@ function closeNav() {
 }
 
 function createEval() {
-    var form = document.getElementById("createEval").submit();
+    var form = document.getElementById("createEvalForm").submit();
     var name = form["name"];
+    var errorMssg = document.getElementById("nameError").innerHTML;
     if (name.length < 5 || name.length > 30) {
-        document.getElementById("nameError").innerHTML = "El nombre debe ser de entre 5 y 30 caracteres";
+        errorMssg = "El nombre debe ser de entre 5 y 30 caracteres";
     } else {
         form.submit();
     }
 }
 
+var Saved = true;
+var CountQuestions = 0;
 function addQuestion() {
-    $("#editor").append(document.getElementById("formatoPregunta").innerHTML);
+    var formatoPregunta = document.getElementById("formatoPregunta");
+    $("#editor").append(formatoPregunta.innerHTML);
+    CountQuestions++;
+    Saved = false;
 }
 
 function toggleQuestion(checkbox, answers) {
@@ -46,6 +52,7 @@ function toggleQuestion(checkbox, answers) {
     } else {
         answers.style.display = "block";
     }
+    Saved = false;
 }
 
 
@@ -57,6 +64,8 @@ function deleteQuestion(question) {
 function confirmDeleteQuestion() {
     Question.innerHTML = "";
     Question.style.display = "none";
+    CountQuestions--;
+    Saved = false;
 }
 
 function save() {
@@ -64,12 +73,13 @@ function save() {
     var elements = document.getElementById("editor").elements;
     var form = document.getElementById("editor");
     var save = true;
+    var errorMssg = document.getElementById("messageError");
 
     for (var i = 0, element; element = elements[i++];) {
         element.classList.remove("emptyField");
         if (element.type == "textarea" || element.type == "text" && element.value == "") {
             element.classList.add("emptyField");
-            document.getElementById("messageError").innerHTML = "* Hay campos vacios.";
+            errorMssg.innerHTML = "* Hay campos vacios.";
             save = false;
         } else if (element.type == "checkbox") {
             if (element.checked) {
@@ -80,5 +90,20 @@ function save() {
 
     if (save) {
         form.submit();
+    }
+}
+
+function generateExams() {
+    var form = document.getElementById("generateExamsForm");
+    var errorMssg = document.getElementById("generateExamsError");
+    var successMssg = document.getElementById("generateExamsSuccess");
+    if (Saved || form["exams"].value < 1 || form["reactivos"].value < 1) {
+        errorMssg.innerHTML = "* Guarde primero los cambios";
+    } else {
+        errorMssg.innerHTML = "";
+        successMssg.innerHTML = "Exportando... Revisa tu correo.";
+        setTimeout(function() {
+            form.submit();
+        }, 3000);
     }
 }
