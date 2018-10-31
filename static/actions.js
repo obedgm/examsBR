@@ -27,11 +27,11 @@ function closeNav() {
 }
 
 function createEval() {
-    var form = document.getElementById("createEvalForm").submit();
-    var name = form["name"];
-    var errorMssg = document.getElementById("nameError").innerHTML;
-    if (name.length < 5 || name.length > 30) {
-        errorMssg = "El nombre debe ser de entre 5 y 30 caracteres";
+    var form = document.getElementById("createEvalForm");
+    var name = form["name"].value;
+    var errorMssg = document.getElementById("nameError");
+    if (name.length <= 5 || name.length > 30) {
+        errorMssg.innerHTML = "* El nombre debe ser de entre 5 y 30 caracteres";
     } else {
         form.submit();
     }
