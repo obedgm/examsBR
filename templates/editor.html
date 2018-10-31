@@ -22,12 +22,12 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="text" id="question" class="form-control" name="question" onchange="Saved=false">
+						<input type="text" class="form-control question" name="question" onchange="Saved=false">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this, this.parentElement.parentElement.parentElement.nextElementSibling.firstChild)">Algebraico?</label>
+						<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this, this.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.firstChild, this.parentElement.parentElement.parentElement.nextElementSibling.firstChild)">Algebraico?</label>
 					</td>
 				</tr>
 				<tr><td colspan="2"><table style="width:100%">
@@ -36,7 +36,7 @@
 							<label class="form-l">Respuesta Correcta:</label>
 						</td>
 						<td>
-							<input type="text" class="form-control" name="1" onchange="Saved=false">
+							<input type="text" class="form-control answer" name="1" onchange="Saved=false">
 						</td>
 					</tr>
 					<tr>
@@ -44,14 +44,25 @@
 							<label class="form-l">Distractores:</label>
 						</td>
 						<td>
-							<input style="margin-bottom:2px" type="text" class="form-control" name="2" onchange="Saved=false">
-							<input style="margin-bottom:2px" type="text" class="form-control" name="3" onchange="Saved=false">
-							<input style="margin-bottom:2px" type="text" class="form-control" name="4" onchange="Saved=false">
+							<input style="margin-bottom:2px" type="text" class="form-control answer" name="2" onchange="Saved=false">
+							<input style="margin-bottom:2px" type="text" class="form-control answer" name="3" onchange="Saved=false">
+							<input style="margin-bottom:2px" type="text" class="form-control answer" name="4" onchange="Saved=false">
+						</td>
+					</tr>
+				</table></td></tr>
+				<tr><td colspan="2" style="display:none"><table style="width:100%">
+					<tr>
+						<td>
+							<label class="form-l">Formula:</label>
+						</td>
+						<td>
+							<input type="text" class="form-control formula" name="5" onchange="Saved=false">
 						</td>
 					</tr>
 				</table></td></tr>
 				<tr>
 					<td colspan="2">
+						<br>
 						<center>
 							<button type="button" class="btn btn-danger" onclick="deleteQuestion(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement)">Eliminar pregunta</button>
 						</center>
@@ -102,13 +113,11 @@
 	<div class="modal" id="generateExamsModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-
 			    <!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title">Crear exámenes</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
-
 			    <form action="generateExams" method="POST" id="generateExamsForm">
 				  	<!-- Modal body -->
 				  	<div class="modal-body">
@@ -125,16 +134,13 @@
  						<input type="hidden" name="user" value={{ user }}>
  						<input type="hidden" name="evalName" value={{ evalName }}>
 				  	</div>
+				  	<input type="hidden" value={{ user }} name="user">
 				</form>
-
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
 			  		<button type="button" class="btn btn-primary" onclick="generateExams()">Crear</button>
 			    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 			  	</div>
-
-			  	<input type="hidden" value={{ user }} name="user">
-
 			</div>
 		</div>
 	</div>

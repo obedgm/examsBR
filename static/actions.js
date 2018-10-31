@@ -46,11 +46,13 @@ function addQuestion() {
     Saved = false;
 }
 
-function toggleQuestion(checkbox, answers) {
+function toggleQuestion(checkbox, formula, answers) {
     if (checkbox.checked) {
         answers.style.display = "none";
+        formula.style.display = "block";
     } else {
         answers.style.display = "block";
+        formula.style.display = "none";
     }
     Saved = false;
 }
@@ -74,17 +76,24 @@ function save() {
     var form = document.getElementById("editor");
     var save = true;
     var errorMssg = document.getElementById("messageError");
+    var reject;
 
     for (var i = 0, element; element = elements[i++];) {
         element.classList.remove("emptyField");
-        if (element.type == "textarea" || element.type == "text" && element.value == "") {
+        
+        if (element.type == "checkbox") {
+            if (element.checked) {
+                reject = "answer";
+            } else {
+                reject = "formula";
+            }
+        } else if (element.type == "textarea" || 
+                   element.type == "text" && 
+                   element.value == "" &&
+                   !element.classList.contains(reject)) {
             element.classList.add("emptyField");
             errorMssg.innerHTML = "* Hay campos vacios.";
             save = false;
-        } else if (element.type == "checkbox") {
-            if (element.checked) {
-                i += 4;
-            } 
         }
     }
 
@@ -97,7 +106,7 @@ function generateExams() {
     var form = document.getElementById("generateExamsForm");
     var errorMssg = document.getElementById("generateExamsError");
     var successMssg = document.getElementById("generateExamsSuccess");
-    if (Saved || form["exams"].value < 1 || form["reactivos"].value < 1) {
+    if (!Saved || form["exams"].value < 1 || form["reactivos"].value < 1) {
         errorMssg.innerHTML = "* Guarde primero los cambios";
     } else {
         errorMssg.innerHTML = "";
