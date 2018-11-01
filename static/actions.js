@@ -2,11 +2,25 @@ function redirectMain() {
 	var f = document.createElement("form");
 	f.setAttribute('method',"post");
 	f.setAttribute('action',"main");
-    var input = document.createElement("input");
-    input.type = "text";
-    input.name = "user";
-    input.value = "usuario";
-    f.appendChild(input);
+
+    var userName = document.createElement("input");
+    userName.type = "text";
+    userName.name = "userName";
+    userName.value = "usuario";
+
+    var userId = document.createElement("input")
+    userId.type = "text";
+    userId.name = "userId";
+    userId.value = "1";
+
+    var email = document.createElement("input")
+    email.type = "text";
+    email.name = "email";
+    email.value = "hola@hola.com";
+
+    f.appendChild(userName);
+    f.appendChild(userId);
+    f.appendChild(email);
     f.style.display = "none";
 	document.body.appendChild(f);
 	f.submit();
