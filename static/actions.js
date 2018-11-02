@@ -60,8 +60,8 @@ function countQuestions() {
 var Saved = true;
 var CountQuestions = 0;
 function addQuestion() {
-    var formatoPregunta = document.getElementById("formatoPregunta");
-    $("#editor").append(formatoPregunta.innerHTML);
+    var questionFormat = document.getElementById("questionFormat");
+    $("#editor").append(questionFormat.innerHTML);
     CountQuestions++;
     Saved = false;
 }

@@ -14,19 +14,19 @@
 	<br><br>
 	<center><h1>Editando: {{ evalName }}</h1></center>
 
+	{% set empty = [] %}
+	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
 	<form id="editor" action="submitEval" method="POST">
-		<input type="hidden" value={{ user }}>
-		<!-- Aqui habra un if (ya tiene preguntas traidas de la BD) /entonces/ las despliego en el editor /else/ despliego -->
-		{% set question = [] %}
-		<div id="formatoPregunta" style="display:none">
-			{{ questionFormat(question) }}
-		</div>
+		<input type="hidden" name="userName" value={{ userName }}>
+		<input type="hidden" name="userId" value={{ userId }}>
+		<input type="hidden" name="evalName" value={{ evalName }}>
+		<input type="hidden" name="evalId" value={{ evalId }}>
 		{% if questions|length > 0 %}
 			{% for question in questions %}
 				{{ questionFormat(question) }}
 			{% endfor %}
 		{% else %}
-			{{ questionFormat(question) }}
+			<script>addQuestion();</script>
 		{% endif %}
 	</form>
 
