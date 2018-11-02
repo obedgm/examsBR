@@ -11,7 +11,6 @@ def index():
 
 @app.route('/main', methods=['POST'])
 def main():
-    print("****\n", request.form)
     userName = request.form["userName"]
     userId = request.form["userId"]
     email = request.form["email"]
@@ -43,19 +42,15 @@ def editor(userName, userId, evalName, evalId):
     Este metodo sera llamado por newEval y openEval, que podria abrir una
         evalaucion nueva o una que ya existia.
     '''
-    evaluation = {}
-    evaluation['questions'] = []
-    evaluation['questions'].append({
-        'algebraic': 'false',
+    questions = []
+    questions.append({
         'statement': 'pregunta',
         'correct': 'correcta',
-        'distractors' : {
-            'distractor1',
-            'distractor2',
-            'distractor3'
-        }
+        'distractor1': 'distractor1',
+        'distractor2': 'distractor2',
+        'distractor3': 'distractor3'
     })
-    evaluation['questions'].append({
+    questions.append({
         'algebraic': 'true',
         'statement': 'pregunta',
         'formula': 'formula'
@@ -63,7 +58,7 @@ def editor(userName, userId, evalName, evalId):
 
     return render_template('editor.html', userName = userName, userId = userId,
                                           evalName = evalName, evalId = evalId,
-                                          evaluation = evaluation)
+                                          questions = questions)
 
 @app.route('/submitEval', methods=['POST'])
 def submitEval():

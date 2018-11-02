@@ -51,6 +51,12 @@ function createEval() {
     }
 }
 
+/*
+function countQuestions() {
+    var x = document.querySelectorAll(".example");
+}
+*/
+
 var Saved = true;
 var CountQuestions = 0;
 function addQuestion() {
