@@ -27,11 +27,11 @@
     						<input type="text" class="form-control" name="evalName">
     						<p id="nameError" style="color:red"></p>
  						</div>
-				    	
 				  	</div>
 				  	<input type="hidden" value={{ userName }} name="userName">
 				  	<input type="hidden" value={{ userId }} name="userId">
 				</form>
+				<script>document.getElementById("createEvalForm").reset();</script>
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
 			  		<button type="button" class="btn btn-primary" onclick="createEval()">Crear</button>
