@@ -90,6 +90,7 @@ function confirmDeleteQuestion() {
     Saved = false;
 }
 
+var clickSave = false;
 function save() {
     document.getElementById("messageError").innerHTML = "";
     var elements = document.getElementById("editor").elements;
@@ -118,6 +119,7 @@ function save() {
     }
 
     if (save) {
+        clickSave = true;
         form.submit();
     }
 }
@@ -136,3 +138,10 @@ function generateExams() {
         }, 3000);
     }
 }
+
+window.onbeforeunload = function() {
+    if (Saved || clickSave){
+        return null;
+    }
+    return true;
+};
