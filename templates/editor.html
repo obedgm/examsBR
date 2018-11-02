@@ -1,4 +1,4 @@
- {% extends "layout.html" %}
+{% extends "layout.html" %}
 {% block title %}Editor{% endblock %}
 {% block head %}
 	{{ super() }}
@@ -11,8 +11,18 @@
 
 
 {% block content %}
-	<br><br>
-	<center><h1>Editando: {{ evalName }}</h1></center>
+	<div class="card bg-light">
+		<table cellpadding="10">
+			<tr>
+				<td>
+					<h2>Editando: {{ evalName }}</h2>
+				</td>
+				<td>
+					<p class="lead" style="float:right">Preguntas: <span id="countQuestions"></span></p>
+				</td>
+			</tr>
+		</table>
+	</div>
 
 	{% set empty = [] %}
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
@@ -29,6 +39,7 @@
 			<script>addQuestion();</script>
 		{% endif %}
 	</form>
+	<script>countQuestions();</script>
 
 	<br>
 	<center><button type="button" class="btn btn-success" onclick="addQuestion()">Agregar pregunta</button></center>
@@ -96,7 +107,7 @@
 {% endblock %}
 
 {% macro questionFormat(question) %}	
-	<section class="pregunta">
+	<section class="question">
 		<br>
 		<table style="width:100%; min-width:500px">
 			<tr>
@@ -107,7 +118,7 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="text" class="form-control question" name="question" onchange="Saved=false" value={{ question.statement }}>
+					<input type="text" class="form-control" name="question" onchange="Saved=false" value={{ question.statement }}>
 				</td>
 			</tr>
 			<tr>

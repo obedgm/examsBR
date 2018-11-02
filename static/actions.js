@@ -51,19 +51,18 @@ function createEval() {
     }
 }
 
-/*
 function countQuestions() {
-    var x = document.querySelectorAll(".example");
+    var questions = document.querySelectorAll(".question");
+    var counter = document.getElementById("countQuestions");
+    counter.innerHTML = questions.length -1;
 }
-*/
 
 var Saved = true;
-var CountQuestions = 0;
 function addQuestion() {
     var questionFormat = document.getElementById("questionFormat");
     $("#editor").append(questionFormat.innerHTML);
-    CountQuestions++;
     Saved = false;
+    countQuestions();
 }
 
 function toggleQuestion(checkbox, formula, answers) {
@@ -85,9 +84,9 @@ function deleteQuestion(question) {
 }
 function confirmDeleteQuestion() {
     Question.innerHTML = "";
-    Question.style.display = "none";
-    CountQuestions--;
+    Question.classList.remove("question");
     Saved = false;
+    countQuestions();
 }
 
 var clickSave = false;
@@ -101,7 +100,6 @@ function save() {
 
     for (var i = 0, element; element = elements[i++];) {
         element.classList.remove("emptyField");
-        
         if (element.type == "checkbox") {
             if (element.checked) {
                 reject = "answer";
