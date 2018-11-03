@@ -11,7 +11,13 @@
 {% endblock %}
 
 {% block content %}
-	<div class="modal" id="createEvalModal">
+	
+	<center>
+		<p style="color:blue; margin-top:170px; font-size:160px">EBR</p>
+		<p style="color:blue; margin-top:-50px">Exams Better Reloaded</p>
+	</center>
+
+	<div class="modal fade" id="createEvalModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 			    <!-- Modal Header -->
@@ -25,13 +31,15 @@
 			    		<div class="form-group">
     						<label>Form name:</label>
     						<input type="text" class="form-control" name="evalName">
-    						<p id="nameError" style="color:red"></p>
+    						<br>
+    						<div id="nameError" class="alert alert-danger" style="display:none"></div>
  						</div>
 				  	</div>
 				  	<input type="hidden" value={{ userName }} name="userName">
 				  	<input type="hidden" value={{ userId }} name="userId">
 				</form>
 				<script>document.getElementById("createEvalForm").reset();</script>
+				
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
 			  		<button type="button" class="btn btn-primary" onclick="createEval()">Crear</button>

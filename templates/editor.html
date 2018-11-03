@@ -26,7 +26,7 @@
 
 	{% set empty = [] %}
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
-	<form id="editor" action="submitEval" method="POST">
+	<form id="editor" action="saveEval" method="POST">
 		<input type="hidden" name="userName" value={{ userName }}>
 		<input type="hidden" name="userId" value={{ userId }}>
 		<input type="hidden" name="evalName" value={{ evalName }}>
@@ -45,10 +45,20 @@
 	<center><button type="button" class="btn btn-success" onclick="addQuestion()">Agregar pregunta</button></center>
 
 	<br>
-	<button type="button" class="btn btn-primary" data-dismiss="modal" style="float:right" onclick="save()">Guardar cambios</button>
-	<p id="messageError" style="color:red"></p>
+	<div id="messageError" class="alert alert-danger" style="display:none"></div>
+	{{save}}
+	{% if caller == "saveEval" %}
+		<div class="alert alert-success">Se han guardado los cambios</div>
+		{% set caller = "F" %}
+	{% endif %}
 
-	<div class="modal" id="deleteQuestionModal">
+	<div id="messageError" class="alert alert-danger" style="display:none"></div>
+	<div style="float:right; margin-bottom:50px">
+		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#undoChangesModal">Descartar cambios</button>
+		<button type="button" class="btn btn-primary" onclick="save()">Guardar cambios</button>
+	</div>
+	
+	<div class="modal fade" id="deleteQuestionModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 			    <!-- Modal Header -->
@@ -70,7 +80,7 @@
 		</div>
 	</div>
 
-	<div class="modal" id="generateExamsModal">
+	<div class="modal fade" id="generateExamsModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 			    <!-- Modal Header -->
@@ -81,16 +91,12 @@
 			    <form action="generateExams" method="POST" id="generateExamsForm">
 				  	<!-- Modal body -->
 				  	<div class="modal-body">
-			    		<div class="form-group">
-    						<label>Número de reactivos por examen:</label>
-    						<input type="number" min="1" class="form-control" name="reactivos">
- 						</div>
- 						<div class="form-group">
-    						<label>Cantidad de exámenes a generar:</label>
-    						<input type="number" min="1" class="form-control" name="exams">
- 						</div>
- 						<p id="generateExamsError" style="color:red"></p>
- 						<p id="generateExamsSuccess" style="color:green"></p>
+						<label>Número de reactivos por examen:</label>
+						<input type="number" min="1" class="form-control" name="reactivos">
+						<label>Cantidad de exámenes a generar:</label>
+						<input type="number" min="1" class="form-control" name="exams">
+ 						<br>
+ 						<div id="generateExamsError" class="alert alert-danger" style="display:none"></div>
  						<input type="hidden" name="user" value={{ user }}>
  						<input type="hidden" name="evalName" value={{ evalName }}>
 				  	</div>
@@ -104,59 +110,82 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="undoChangesModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Descartar cambios</h4>
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+			  	<!-- Modal body -->
+			  	<div class="modal-body">
+    				<label for="name">¿Desea regresar al estado del ultimo guardado? No se podran recuperar los cambios.</label>
+			  	</div>
+			  	<!-- Modal footer -->
+			  	<div class="modal-footer">
+			  		<button type="button" class="btn btn-danger" onclick="confirmUndoChanges()" data-dismiss="modal">Eliminar</button>
+			    	<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+			  	</div>
+			  	<input type="hidden" value={{ user }} name="user">
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
 {% macro questionFormat(question) %}	
 	<section class="question">
 		<br>
-		<table style="width:100%; min-width:500px">
-			<tr>
-				<td>
-					<label style="float:left">Enunciado:</label>
-					<button type="button" class="btn btn-basic btn-sm" onclick="deleteQuestion(this.parentElement.parentElement.parentElement.parentElement.parentElement)" style="float:right">Eliminar pregunta</button>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<input type="text" class="form-control" name="question" onchange="Saved=false" value={{ question.statement }}>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this, this.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.firstChild, this.parentElement.parentElement.parentElement.nextElementSibling.firstChild)" {% if question.algebraic %} checked {% endif %}>Algebraico?</label>
-				</td>
-			</tr>
-			<tr><td colspan="2" {% if question.algebraic is defined%} style="display:none" {% endif %}><table style="width:100%">
+		<div class="card" style="padding:20px">
+			<table style="width:100%; min-width:500px">
 				<tr>
 					<td>
-						<label class="form-l">Respuesta Correcta:</label>
-					</td>
-					<td>
-						<input type="text" class="form-control answer" name="1" onchange="Saved=false" value={{ question.correct }}>
+						<label style="float:left">Enunciado:</label>
+						<button type="button" class="btn btn-basic btn-sm" onclick="deleteQuestion(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement)" style="float:right">Eliminar pregunta</button>
 					</td>
 				</tr>
 				<tr>
-					<td style="vertical-align: top">
-						<label class="form-l">Distractores:</label>
-					</td>
-					<td>
-						<input style="margin-bottom:2px" type="text" class="form-control answer" name="2" onchange="Saved=false" value={{ question.distractor1 }}>
-						<input style="margin-bottom:2px" type="text" class="form-control answer" name="3" onchange="Saved=false" value={{ question.distractor2 }}>
-						<input style="margin-bottom:2px" type="text" class="form-control answer" name="4" onchange="Saved=false" value={{ question.distractor3 }}>
+					<td colspan="2">
+						<input type="text" class="form-control" name="question" onchange="Saved=false" value={{ question.statement }}>
 					</td>
 				</tr>
-			</table></td></tr>
-			<tr><td colspan="2" {% if question.algebraic is not defined %} style="display:none" {% endif %}><table style="width:100%">
 				<tr>
 					<td>
-						<label class="form-l">Formula:</label>
-					</td>
-					<td>
-						<input type="text" class="form-control formula" name="5" onchange="Saved=false" value={{ question.formula }}>
+						<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this, this.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.firstChild, this.parentElement.parentElement.parentElement.nextElementSibling.firstChild)" {% if question.algebraic %} checked {% endif %}>Algebraico?</label>
 					</td>
 				</tr>
-			</table></td></tr>
-		</table>
-		<hr style="border-color:#99ccff">
+				<tr><td colspan="2" {% if question.algebraic is defined%} style="display:none" {% endif %}><table style="width:100%">
+					<tr>
+						<td>
+							<label class="form-l">Respuesta Correcta:</label>
+						</td>
+						<td>
+							<input type="text" class="form-control answer" name="1" onchange="Saved=false" value={{ question.correct }}>
+						</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top">
+							<label class="form-l">Distractores:</label>
+						</td>
+						<td>
+							<input style="margin-bottom:2px" type="text" class="form-control answer" name="2" onchange="Saved=false" value={{ question.distractor1 }}>
+							<input style="margin-bottom:2px" type="text" class="form-control answer" name="3" onchange="Saved=false" value={{ question.distractor2 }}>
+							<input style="margin-bottom:2px" type="text" class="form-control answer" name="4" onchange="Saved=false" value={{ question.distractor3 }}>
+						</td>
+					</tr>
+				</table></td></tr>
+				<tr><td colspan="2" {% if question.algebraic is not defined %} style="display:none" {% endif %}><table style="width:100%">
+					<tr>
+						<td>
+							<label class="form-l">Formula:</label>
+						</td>
+						<td>
+							<input type="text" class="form-control formula" name="5" onchange="Saved=false" value={{ question.formula }}>
+						</td>
+					</tr>
+				</table></td></tr>
+			</table>
+		</div>
 	</section>
 {% endmacro %}

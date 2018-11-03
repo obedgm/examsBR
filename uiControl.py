@@ -23,7 +23,6 @@ def main():
 
 @app.route('/newEval', methods=['POST'])
 def newEval():
-    userName = request.form["userName"]
     userId = request.form["userId"]
     evalName = request.form["evalName"]
     evalId = evalName.strip()
@@ -34,10 +33,19 @@ def newEval():
         y agregamos un mensaje de que ya existia (o si nos queda 
         tiempo hacemos algo mas fancy)
     '''
-    return redirect(url_for('editor', userName = userName, userId = userId, evalName = evalName, evalId = evalId), code = 307)
+    return redirect(url_for('editor', userId = userId, evalId = evalId, caller = "newEval"), code = 307)
 
-@app.route('/editor/<userName>/<userId>/<evalName>/<evalId>', methods=['POST'])
-def editor(userName, userId, evalName, evalId):
+@app.route('/saveEval', methods=['POST'])
+def saveEval():
+    userId = request.form["userId"]
+    evalName = request.form["evalId"]
+    '''
+    Envio al backend request.form para guardarlo en la BD
+    '''
+    return redirect(url_for('editor', userId = userId, evalId = evalId, caller = "saveEval"), code = 307)
+
+@app.route('/editor/<userId>/<evalId>/<caller>', methods=['POST'])
+def editor(userId, evalId, caller):
     '''
     Este metodo sera llamado por newEval y openEval, que podria abrir una
         evalaucion nueva o una que ya existia.
@@ -56,9 +64,12 @@ def editor(userName, userId, evalName, evalId):
         'formula': 'formula'
     })
 
+    userName = 'usuario'
+    evalName = 'evaluacion'
+
     return render_template('editor.html', userName = userName, userId = userId,
                                           evalName = evalName, evalId = evalId,
-                                          questions = questions)
+                                          questions = questions, caller = caller)
 
 @app.route('/submitEval', methods=['POST'])
 def submitEval():

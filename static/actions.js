@@ -44,8 +44,11 @@ function createEval() {
     var form = document.getElementById("createEvalForm");
     var name = form["name"].value;
     var errorMssg = document.getElementById("nameError");
-    if (name.length <= 5 || name.length > 30) {
-        errorMssg.innerHTML = "* El nombre debe ser de entre 5 y 30 caracteres";
+
+    errorMssg.style.display = "none";
+    if (typeof name === "undefined" || name.length <= 5 || name.length > 30) {
+        errorMssg.style.display = "block";
+        errorMssg.innerHTML = "El nombre debe ser de entre 5 y 30 caracteres";
     } else {
         form.submit();
     }
@@ -76,7 +79,6 @@ function toggleQuestion(checkbox, formula, answers) {
     Saved = false;
 }
 
-
 var Question;
 function deleteQuestion(question) {
     Question = question;
@@ -89,7 +91,6 @@ function confirmDeleteQuestion() {
     countQuestions();
 }
 
-var clickSave = false;
 function save() {
     document.getElementById("messageError").innerHTML = "";
     var elements = document.getElementById("editor").elements;
@@ -98,6 +99,7 @@ function save() {
     var errorMssg = document.getElementById("messageError");
     var reject;
 
+    errorMssg.style.display = "none";
     for (var i = 0, element; element = elements[i++];) {
         element.classList.remove("emptyField");
         if (element.type == "checkbox") {
@@ -111,26 +113,45 @@ function save() {
                    element.value == "" &&
                    !element.classList.contains(reject)) {
             element.classList.add("emptyField");
-            errorMssg.innerHTML = "* Hay campos vacios.";
+            errorMssg.style.display = "block";
+            errorMssg.innerHTML = "Hay campos vacios.";
             save = false;
         }
     }
 
     if (save) {
-        clickSave = true;
+        Saved = true;
         form.submit();
     }
+}
+
+function confirmUndoChanges() {
+    Saved = true;
+    window.location.reload();
 }
 
 function generateExams() {
     var form = document.getElementById("generateExamsForm");
     var errorMssg = document.getElementById("generateExamsError");
     var successMssg = document.getElementById("generateExamsSuccess");
-    if (!Saved || form["exams"].value < 1 || form["reactivos"].value < 1) {
-        errorMssg.innerHTML = "* Guarde primero los cambios";
+
+    form["exams"].classList.remove("emptyField");
+    form["reactivos"].classList.remove("emptyField");
+    errorMssg.style.display = "none";
+    if (!Saved) {
+        errorMssg.style.display = "block";
+        errorMssg.innerHTML = "Guarde primero los cambios.";
+    } else if (form["reactivos"].value < 1 || form["exams"].value < 1) {
+        errorMssg.style.display = "block";
+        errorMssg.innerHTML = "Especifique los valores faltantes.";
+        if (form["reactivos"].value < 1) {
+            form["reactivos"].classList.add("emptyField");
+        }
+        if (form["exams"].value < 1) {
+            form["exams"].classList.add("emptyField");
+        }
     } else {
         errorMssg.innerHTML = "";
-        successMssg.innerHTML = "Exportando... Revisa tu correo.";
         setTimeout(function() {
             form.submit();
         }, 3000);
@@ -138,7 +159,7 @@ function generateExams() {
 }
 
 window.onbeforeunload = function() {
-    if (Saved || clickSave){
+    if (Saved){
         return null;
     }
     return true;
