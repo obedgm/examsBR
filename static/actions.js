@@ -1,3 +1,4 @@
+
 function redirectMain() {
 	var f = document.createElement("form");
 	f.setAttribute('method',"post");
@@ -40,6 +41,7 @@ function closeNav() {
     document.getElementById("toggleBtn").onclick = openNav;
 }
 
+/*
 function createEval() {
     var evaluations = $("#createEvalData").data();
     var form = document.getElementById("createEvalForm");
@@ -55,8 +57,7 @@ function createEval() {
         submit = false;
     } else {
         for (var i = 0; i < evaluations.name.length; i++) {
-            if (name == evaluations.name[i].evalName){
-                console.log("loop");
+            if (name == evaluations.name[i].evalName) {
                 errorMssg.style.display = "block";
                 errorMssg.innerHTML = "Ya hay una evaluacion con ese nombre";
                 submit = false;
@@ -66,7 +67,7 @@ function createEval() {
     if (submit) {
         form.submit();
     }
-}
+}*/
 
 function countQuestions() {
     var questions = document.querySelectorAll(".question");
@@ -170,6 +171,7 @@ function generateExams() {
         form.submit();
     }
 }
+
 
 window.onbeforeunload = function() {
     if (Saved){
