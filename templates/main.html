@@ -11,7 +11,6 @@
 {% endblock %}
 
 {% block content %}
-	
 	<center>
 		<p style="color:blue; margin-top:170px; font-size:160px">EBR</p>
 		<p style="color:blue; margin-top:-50px">Exams Better Reloaded</p>
@@ -25,11 +24,12 @@
 					<h4 class="modal-title">Crear nueva evaluación</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
-			    <form id="createEvalForm" action="/newEval" method="POST">
+			    <form id="createEvalForm" action="/newEval" method="POST"
+			    	  onkeypress="return event.keyCode != 13;">
 				  	<!-- Modal body -->
 				  	<div class="modal-body">
 			    		<div class="form-group">
-    						<label>Form name:</label>
+    						<label>Nombre del test:</label>
     						<input type="text" class="form-control" name="evalName">
     						<br>
     						<div id="nameError" class="alert alert-danger" style="display:none"></div>
@@ -42,10 +42,12 @@
 				
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
+			  		<meta id="createEvalData" data-name="{{ evaluationsJSON }}">
 			  		<button type="button" class="btn btn-primary" onclick="createEval()">Crear</button>
 			    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 			  	</div>
 			</div>
 		</div>
 	</div>
+
 {% endblock %}

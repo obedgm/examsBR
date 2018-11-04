@@ -41,15 +41,29 @@ function closeNav() {
 }
 
 function createEval() {
+    var evaluations = $("#createEvalData").data();
     var form = document.getElementById("createEvalForm");
-    var name = form["name"].value;
+    form["evalName"].value = form["evalName"].value.trim();
+    var name = form["evalName"].value;
     var errorMssg = document.getElementById("nameError");
+    var submit = true;
 
     errorMssg.style.display = "none";
-    if (typeof name === "undefined" || name.length <= 5 || name.length > 30) {
+    if (name.length < 5 || name.length > 30) {
         errorMssg.style.display = "block";
         errorMssg.innerHTML = "El nombre debe ser de entre 5 y 30 caracteres";
+        submit = false;
     } else {
+        for (var i = 0; i < evaluations.name.length; i++) {
+            if (name == evaluations.name[i].evalName){
+                console.log("loop");
+                errorMssg.style.display = "block";
+                errorMssg.innerHTML = "Ya hay una evaluacion con ese nombre";
+                submit = false;
+            }
+    }
+
+    if (submit) {
         form.submit();
     }
 }
@@ -126,8 +140,9 @@ function save() {
 }
 
 function confirmUndoChanges() {
+    var form = document.getElementById('evalData');
     Saved = true;
-    window.location.reload();
+    form.submit();
 }
 
 function generateExams() {
@@ -151,10 +166,8 @@ function generateExams() {
             form["exams"].classList.add("emptyField");
         }
     } else {
-        errorMssg.innerHTML = "";
-        setTimeout(function() {
-            form.submit();
-        }, 3000);
+        // TODO: Poner algun gif de carga en lo que carga la siguiente pagina
+        form.submit();
     }
 }
 

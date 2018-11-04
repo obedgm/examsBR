@@ -47,3 +47,8 @@
 .emptyField {
 	border-color: red;
 }
+
+.card {
+    min-width: 550px;
+    padding: 20px;
+}

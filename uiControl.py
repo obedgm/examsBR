@@ -18,8 +18,33 @@ def main():
     Envio datos del usuario al controlador de sesiones.
     Si existe el usuario en la base de datos no hago nada.
     Si no existe lo agrego.
+
+    Si existe entonces traere la lista de evaluaciones que 
+    ha credo porque se usa en esta pag
     '''
-    return render_template('main.html', userName = userName, userId = userId)
+
+    evaluations = []
+    evaluations.append({
+        'evalName': 'evaluation1',
+        'evalId' : 'evaluationId1'
+    })
+    evaluations.append({
+        'evalName': 'evaluation2',
+        'evalId' : 'evaluationId2'
+    })
+
+    evaluationsJSON = json.dumps(evaluations)
+
+    return render_template('main.html', userName = userName, userId = userId, evaluations = evaluations,evaluationsJSON = evaluationsJSON)
+
+@app.route('/openEval', methods=['POST'])
+def openEval():
+    userId = request.form["userId"]
+    evalId = request.form["evalId"]
+    '''
+    Envio al backend request.form para guardarlo en la BD
+    '''
+    return redirect(url_for('editor', userId = userId, evalId = evalId, caller = "openEval"), code = 307)
 
 @app.route('/newEval', methods=['POST'])
 def newEval():
@@ -29,16 +54,13 @@ def newEval():
     '''
     Envio datos al controlador
     Creo la evaluacion ligada al usuario
-    Si ya existe una evaluacion pues se va a abrir esa evaluacion
-        y agregamos un mensaje de que ya existia (o si nos queda 
-        tiempo hacemos algo mas fancy)
     '''
     return redirect(url_for('editor', userId = userId, evalId = evalId, caller = "newEval"), code = 307)
 
 @app.route('/saveEval', methods=['POST'])
 def saveEval():
     userId = request.form["userId"]
-    evalName = request.form["evalId"]
+    evalId = request.form["evalId"]
     '''
     Envio al backend request.form para guardarlo en la BD
     '''
