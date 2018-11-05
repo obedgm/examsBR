@@ -41,7 +41,6 @@ function closeNav() {
     document.getElementById("toggleBtn").onclick = openNav;
 }
 
-/*
 function createEval() {
     var evaluations = $("#createEvalData").data();
     var form = document.getElementById("createEvalForm");
@@ -62,12 +61,13 @@ function createEval() {
                 errorMssg.innerHTML = "Ya hay una evaluacion con ese nombre";
                 submit = false;
             }
+        }
     }
 
     if (submit) {
         form.submit();
     }
-}*/
+}
 
 function countQuestions() {
     var questions = document.querySelectorAll(".question");

@@ -48,7 +48,13 @@
 	border-color: red;
 }
 
-.card {
+.editorCard {
     min-width: 550px;
     padding: 20px;
+}
+
+.evalSelectBtn {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
 }

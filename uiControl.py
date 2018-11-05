@@ -35,7 +35,8 @@ def main():
 
     evaluationsJSON = json.dumps(evaluations)
 
-    return render_template('main.html', userName = userName, userId = userId, evaluations = evaluations,evaluationsJSON = evaluationsJSON)
+    return render_template('main.html', userName = userName, userId = userId, 
+        evaluations = evaluations, evaluationsJSON = evaluationsJSON)
 
 @app.route('/openEval', methods=['POST'])
 def openEval():

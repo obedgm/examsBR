@@ -7,7 +7,7 @@
 {% block options %}
 	<br>
 	<p class="nav-link" data-toggle="modal" data-target="#createEvalModal" href="">Crear Evaluación</p>
-	<p class="nav-link" href="">Abrir Evaluación</p>
+	<p class="nav-link" data-toggle="modal" data-target="#openEvalModal" href="">Abrir Evaluación</p>
 {% endblock %}
 
 {% block content %}
@@ -50,4 +50,38 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="openEvalModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Abrir evalucion</h4>
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+			  	<!-- Modal body -->
+			  	<div class="modal-body">
+			  		{% if evaluations|length > 0%}
+				  		<form action="openEval" method="POST">
+				  			<input type="hidden" value={{ userId }} name="userId">
+				  			<center>
+					  			{% for evaluation in evaluations %}
+			    					<button type="submit" name="evalId" value={{ evaluation.evalId }} class="btn btn-primary evalSelectBtn">{{ evaluation.evalName }}</button>
+			    				{% endfor %}
+		    				</center>
+				  		</form>
+				  	{% else %}
+				  		<div class="alert alert-danger">
+				  			No hay evaluaciones para este usuario.
+				  		</div>
+				  	{% endif %}
+    				
+			  	</div>
+			  	<!-- Modal footer -->
+			  	<div class="modal-footer">
+			    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+			  	</div>
+			  	<input type="hidden" value={{ user }} name="user">
+			</div>
+		</div>
+	</div>
 {% endblock %}

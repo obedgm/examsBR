@@ -11,7 +11,7 @@
 
 
 {% block content %}
-	<div class="card bg-light">
+	<div class="card bg-light editorCard">
 		<table cellpadding="10">
 			<tr>
 				<td>
@@ -27,9 +27,7 @@
 	{% set empty = [] %}
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
 	<form id="editor" action="saveEval" method="POST">
-		<input type="hidden" name="userName" value={{ userName }}>
 		<input type="hidden" name="userId" value={{ userId }}>
-		<input type="hidden" name="evalName" value={{ evalName }}>
 		<input type="hidden" name="evalId" value={{ evalId }}>
 		{% if questions|length > 0 %}
 			{% for question in questions %}
@@ -142,7 +140,7 @@
 {% macro questionFormat(question) %}	
 	<section class="question">
 		<br>
-		<div class="card">
+		<div class="card editorCard">
 			<table style="width:100%; min-width:500px">
 				<tr>
 					<td>
