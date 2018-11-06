@@ -72,7 +72,16 @@ function createEval() {
 function countQuestions() {
     var questions = document.querySelectorAll(".question");
     var counter = document.getElementById("countQuestions");
+    questionNumbers = document.querySelectorAll(".count");
+    
     counter.innerHTML = questions.length -1;
+    for (var i = 0, qn; qn = questionNumbers[i++];) {
+        qn.innerHTML = i-1;
+    }
+    for (var i = 0, qi; qi = questions[i++];) {
+        qi.id = i-1;
+    }
+
 }
 
 var Saved = true;
@@ -104,6 +113,26 @@ function confirmDeleteQuestion() {
     Question.classList.remove("question");
     Saved = false;
     countQuestions();
+}
+
+function moveQuestionUp(question) {
+    if (question.id != 1) {
+        beforeId = parseInt(question.id)-1;
+        before = document.getElementById(beforeId);
+        console.log(before);
+        before.classList.remove("fadeIn");
+        $(question.id).detach();
+        question.parentNode.insertBefore(question, before);
+        before.classList.add("fadeIn");
+        Saved = false;
+        countQuestions();
+    }
+}
+
+function moveQuestionDown(question) {
+    nextId = parseInt(question.id)+1;
+    next = document.getElementById(nextId);    
+    moveQuestionUp(next);
 }
 
 function save() {
