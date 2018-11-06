@@ -82,6 +82,11 @@ def editor(evalId, caller):
 
     return "no haz iniciado sesion"
 
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session.pop('userId', None)
+    return render_template('home.html')
+
 if __name__ == '__main__':
     db = DBController()
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'

@@ -17,41 +17,34 @@ def formatEvaluationsJSON(user):
 	return formattedEvaluationsJSON
 
 def getEvalName(user, evalId):
-	evaluations = user.getEvaluations()
-	for e in evaluations:
-		if e.getId() == evalId:
-			return e.getName()
+	evaluation = user.getEvaluation(evalId)
+	return evaluation.getName()
 
 def getFormattedQuestions(user, evalId):
 	formattedQuestions = []
-	evaluations = user.getEvaluations()
-	for e in evaluations:
-		if e.getId() == evalId:
-			questions = e.getQuestions()
-			for q in questions:
-				if q.getAlgebraic():
-					formattedQuestions.append({
-						'algebraic' : 'true',
-						'statement' : q.getStatement(),
-						'formula' : q.getFormula()
-					})
-				else:
-					distractors = q.getDistractors()
-					formattedQuestions.append({
-						'statement' : q.getStatement(),
-						'correct' : q.getCorrect(),
-						'distractor1' : distractors[0],
-						'distractor2' : distractors[1],
-						'distractor3' : distractors[2]
-					})
+	evaluation = user.getEvaluation(evalId)
+	questions = evaluation.getQuestions()
+	for q in questions:
+		if q.getAlgebraic():
+			formattedQuestions.append({
+				'algebraic' : 'true',
+				'statement' : q.getStatement(),
+				'formula' : q.getFormula()
+			})
+		else:
+			distractors = q.getDistractors()
+			formattedQuestions.append({
+				'statement' : q.getStatement(),
+				'correct' : q.getCorrect(),
+				'distractor1' : distractors[0],
+				'distractor2' : distractors[1],
+				'distractor3' : distractors[2]
+			})
 	return formattedQuestions
 
 def saveEvaluation(form, user, evalId):
 	i = 1;
-	evaluations = user.getEvaluations()
-	for e in evaluations:
-		if e.getId() == evalId:
-			evaluation = e
+	evaluation = user.getEvaluation(evalId)
 	evaluation.clearQuestions()
 	while form.has_key(str(i) + '_question'):
 		ii = str(i)
