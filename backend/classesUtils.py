@@ -47,4 +47,24 @@ def getFormattedQuestions(user, evalId):
 	return formattedQuestions
 
 def saveEvaluation(form, user, evalId):
-	return 0;
+	i = 1;
+	evaluations = user.getEvaluations()
+	for e in evaluations:
+		if e.getId() == evalId:
+			evaluation = e
+	evaluation.clearQuestions()
+	while form.has_key(str(i) + '_question'):
+		ii = str(i)
+		if form.has_key(ii + '_algebra'):
+			q = Question(form[ii+'_question'], True)
+			print(form[ii+'_5'])
+			q.setFormula(form[ii+'_5'])
+		else:
+			q = Question(form[ii+'_question'], False)
+			q.setCorrect(form[ii+'_1'])
+			q.addDistractor(form[ii+'_2'])
+			q.addDistractor(form[ii+'_3'])
+			q.addDistractor(form[ii+'_4'])
+		evaluation.addQuestion(q)
+		i = i + 1
+

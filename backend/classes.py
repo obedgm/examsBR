@@ -41,7 +41,7 @@ class Evaluation:
         return self.__questions
 
     def clearQuestions(self):
-        self.__questions.clear
+        self.__questions = []
 
 class Question:
 

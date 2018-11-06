@@ -135,6 +135,14 @@ function save() {
     }
 
     if (save) {
+        var id = 0;
+        for (var i = 0, element; element = elements[i++];) {
+            element.name = id + "_" + element.name;
+            if (element.type == "button") {
+                id = id + 1;
+            }
+        }
+
         Saved = true;
         form.submit();
     }

@@ -19,9 +19,6 @@ def main():
     user = db.getOrCreateUser(userName, userId, email)
     users[userId] = user
 
-    user.to_dict(flat=False)
-    print(str(user))
-
     evaluations = cu.formatEvaluations(user)
     evaluationsJSON = cu.formatEvaluationsJSON(user)
 
@@ -45,9 +42,10 @@ def newEval():
 @app.route('/saveEval', methods=['POST'])
 def saveEval():
     if 'userId' in session:
-        evalId = request.form["evalId"]
+        evalId = request.form["0_evalId"]
         userId = session['userId']
         user = users[userId]
+        print(str(request.form))
         cu.saveEvaluation(request.form, user, evalId)
         db.updateUserData(user)
         
