@@ -46,6 +46,7 @@ def saveEvaluation(form, user, evalId):
 	i = 1;
 	evaluation = user.getEvaluation(evalId)
 	evaluation.clearQuestions()
+	print(str(form))
 	while form.has_key(str(i) + '_question'):
 		ii = str(i)
 		if form.has_key(ii + '_algebra'):

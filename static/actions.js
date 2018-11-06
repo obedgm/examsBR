@@ -166,10 +166,10 @@ function save() {
     if (save) {
         var id = 0;
         for (var i = 0, element; element = elements[i++];) {
-            element.name = id + "_" + element.name;
-            if (element.type == "button") {
+            if (element.name == "question") {
                 id = id + 1;
             }
+            element.name = id + "_" + element.name;
         }
 
         Saved = true;
