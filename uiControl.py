@@ -1,7 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, request
-import json
-#Ejemplo de como importar paquetes
-#from backend.classes import User
+from flask import Flask, render_template, redirect, url_for, request, session
+from backend.classes import User, Evaluation, Question
+import backend.classesUtils as cu
+from backend.DBController import DBController
 
 app = Flask(__name__)
 
@@ -12,91 +12,80 @@ def index():
 @app.route('/main', methods=['POST'])
 def main():
     userName = request.form["userName"]
-    userId = request.form["userId"]
+    userId = str(request.form["userId"])
     email = request.form["email"]
-    '''
-    Envio datos del usuario al controlador de sesiones.
-    Si existe el usuario en la base de datos no hago nada.
-    Si no existe lo agrego.
 
-    Si existe entonces traere la lista de evaluaciones que 
-    ha credo porque se usa en esta pag
-    '''
+    session['userId'] = userId
+    user = db.getOrCreateUser(userName, userId, email)
+    users[userId] = user
 
-    evaluations = []
-    evaluations.append({
-        'evalName': 'evaluation1',
-        'evalId' : 'evaluationId1'
-    })
-    evaluations.append({
-        'evalName': 'evaluation2',
-        'evalId' : 'evaluationId2'
-    })
+    user.to_dict(flat=False)
+    print(str(user))
 
-    evaluationsJSON = json.dumps(evaluations)
+    evaluations = cu.formatEvaluations(user)
+    evaluationsJSON = cu.formatEvaluationsJSON(user)
 
-    return render_template('main.html', userName = userName, userId = userId, 
+    return render_template('main.html', userName = userName, 
         evaluations = evaluations, evaluationsJSON = evaluationsJSON)
-
-@app.route('/openEval', methods=['POST'])
-def openEval():
-    userId = request.form["userId"]
-    evalId = request.form["evalId"]
-    '''
-    Envio al backend request.form para guardarlo en la BD
-    '''
-    return redirect(url_for('editor', userId = userId, evalId = evalId, caller = "openEval"), code = 307)
 
 @app.route('/newEval', methods=['POST'])
 def newEval():
-    userId = request.form["userId"]
-    evalName = request.form["evalName"]
-    evalId = evalName.strip()
-    '''
-    Envio datos al controlador
-    Creo la evaluacion ligada al usuario
-    '''
-    return redirect(url_for('editor', userId = userId, evalId = evalId, caller = "newEval"), code = 307)
+    if 'userId' in session:
+        evalName = request.form["evalName"]
+        evalId = evalName.strip()
+        userId = session['userId']
+        user = users[userId]
+
+        user.addEvaluation(Evaluation(evalName, evalId))
+
+        return redirect(url_for('editor', evalId = evalId, caller = "newEval"), code = 307)
+
+    return "no haz iniciado sesion"
 
 @app.route('/saveEval', methods=['POST'])
 def saveEval():
-    userId = request.form["userId"]
-    evalId = request.form["evalId"]
-    '''
-    Envio al backend request.form para guardarlo en la BD
-    '''
-    return redirect(url_for('editor', userId = userId, evalId = evalId, caller = "saveEval"), code = 307)
+    if 'userId' in session:
+        evalId = request.form["evalId"]
+        userId = session['userId']
+        user = users[userId]
+        cu.saveEvaluation(request.form, user, evalId)
+        db.updateUserData(user)
+        
+        return redirect(url_for('editor', evalId = evalId, caller = "saveEval"), code = 307)
 
-@app.route('/editor/<userId>/<evalId>/<caller>', methods=['POST'])
-def editor(userId, evalId, caller):
+    return "no haz iniciado sesion"
+
+@app.route('/openEval', methods=['POST'])
+def openEval():
+    if 'userId' in session:
+        evalId = request.form["evalId"]
+        
+        return redirect(url_for('editor', evalId = evalId, caller = "openEval"), code = 307)
+   
+    return "no haz iniciado sesion"
+
+@app.route('/editor/<evalId>/<caller>', methods=['POST'])
+def editor(evalId, caller):
     '''
     Este metodo sera llamado por newEval y openEval, que podria abrir una
         evalaucion nueva o una que ya existia.
     '''
-    questions = []
-    questions.append({
-        'statement': 'pregunta',
-        'correct': 'correcta',
-        'distractor1': 'distractor1',
-        'distractor2': 'distractor2',
-        'distractor3': 'distractor3'
-    })
-    questions.append({
-        'algebraic': 'true',
-        'statement': 'pregunta',
-        'formula': 'formula'
-    })
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
 
-    userName = 'usuario'
-    evalName = 'evaluacion'
+        userName = user.getName()
+        evalName = cu.getEvalName(user, evalId)
+        questions = cu.getFormattedQuestions(user, evalId)
 
-    return render_template('editor.html', userName = userName, userId = userId,
-                                          evalName = evalName, evalId = evalId,
-                                          questions = questions, caller = caller)
+        return render_template('editor.html', userName = userName,
+                                              evalName = evalName, evalId = evalId,
+                                              questions = questions, caller = caller)
 
-@app.route('/submitEval', methods=['POST'])
-def submitEval():
-    return null;
+    return "no haz iniciado sesion"
 
 if __name__ == '__main__':
+    db = DBController()
+    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+    users = {}
     app.run(debug = True)

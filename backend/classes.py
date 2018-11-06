@@ -1,33 +1,75 @@
 class User:
 
-	def __init__(self, name, id, email):
-		self.__name = name
-		self.__id = id
-		self.__email = email
+    def __init__(self, name, id, email):
+        self.__name = name
+        self.__id = id
+        self.__email = email
+        self.__evaluations = []
 
-	def addFolder(folder):
-		self.__folders.append(folder)
+    def addEvaluation(self, evaluation):
+        self.__evaluations.append(evaluation)
 
-class Folder:
+    def getName(self):
+        return self.__name
 
-	def __init__(self, name, id):
-		self.__name = name
-		self.__id = id
+    def getId(self):
+        return self.__id
 
-	def addQuestion(question):
-		self.__questions.append(question)
+    def getEmail(self):
+        return self.__email
+
+    def getEvaluations(self):
+        return self.__evaluations
+
+class Evaluation:
+
+    def __init__(self, name, id):
+        self.__name = name
+        self.__id = id
+        self.__questions = []
+
+    def addQuestion(self, question):
+        self.__questions.append(question)
+
+    def getName(self):
+        return self.__name
+
+    def getId(self):
+        return self.__id
+
+    def getQuestions(self):
+        return self.__questions
+
+    def clearQuestions(self):
+        self.__questions.clear
 
 class Question:
 
-	def __init__(self, statement, algebraic):
-		self.__statement = statement
-		self.__algebraic = algebraic
+    def __init__(self, statement, algebraic):
+        self.__statement = statement
+        self.__algebraic = algebraic
+        self.__distractors = []
 
-	def setCorrect(correct):
-		self.__correct = correct
+    def setCorrect(self, correct):
+        self.__correct = correct
 
-	def addDistractor(distractor):
-		self.__distractors.append(distractor)
+    def addDistractor(self, distractor):
+        self.__distractors.append(distractor)
 
-	def setFormula(formula):
-		self.__formula = formula
+    def setFormula(self, formula):
+        self.__formula = formula
+
+    def getAlgebraic(self):
+        return self.__algebraic
+
+    def getStatement(self):
+        return self.__statement
+
+    def getCorrect(self):
+        return self.__correct
+
+    def getDistractors(self):
+        return self.__distractors
+
+    def getFormula(self):
+        return self.__formula
