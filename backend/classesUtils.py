@@ -60,4 +60,3 @@ def saveEvaluation(form, user, evalId):
 			q.addDistractor(form[ii+'_4'])
 		evaluation.addQuestion(q)
 		i = i + 1
-

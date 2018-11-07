@@ -92,6 +92,21 @@ def editor(evalId, caller):
 
     return render_template('home.html', notLogged = True)
 
+@app.route('/delEval', methods=['POST'])
+def delEval():
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
+        evalId = request.form['evalId']
+        '''
+        Enviar a la BD y borrar
+        '''
+        user.deleteEvaluation(evalId)
+
+        return redirect(url_for('main'), code = 307)
+
+    return render_template('home.html', notLogged = True)
+
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('userId', None)

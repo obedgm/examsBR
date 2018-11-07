@@ -9,6 +9,9 @@ class User:
     def addEvaluation(self, evaluation):
         self.__evaluations[evaluation.getId()] = evaluation
 
+    def deleteEvaluation(self, evalId):
+        del self.__evaluations[evalId]
+
     def getName(self):
         return self.__name
 
@@ -28,7 +31,7 @@ class User:
         self.__evaluations = {}
 
 class Evaluation:
-
+    
     def __init__(self, name, id):
         self.__name = name
         self.__id = id

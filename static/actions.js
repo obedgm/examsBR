@@ -108,6 +108,7 @@ function deleteQuestion(question) {
     $("#deleteQuestionModal").modal("show");
 }
 function confirmDeleteQuestion() {
+    form = document.getElementById("editor");
     Question.classList.add("animated");
     Question.classList.add("fadeOut");
     Saved = false;
@@ -115,6 +116,12 @@ function confirmDeleteQuestion() {
         Question.innerHTML = "";
         Question.classList.remove("question");
         countQuestions();
+        form.classList.add("animated");
+        form.classList.add("fadeIn");
+        setTimeout(function() {
+            form.classList.remove("animated");
+            form.classList.remove("fadeIn");
+        }, 1000);
     }, 1000);
 }
 

@@ -17,13 +17,32 @@
 			<tr>
 				<td>
 					<h2>Editando: {{ evalName }}</h2>
+					<p class="lead">Preguntas: <span id="countQuestions"></span></p>
 				</td>
 				<td>
-					<p class="lead" style="float:right">Preguntas: <span id="countQuestions"></span></p>
+					<div style="float:right">
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#undoChangesModal">
+							<i class="material-icons">settings_backup_restore</i>
+						</button>
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteEvalModal">
+							<i class="material-icons">delete</i>
+						</button>
+						<button type="button" class="btn btn-primary" onclick="save()">
+							<i class="material-icons">save</i>
+						</button>
+					</div>
 				</td>
 			</tr>
 		</table>
 	</div>
+
+	<br>
+	<div id="messageError" class="alert alert-danger" style="display:none"></div>
+	{{save}}
+	{% if caller == "saveEval" %}
+		<div class="alert alert-success">Se han guardado los cambios</div>
+		{% set caller = "F" %}
+	{% endif %}
 
 	{% set empty = [] %}
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
@@ -40,21 +59,9 @@
 	<script>countQuestions();</script>
 
 	<br>
-	<center><button type="button" class="btn btn-success" onclick="addQuestion()">Agregar pregunta</button></center>
-
-	<br>
-	<div id="messageError" class="alert alert-danger" style="display:none"></div>
-	{{save}}
-	{% if caller == "saveEval" %}
-		<div class="alert alert-success">Se han guardado los cambios</div>
-		{% set caller = "F" %}
-	{% endif %}
-
-	<div id="messageError" class="alert alert-danger" style="display:none"></div>
-	<div style="float:right; margin-bottom:50px">
-		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#undoChangesModal">Descartar cambios</button>
-		<button type="button" class="btn btn-primary" onclick="save()">Guardar cambios</button>
-	</div>
+	<center><button type="button" class="btn btn-success" onclick="addQuestion()">
+		<i class="material-icons">add</i> Pregunta
+	</button></center>
 	
 	<div class="modal fade" id="deleteQuestionModal">
 		<div class="modal-dialog">
@@ -152,6 +159,31 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="deleteEvalModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Crear nueva evaluación</h4>
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div> 
+			  	<!-- Modal body -->
+			  	<div class="modal-body">
+		    		<label>Seguro que desea eliminar la forma?</label>
+			  	</div>
+				<form id="deleteEvalForm" action="/delEval" method="POST" 
+					onkeypress="return event.keyCode != 13;">
+					<input type="hidden" name="evalId" value="{{ evalId }}">
+				  	<!-- Modal footer -->
+				  	<div class="modal-footer">
+				  		<input type="submit" class="btn btn-danger" value="Eliminar"></input>
+				    	<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+				  	</div>
+				</form>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
 {% macro questionFormat(question) %}	
@@ -159,7 +191,6 @@
 	{% set optionsFromAlgebra = "this.parentElement.parentElement.parentElement.nextElementSibling.firstChild" %}
 	{% set formulaFromAlgebra = "this.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.firstChild" %}
 	<section class="question animated fadeIn">
-		<br>
 		<div class="card editorCard">
 			<table style="width:100%; min-width:500px">
 				<tr>
@@ -223,5 +254,6 @@
 				</table></td></tr>
 			</table>
 		</div>
+		<br>
 	</section>
 {% endmacro %}

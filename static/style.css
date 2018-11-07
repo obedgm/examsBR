@@ -51,10 +51,20 @@
 .editorCard {
     min-width: 550px;
     padding: 20px;
+    border-color: ;
 }
 
 .evalSelectBtn {
     display: block;
     margin-bottom: 10px;
     width: 100%;
+}
+
+i {
+    vertical-align: middle;
+}
+
+a, p, label {
+    text-align: left;
+    float: left;
 }
