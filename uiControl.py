@@ -9,8 +9,8 @@ app = Flask(__name__)
 def index():
     return render_template('home.html')
 
-@app.route('/main', methods=['POST'])
-def main():
+@app.route('/login', methods=['POST'])
+def login():
     userName = request.form["userName"]
     userId = str(request.form["userId"])
     email = request.form["email"]
@@ -19,13 +19,24 @@ def main():
     user = db.getOrCreateUser(userName, userId, email)
     users[userId] = user
 
-    db.loadEvaluations(user)
+    return redirect(url_for('main'), code = 307)
 
-    evaluations = cu.formatEvaluations(user)
-    evaluationsJSON = cu.formatEvaluationsJSON(user)
+@app.route('/main', methods=['GET', 'POST'])
+def main():
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
 
-    return render_template('main.html', userName = userName, 
-        evaluations = evaluations, evaluationsJSON = evaluationsJSON)
+        userName = user.getName()
+        db.loadEvaluations(user)
+
+        evaluations = cu.formatEvaluations(user)
+        evaluationsJSON = cu.formatEvaluationsJSON(user)
+
+        return render_template('main.html', userName = userName, 
+            evaluations = evaluations, evaluationsJSON = evaluationsJSON)
+
+    return "no haz iniciado sesion"
 
 @app.route('/newEval', methods=['POST'])
 def newEval():

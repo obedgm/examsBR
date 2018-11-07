@@ -2,7 +2,7 @@
 function redirectMain() {
 	var f = document.createElement("form");
 	f.setAttribute('method',"post");
-	f.setAttribute('action',"main");
+	f.setAttribute('action',"/login");
 
     var userName = document.createElement("input");
     userName.type = "text";
