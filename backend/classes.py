@@ -35,16 +35,31 @@ class Evaluation:
     def __init__(self, name, id):
         self.__name = name
         self.__id = id
-        self.__questions = []
+        self.__sections = []
 
     def addQuestion(self, question):
-        self.__questions.append(question)
+        self.__sections.append(sections)
 
     def getName(self):
         return self.__name
 
     def getId(self):
         return self.__id
+
+    def getQuestions(self):
+        return self.__sections
+
+    def clearSections(self):
+        self.__sections = []
+
+class Section:
+
+    def __init__(self, name):
+        self.__name = name
+        self.__questions = []
+
+    def addQuestion(self, question):
+        self.__question.append(question)
 
     def getQuestions(self):
         return self.__questions
