@@ -11,13 +11,15 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    userName = request.form["userName"]
-    userId = str(request.form["userId"])
-    email = request.form["email"]
+    # Trae usuario de la base de datos
 
-    session['userId'] = userId
-    user = db.getOrCreateUser(userName, userId, email)
+    # mock data
+    user = User("Juan", "1", "juan@hola.com")
+    # end mock data
+
+    userId = user.getId()
     users[userId] = user
+    session['userId'] = userId
 
     return redirect(url_for('main'), code = 307)
 

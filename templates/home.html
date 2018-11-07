@@ -24,29 +24,33 @@
 				<div class="alert alert-danger" style="width:250px">No hay una sesion iniciada</div>
 			{% endif %}
 			<p>Iniciar sesion</p>
-			<div class="g-signin2" data-onsuccess="onSignIn"></div>
-			<button onclick="redirectMain()">Acceder</button>
+			<div class="g-signin2" data-onsuccess="onSignIn" onclick="clicked = true"></div>
 		</center>
 	</body>
 </html>
 
 <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCMs1O70z1q6qIArA36dBX1iuipaNStOYg",
-    authDomain: "examsbr-2a061.firebaseapp.com",
-    databaseURL: "https://examsbr-2a061.firebaseio.com",
-    projectId: "examsbr-2a061",
-    storageBucket: "",
-    messagingSenderId: "1086622454733"
-  };
-  firebase.initializeApp(config);
-  function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-}
+  	// Initialize Firebase
+  	var config = {
+    	apiKey: "AIzaSyCMs1O70z1q6qIArA36dBX1iuipaNStOYg",
+    	authDomain: "examsbr-2a061.firebaseapp.com",
+    	databaseURL: "https://examsbr-2a061.firebaseio.com",
+    	projectId: "examsbr-2a061",
+    	storageBucket: "",
+    	messagingSenderId: "1086622454733"
+  	};
+  	firebase.initializeApp(config);
+  	var clicked = false;
+  	var f = document.createElement("form");
+  	function onSignIn(googleUser) {
+	    var profile = googleUser.getBasicProfile();
+	    f.setAttribute('method',"post");
+	    f.setAttribute('action',"/login");
+	    f.style.display = "none";
+	    document.body.appendChild(f);
+	    if (clicked) {
+	    	f.submit();
+	    }
+	}
 </script>
