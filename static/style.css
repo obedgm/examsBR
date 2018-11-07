@@ -6,10 +6,11 @@
     z-index: 2; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #7c8482; /* Black*/
+    background-color: #7c8482; /* gray*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+
 }
 
 /* The navigation menu links */
@@ -17,7 +18,7 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: white;
     display: block;
     transition: 0.3s;
 }
@@ -64,3 +65,7 @@
 img { 
     display: inline-block;
 }
+.nav-link{
+    color: white;
+}
+
