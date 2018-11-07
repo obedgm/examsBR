@@ -64,7 +64,7 @@
 			<script>addSection(); addQuestion();</script>
 		{% endif %}
 	</form>
-	<script>countQuestions();</script>
+	<script>countElements();</script>
 
 	<br>
 	<center>
@@ -230,7 +230,7 @@
 				<tr>
 					<td colspan="2">
 						<div style="float:left; margin-top:8px">
-							<label class="lead">Pregunta <span class="count"></span>:</label>
+							<label class="lead">Pregunta <span class="questionNumber"></span>:</label>
 						</div>
 						<div style="float:right">
 							<button type="button" class="btn btn-basic btn-sm" onclick="moveQuestionUp({{ questionIdFromHeader }})">
@@ -299,7 +299,7 @@
 			<table style="width:100%; min-width:500px">
 				<tr>
 					<td>
-						<label class="lead">Seccion:</label>
+						<label class="lead">Seccion <span class="sectionNumber"></span>:</label>
 					</td>
 					<td>
 						<input type="text" class="form-control" name="section" onchange="Saved=false" value="{{ section.section }}">

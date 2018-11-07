@@ -68,17 +68,7 @@ function createEval() {
     }
 }
 
-function countQuestions() {
-    var questions = document.querySelectorAll(".question");
-    var counter = document.getElementById("countQuestions");
-    counter.innerHTML = questions.length -1;
-
-
-    var questionNumbers = document.querySelectorAll(".count");
-    for (var i = 0, qn; qn = questionNumbers[i++];) {
-        qn.innerHTML = i-1;
-    }
-
+function countIds() {
     var s_id = 0;
     var q_id = 0;
     var children = document.getElementById("editor").children;
@@ -93,6 +83,34 @@ function countQuestions() {
         }
     }
 }
+function displayedCounts() {
+    var questions = document.querySelectorAll(".question");
+    var counter = document.getElementById("countQuestions");
+    counter.innerHTML = questions.length -1;
+
+    /*var questionNumbers = document.querySelectorAll(".questionNumber");
+    for (var i = 0, qn; qn = questionNumbers[i++];) {
+        qn.innerHTML = i-1;
+    }*/
+
+    var s = 0;
+    var q;
+    var children = document.getElementById("editor").querySelectorAll("*");
+    for (var i = 0, child; child = children[i++];) {
+        if (child.classList.contains("sectionNumber")){
+            q = 1;
+            s = s + 1;
+            child.innerHTML = s;
+        } else if (child.classList.contains("questionNumber")) {
+            child.innerHTML = s + "." + q;
+            q = q + 1;
+        }
+    }
+}
+function countElements() {
+    countIds();
+    displayedCounts();
+}
 
 var Saved = true;
 
@@ -100,7 +118,7 @@ function addQuestion() {
     var questionFormat = document.getElementById("questionFormat");
     $("#editor").append(questionFormat.innerHTML);
     Saved = false;
-    countQuestions();
+    countElements();
 
     question = document.getElementById("editor").lastElementChild;
     animate(question);
@@ -110,7 +128,7 @@ function addSection() {
     var sectionFormat = document.getElementById("sectionFormat");
     $("#editor").append(sectionFormat.innerHTML);
     Saved = false;
-    countQuestions();
+    countElements();
 
     section = document.getElementById("editor").lastElementChild;
     animate(section);
@@ -135,10 +153,8 @@ function deleteQuestion(question) {
 function confirmDeleteQuestion() {
     form = document.getElementById("editor");
     Saved = false;
-    Question.classList.remove("question");
-    Question.innerHTML = "";
-    Question.id = "";
-    countQuestions();
+    Question.remove();
+    countElements();
     animate(form);
 }
 
@@ -154,17 +170,13 @@ function confirmDeleteSection() {
     var questions = document.querySelectorAll(".question");
     for (var i = 0, question; question = questions[i++];){
         if (question.id.indexOf(Section.id + "_") == 0) {
-            question.classList.remove("question");
-            question.innerHTML = "";
-            question.id = "";
+            question.remove();
         }
     }
 
-    Section.classList.remove("section");
-    Section.innerHTML = "";
-    section.id = "";
+    Section.remove();
 
-    countQuestions();
+    countElements();
     animate(form);
 }
 
@@ -175,7 +187,7 @@ function moveQuestionUp(question) {
     if (sectionId != "1") {
         $(question.id).detach();
         question.parentNode.insertBefore(question, section);
-        countQuestions();
+        countElements();
         animate(section);
         animate(question);
     }
@@ -184,14 +196,22 @@ function moveQuestionUp(question) {
 function moveQuestionDown(question) {
     var sectionId = String(parseInt(question.id.substr(0, question.id.indexOf("_")))+1);
     var section = document.getElementById(sectionId);
+    var form = document.getElementById("editor");
+    next = section.nextElementSibling;
 
     var sections = document.querySelectorAll(".section");
     if (sectionId != String(sections.length)) {
-        $(section.id).detach();
-        section.parentNode.insertBefore(section, question);
-        countQuestions();
+        if (next != null) {
+            console.log(next);
+            $(question.id).detach();
+            question.parentNode.insertBefore(question, next);
+        } else {
+            $(question.id).detach();
+            form.appendChild(question);
+        }
         animate(section);
         animate(question);
+        countElements();
     }
 }
 
