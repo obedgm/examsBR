@@ -9,6 +9,8 @@ class DBController:
         #   lo restructura a clases
 
         user = User(userName, userId, email)
+
+        # Agrega usuario a la bd
         
         return user
 
@@ -17,7 +19,11 @@ class DBController:
         # Trae desde la base de datos todas las 
         #   evaluaciones del usuario y las agrega
         #   al usuario
+
+        # mock data
         e1 = Evaluation("Eval 1", "Eval1")
+        # end mock data
+
         user.addEvaluation(e1)
 
     def addEvaluation(self, user, evalName, evalId):
@@ -28,7 +34,11 @@ class DBController:
     def getEvaluation(self, user, evalId):
         # Trae la evaluacion de la bd y se la pone
         #   al usuario
+
+        # mock data
         evaluation = Evaluation("nombre", evalId)
+        # end mock data
+
         user.addEvaluation(evaluation)
 
     def getQuestions(self, user, evalId):
@@ -37,6 +47,9 @@ class DBController:
         # Trae las preguntas desde la bd y se las
         #   pone a la evalaucion y al usuario
         
+        e1 = user.getEvaluation(evalId)
+
+        # mock data
         q1 = Question("Que paso?", False)
         q1.setCorrect("Correcto")
         q1.addDistractor("Distractor1")
@@ -45,8 +58,8 @@ class DBController:
 
         q2 = Question("Que paso pt2?", True)
         q2.setFormula("X + Y")
+        # end mock data
 
-        e1 = user.getEvaluation(evalId)
         e1.addQuestion(q1)
         e1.addQuestion(q2)
 
