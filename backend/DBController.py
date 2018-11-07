@@ -1,17 +1,18 @@
 from classes import User, Folder, Section, Question
 import classesUtils as cu
+import pyrebase
 
 class DBController:
 
     def getOrCreateUser(self, userName, userId, email):
         # Busca en la BD el usuario y si no lo crea
-        # Toma el output de la BD y en otra funcion 
+        # Toma el output de la BD y en otra funcion
         #   lo restructura a clases
 
         user = User(userName, userId, email)
 
         # Agrega usuario a la bd
-        
+
         return user
 
     def loadFolders(self, user):
@@ -69,3 +70,13 @@ class DBController:
     def updateUserData(self, user):
         # Actualizar al usuario y todo su desmadre
         return 0
+
+#conectar a la BD
+config = {
+  "apiKey": "AIzaSyCMs1O70z1q6qIArA36dBX1iuipaNStOYg",
+  "authDomain": "examsbr-2a061.firebaseapp.com",
+  "databaseURL": "https://examsbr-2a061.firebaseio.com",
+  "storageBucket": "",
+}
+
+firebase = pyrebase.initialize_app(config)
