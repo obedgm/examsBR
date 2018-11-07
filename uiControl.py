@@ -19,6 +19,8 @@ def main():
     user = db.getOrCreateUser(userName, userId, email)
     users[userId] = user
 
+    db.getEvaluations(user)
+
     evaluations = cu.formatEvaluations(user)
     evaluationsJSON = cu.formatEvaluationsJSON(user)
 
@@ -33,7 +35,7 @@ def newEval():
         userId = session['userId']
         user = users[userId]
 
-        user.addEvaluation(Evaluation(evalName, evalId))
+        db.addEvaluation(user, evalName, evalId)
 
         return redirect(url_for('editor', evalId = evalId, caller = "newEval"), code = 307)
 
@@ -71,6 +73,8 @@ def editor(evalId, caller):
     if 'userId' in session:
         userId = session['userId']
         user = users[userId]
+
+        db.getQuestions(user, evalId)
 
         userName = user.getName()
         evalName = cu.getEvalName(user, evalId)

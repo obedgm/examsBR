@@ -24,6 +24,9 @@ class User:
     def getEvaluations(self):
         return self.__evaluations.values()
 
+    def clearEvaluations(self):
+        self.__evaluations = {}
+
 class Evaluation:
 
     def __init__(self, name, id):
