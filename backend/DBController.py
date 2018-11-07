@@ -14,7 +14,7 @@ class DBController:
         
         return user
 
-    def getEvaluations(self, user):
+    def loadEvaluations(self, user):
         user.clearEvaluations()
         # Trae desde la base de datos todas las 
         #   evaluaciones del usuario y las agrega
@@ -31,7 +31,7 @@ class DBController:
         user.addEvaluation(evaluation)
         # Guarda la evaluacion en la BD
 
-    def getEvaluation(self, user, evalId):
+    def loadEvaluation(self, user, evalId):
         # Trae la evaluacion de la bd y se la pone
         #   al usuario
 
@@ -41,9 +41,9 @@ class DBController:
 
         user.addEvaluation(evaluation)
 
-    def getQuestions(self, user, evalId):
+    def loadQuestions(self, user, evalId):
         user.clearEvaluations()
-        self.getEvaluation(user, evalId)
+        self.loadEvaluation(user, evalId)
         # Trae las preguntas desde la bd y se las
         #   pone a la evalaucion y al usuario
         

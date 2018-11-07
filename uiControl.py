@@ -19,7 +19,7 @@ def main():
     user = db.getOrCreateUser(userName, userId, email)
     users[userId] = user
 
-    db.getEvaluations(user)
+    db.loadEvaluations(user)
 
     evaluations = cu.formatEvaluations(user)
     evaluationsJSON = cu.formatEvaluationsJSON(user)
@@ -47,7 +47,6 @@ def saveEval():
         evalId = request.form["0_evalId"]
         userId = session['userId']
         user = users[userId]
-        print(str(request.form))
         cu.saveEvaluation(request.form, user, evalId)
         db.updateUserData(user)
         
@@ -74,7 +73,7 @@ def editor(evalId, caller):
         userId = session['userId']
         user = users[userId]
 
-        db.getQuestions(user, evalId)
+        db.loadQuestions(user, evalId)
 
         userName = user.getName()
         evalName = cu.getEvalName(user, evalId)
