@@ -12,7 +12,7 @@
 
 {% block content %}
 	<br>
-	<div class="card bg-light editorCard">
+	<div class="card bg-light editorCard" style="border-color: #7c8482;">
 		<table cellpadding="10">
 			<tr>
 				<td>
@@ -39,9 +39,9 @@
 	<br>
 	<div id="messageError" class="alert alert-danger" style="display:none"></div>
 	{{save}}
-	<div id="messageSuccess" class="alert alert-success">
+	<div id="messageSuccess">
 		{% if caller == "saveEval" %}
-			Se han guardado los cambios
+			<div class="alert alert-success">Se han guardado los cambios</div>
 			{% set caller = "F" %}
 		{% endif %}
 	</div>
@@ -193,7 +193,7 @@
 	{% set optionsFromAlgebra = "this.parentElement.parentElement.parentElement.nextElementSibling.firstChild" %}
 	{% set formulaFromAlgebra = "this.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.firstChild" %}
 	<section class="question animated fadeIn">
-		<div class="card editorCard">
+		<div class="card editorCard" style="border-color: #56b0ff;">
 			<table style="width:100%; min-width:500px">
 				<tr>
 					<td colspan="2">
