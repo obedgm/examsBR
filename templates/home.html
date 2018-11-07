@@ -19,6 +19,9 @@
 		<center>
 			<p style="color:blue; margin-top:10px; font-size:160px">EBR</p>
 			<p style="color:blue; margin-top:-50px">Exams Better Reloaded</p>
+			{% if notLogged is defined%}
+				<div class="alert alert-danger" style="width:250px">No hay una sesion iniciada</div>
+			{% endif %}
 			<p>Iniciar sesion</p>
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			<button onclick="redirectMain()">Acceder</button>
