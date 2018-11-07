@@ -71,24 +71,48 @@ function createEval() {
 function countQuestions() {
     var questions = document.querySelectorAll(".question");
     var counter = document.getElementById("countQuestions");
-    questionNumbers = document.querySelectorAll(".count");
-    
     counter.innerHTML = questions.length -1;
+
+
+    var questionNumbers = document.querySelectorAll(".count");
     for (var i = 0, qn; qn = questionNumbers[i++];) {
         qn.innerHTML = i-1;
     }
-    for (var i = 0, qi; qi = questions[i++];) {
-        qi.id = i-1;
-    }
 
+    var s_id = 0;
+    var q_id = 0;
+    var children = document.getElementById("editor").children;
+    for (var i = 0, child; child = children[i++];) {
+        if (child.classList.contains("section")){
+            s_id = s_id + 1;
+            child.id = s_id;
+        } else if (child.classList.contains("question")) {
+            q_id = q_id + 1;
+            child.id = s_id + "_" + q_id;
+        }
+    }
 }
 
 var Saved = true;
+
 function addQuestion() {
     var questionFormat = document.getElementById("questionFormat");
     $("#editor").append(questionFormat.innerHTML);
     Saved = false;
     countQuestions();
+
+    question = document.getElementById("editor").lastElementChild;
+    animate(question);
+}
+
+function addSection() {
+    var sectionFormat = document.getElementById("sectionFormat");
+    $("#editor").append(sectionFormat.innerHTML);
+    Saved = false;
+    countQuestions();
+
+    section = document.getElementById("editor").lastElementChild;
+    animate(section);
 }
 
 function toggleQuestion(checkbox, formula, answers) {
@@ -109,39 +133,62 @@ function deleteQuestion(question) {
 }
 function confirmDeleteQuestion() {
     form = document.getElementById("editor");
-    Question.classList.add("animated");
-    Question.classList.add("fadeOut");
     Saved = false;
-    setTimeout(function(){ 
-        Question.innerHTML = "";
-        Question.classList.remove("question");
-        countQuestions();
-        form.classList.add("animated");
-        form.classList.add("fadeIn");
-        setTimeout(function() {
-            form.classList.remove("animated");
-            form.classList.remove("fadeIn");
-        }, 1000);
-    }, 1000);
+    Question.classList.remove("question");
+    Question.innerHTML = "";
+    countQuestions();
+    animate(form);
+}
+
+var Section;
+function deleteSection(section) {
+    Section = section;
+    $("#deleteSectionModal").modal("show");
+}
+function confirmDeleteSection() {
+    form = document.getElementById("editor");
+    Saved = false;
+
+    var questions = document.querySelectorAll(".question");
+    for (var i = 0, question; question = questions[i++];){
+        if (question.id.indexOf(Section.id + "_") == 0) {
+            question.classList.remove("question");
+            question.innerHTML = "";
+        }
+    }
+
+    Section.classList.remove("section");
+    Section.innerHTML = "";
+
+    countQuestions();
+    animate(form);
 }
 
 function moveQuestionUp(question) {
-    if (question.id != 1) {
-        beforeId = parseInt(question.id)-1;
-        before = document.getElementById(beforeId);
-        before.classList.remove("fadeIn");
+    var sectionId = question.id.substr(0, question.id.indexOf("_"));
+    var section = document.getElementById(sectionId);
+
+    if (sectionId != "1") {
         $(question.id).detach();
-        question.parentNode.insertBefore(question, before);
-        before.classList.add("fadeIn");
-        Saved = false;
+        question.parentNode.insertBefore(question, section);
         countQuestions();
+        animate(section);
+        animate(question);
     }
 }
 
 function moveQuestionDown(question) {
-    nextId = parseInt(question.id)+1;
-    next = document.getElementById(nextId);    
-    moveQuestionUp(next);
+    var sectionId = String(parseInt(question.id.substr(0, question.id.indexOf("_")))+1);
+    var section = document.getElementById(sectionId);
+
+    var questions = document.querySelectorAll(".question");
+    if (sectionId != String(questions.length)) {
+        $(question.id).detach();
+        question.parentNode.insertBefore(section, question);
+        countQuestions();
+        animate(section);
+        animate(question);
+    }
 }
 
 function save() {
@@ -175,14 +222,18 @@ function save() {
     }
 
     if (save) {
-        var id = 0;
+        var s_id = 1;
+        var q_id = 1;
         for (var i = 0, element; element = elements[i++];) {
-            if (element.name == "question") {
-                id = id + 1;
+            if (element.name == "section") {
+                element.name == s_id + element.name;
+                s_id = s_id + 1;
+            } else {
+                if (element.name == "question") {
+                    q_id = q_id + 1;
+                }
             }
-            element.name = id + "_" + element.name;
         }
-
         Saved = true;
         form.submit();
     }
@@ -226,3 +277,12 @@ window.onbeforeunload = function() {
     }
     return true;
 };
+
+function animate(element) {
+    element.classList.add("animated");
+    element.classList.add("fadeIn");
+    setTimeout(function() {
+        element.classList.remove("animated");
+        element.classList.remove("fadeIn");
+    }, 1000);
+}

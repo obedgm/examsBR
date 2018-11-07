@@ -48,22 +48,29 @@
 
 	{% set empty = [] %}
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
-	<form id="editor" action="/saveEval" method="POST">
+	<span id="sectionFormat" style="display:none">{{ sectionFormat() }}</span>
+	<form id="editor" class="animated fadeIn" action="/saveEval" method="POST">
 		<input type="hidden" name="evalId" value={{ evalId }}>
+		<script>addSection(); addQuestion();</script>
 		{% if questions|length > 0 %}
 			{% for question in questions %}
 				{{ questionFormat(question) }}
 			{% endfor %}
 		{% else %}
-			<script>addQuestion();</script>
+			<script>addSection(); addQuestion();</script>
 		{% endif %}
 	</form>
 	<script>countQuestions();</script>
 
 	<br>
-	<center><button type="button" class="btn btn-success" onclick="addQuestion()">
-		<i class="material-icons">add</i> Pregunta
-	</button></center>
+	<center>
+		<button type="button" class="btn btn-success" onclick="addQuestion()">
+			<i class="material-icons">add</i> Pregunta
+		</button>
+		<button type="button" class="btn btn-success" onclick="addSection()">
+			<i class="material-icons">add</i> Seccion
+		</button>
+	</center>
 	
 	<div class="modal fade" id="deleteQuestionModal">
 		<div class="modal-dialog">
@@ -80,6 +87,27 @@
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
 			  		<button type="button" class="btn btn-danger" onclick="confirmDeleteQuestion()" data-dismiss="modal">Eliminar</button>
+			    	<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="deleteSectionModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Eliminar seccion</h4>
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+			  	<!-- Modal body -->
+			  	<div class="modal-body">
+    				<label for="name">¿Desea eliminar la seccion y todas sus preguntas?</label>
+			  	</div>
+			  	<!-- Modal footer -->
+			  	<div class="modal-footer">
+			  		<button type="button" class="btn btn-danger" onclick="confirmDeleteSection()" data-dismiss="modal">Eliminar</button>
 			    	<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
 			  	</div>
 			</div>
@@ -192,7 +220,7 @@
 	{% set questionIdFromHeader = "this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement" %}
 	{% set optionsFromAlgebra = "this.parentElement.parentElement.parentElement.nextElementSibling.firstChild" %}
 	{% set formulaFromAlgebra = "this.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.firstChild" %}
-	<section class="question animated fadeIn">
+	<section class="question">
 		<div class="card editorCard" style="border-color: #56b0ff;">
 			<table style="width:100%; min-width:500px">
 				<tr>
@@ -254,6 +282,30 @@
 						</td>
 					</tr>
 				</table></td></tr>
+			</table>
+		</div>
+		<br>
+	</section>
+{% endmacro %}
+
+{% macro sectionFormat() %}
+	{% set sectionIdFromBtn = "this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement" %}
+	<section class="section">
+		<div class="card editorCard" style="border-color: #6de8ce;">
+			<table style="width:100%; min-width:500px">
+				<tr>
+					<td>
+						<label class="lead">Seccion:</label>
+					</td>
+					<td>
+						<input type="text" class="form-control" name="section" onchange="Saved=false">
+					</td>
+					<td align="right">
+					<button type="button" class="btn btn-basic btn-sm" onclick="deleteSection({{ sectionIdFromBtn }})">
+						<i class="material-icons">delete</i>
+					</button>
+					</td>
+				</tr>
 			</table>
 		</div>
 		<br>
