@@ -68,17 +68,7 @@ function createEval() {
     }
 }
 
-function countQuestions() {
-    var questions = document.querySelectorAll(".question");
-    var counter = document.getElementById("countQuestions");
-    counter.innerHTML = questions.length -1;
-
-
-    var questionNumbers = document.querySelectorAll(".count");
-    for (var i = 0, qn; qn = questionNumbers[i++];) {
-        qn.innerHTML = i-1;
-    }
-
+function countIds() {
     var s_id = 0;
     var q_id = 0;
     var children = document.getElementById("editor").children;
@@ -93,6 +83,34 @@ function countQuestions() {
         }
     }
 }
+function displayedCounts() {
+    var questions = document.querySelectorAll(".question");
+    var counter = document.getElementById("countQuestions");
+    counter.innerHTML = questions.length -1;
+
+    /*var questionNumbers = document.querySelectorAll(".questionNumber");
+    for (var i = 0, qn; qn = questionNumbers[i++];) {
+        qn.innerHTML = i-1;
+    }*/
+
+    var s = 0;
+    var q;
+    var children = document.getElementById("editor").querySelectorAll("*");
+    for (var i = 0, child; child = children[i++];) {
+        if (child.classList.contains("sectionNumber")){
+            q = 1;
+            s = s + 1;
+            child.innerHTML = s;
+        } else if (child.classList.contains("questionNumber")) {
+            child.innerHTML = s + "." + q;
+            q = q + 1;
+        }
+    }
+}
+function countElements() {
+    countIds();
+    displayedCounts();
+}
 
 var Saved = true;
 
@@ -100,7 +118,7 @@ function addQuestion() {
     var questionFormat = document.getElementById("questionFormat");
     $("#editor").append(questionFormat.innerHTML);
     Saved = false;
-    countQuestions();
+    countElements();
 
     question = document.getElementById("editor").lastElementChild;
     animate(question);
@@ -110,7 +128,7 @@ function addSection() {
     var sectionFormat = document.getElementById("sectionFormat");
     $("#editor").append(sectionFormat.innerHTML);
     Saved = false;
-    countQuestions();
+    countElements();
 
     section = document.getElementById("editor").lastElementChild;
     animate(section);
@@ -136,7 +154,7 @@ function confirmDeleteQuestion() {
     form = document.getElementById("editor");
     Saved = false;
     Question.remove();
-    countQuestions();
+    countElements();
     animate(form);
 }
 
@@ -158,7 +176,7 @@ function confirmDeleteSection() {
 
     Section.remove();
 
-    countQuestions();
+    countElements();
     animate(form);
 }
 
@@ -169,7 +187,7 @@ function moveQuestionUp(question) {
     if (sectionId != "1") {
         $(question.id).detach();
         question.parentNode.insertBefore(question, section);
-        countQuestions();
+        countElements();
         animate(section);
         animate(question);
     }
@@ -193,7 +211,7 @@ function moveQuestionDown(question) {
         }
         animate(section);
         animate(question);
-        countQuestions();
+        countElements();
     }
 }
 
