@@ -1,4 +1,3 @@
-
 function redirectMain() {
 	var f = document.createElement("form");
 	f.setAttribute('method',"post");
@@ -109,9 +108,13 @@ function deleteQuestion(question) {
     $("#deleteQuestionModal").modal("show");
 }
 function confirmDeleteQuestion() {
-    Question.innerHTML = "";
-    Question.classList.remove("question");
+    Question.classList.add("animated");
+    Question.classList.add("fadeOut");
     Saved = false;
+    setTimeout(function(){ 
+        Question.innerHTML = "";
+        Question.classList.remove("question");
+    }, 1000);
     countQuestions();
 }
 
@@ -119,7 +122,6 @@ function moveQuestionUp(question) {
     if (question.id != 1) {
         beforeId = parseInt(question.id)-1;
         before = document.getElementById(beforeId);
-        console.log(before);
         before.classList.remove("fadeIn");
         $(question.id).detach();
         question.parentNode.insertBefore(question, before);
