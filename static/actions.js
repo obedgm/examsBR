@@ -135,9 +135,7 @@ function deleteQuestion(question) {
 function confirmDeleteQuestion() {
     form = document.getElementById("editor");
     Saved = false;
-    Question.classList.remove("question");
-    Question.innerHTML = "";
-    Question.id = "";
+    Question.remove();
     countQuestions();
     animate(form);
 }
@@ -154,15 +152,11 @@ function confirmDeleteSection() {
     var questions = document.querySelectorAll(".question");
     for (var i = 0, question; question = questions[i++];){
         if (question.id.indexOf(Section.id + "_") == 0) {
-            question.classList.remove("question");
-            question.innerHTML = "";
-            question.id = "";
+            question.remove();
         }
     }
 
-    Section.classList.remove("section");
-    Section.innerHTML = "";
-    section.id = "";
+    Section.remove();
 
     countQuestions();
     animate(form);
@@ -184,14 +178,22 @@ function moveQuestionUp(question) {
 function moveQuestionDown(question) {
     var sectionId = String(parseInt(question.id.substr(0, question.id.indexOf("_")))+1);
     var section = document.getElementById(sectionId);
+    var form = document.getElementById("editor");
+    next = section.nextElementSibling;
 
     var sections = document.querySelectorAll(".section");
     if (sectionId != String(sections.length)) {
-        $(section.id).detach();
-        section.parentNode.insertBefore(section, question);
-        countQuestions();
+        if (next != null) {
+            console.log(next);
+            $(question.id).detach();
+            question.parentNode.insertBefore(question, next);
+        } else {
+            $(question.id).detach();
+            form.appendChild(question);
+        }
         animate(section);
         animate(question);
+        countQuestions();
     }
 }
 
