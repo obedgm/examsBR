@@ -39,10 +39,12 @@
 	<br>
 	<div id="messageError" class="alert alert-danger" style="display:none"></div>
 	{{save}}
-	{% if caller == "saveEval" %}
-		<div class="alert alert-success">Se han guardado los cambios</div>
-		{% set caller = "F" %}
-	{% endif %}
+	<div id="messageSuccess" class="alert alert-success">
+		{% if caller == "saveEval" %}
+			Se han guardado los cambios
+			{% set caller = "F" %}
+		{% endif %}
+	</div>
 
 	{% set empty = [] %}
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>

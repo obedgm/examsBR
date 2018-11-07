@@ -150,6 +150,7 @@ function save() {
     var form = document.getElementById("editor");
     var save = true;
     var errorMssg = document.getElementById("messageError");
+    var successMssg = document.getElementById("messageSuccess")
     var reject;
 
     errorMssg.style.display = "none";
@@ -168,6 +169,7 @@ function save() {
             element.classList.add("emptyField");
             errorMssg.style.display = "block";
             errorMssg.innerHTML = "Hay campos vacios.";
+            successMssg.style.display = "none";
             save = false;
         }
     }
