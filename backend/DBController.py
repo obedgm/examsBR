@@ -1,4 +1,4 @@
-from classes import User, Evaluation, Question
+from classes import User, Evaluation, Section, Question
 import classesUtils as cu
 
 class DBController:
@@ -58,11 +58,13 @@ class DBController:
 
         q2 = Question("Que paso pt2?", True)
         q2.setFormula("X + Y")
+
+        s1 = Section("Porfiriato")
+        s1.addQuestion(q1)
+        s1.addQuestion(q2)
         # end mock data
 
-        e1.addQuestion(q1)
-        e1.addQuestion(q2)
-
+        e1.addSection(s1)
 
     def updateUserData(self, user):
         # Actualizar al usuario y todo su desmadre

@@ -37,8 +37,8 @@ class Evaluation:
         self.__id = id
         self.__sections = []
 
-    def addQuestion(self, question):
-        self.__sections.append(sections)
+    def addSection(self, section):
+        self.__sections.append(section)
 
     def getName(self):
         return self.__name
@@ -46,7 +46,7 @@ class Evaluation:
     def getId(self):
         return self.__id
 
-    def getQuestions(self):
+    def getSections(self):
         return self.__sections
 
     def clearSections(self):
@@ -59,7 +59,10 @@ class Section:
         self.__questions = []
 
     def addQuestion(self, question):
-        self.__question.append(question)
+        self.__questions.append(question)
+
+    def getName(self):
+        return self.__name
 
     def getQuestions(self):
         return self.__questions

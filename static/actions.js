@@ -1,4 +1,4 @@
-function redirectMain() {
+/*function redirectMain() {
 	var f = document.createElement("form");
 	f.setAttribute('method',"post");
 	f.setAttribute('action',"/login");
@@ -24,7 +24,7 @@ function redirectMain() {
     f.style.display = "none";
 	document.body.appendChild(f);
 	f.submit();
-}
+}*/
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
@@ -222,13 +222,15 @@ function save() {
     }
 
     if (save) {
-        var s_id = 1;
-        var q_id = 1;
+        var s_id = 0;
+        var q_id = 0;
         for (var i = 0, element; element = elements[i++];) {
             if (element.name == "section") {
-                element.name == s_id + element.name;
                 s_id = s_id + 1;
+                element.name = s_id + "_" + element.name;
+                q_id = 1;
             } else {
+                element.name = s_id + "_" + q_id + "_" + element.name;
                 if (element.name == "question") {
                     q_id = q_id + 1;
                 }

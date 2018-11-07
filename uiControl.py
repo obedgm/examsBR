@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, session
-from backend.classes import User, Evaluation, Question
+from backend.classes import User, Evaluation, Section, Question
 import backend.classesUtils as cu
 from backend.DBController import DBController
 
@@ -57,7 +57,8 @@ def newEval():
 @app.route('/saveEval', methods=['POST'])
 def saveEval():
     if 'userId' in session:
-        evalId = request.form["0_evalId"]
+        print(str(request.form))
+        evalId = request.form["0_0_evalId"]
         userId = session['userId']
         user = users[userId]
         cu.saveEvaluation(request.form, user, evalId)
@@ -86,11 +87,12 @@ def editor(evalId, caller):
 
         userName = user.getName()
         evalName = cu.getEvalName(user, evalId)
-        questions = cu.getFormattedQuestions(user, evalId)
+
+        contents = cu.getFormattedContents(user, evalId)
 
         return render_template('editor.html', userName = userName,
                                               evalName = evalName, evalId = evalId,
-                                              questions = questions, caller = caller)
+                                              contents = contents, caller = caller)
 
     return render_template('home.html', notLogged = True)
 

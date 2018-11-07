@@ -48,13 +48,17 @@
 
 	{% set empty = [] %}
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
-	<span id="sectionFormat" style="display:none">{{ sectionFormat() }}</span>
+	<span id="sectionFormat" style="display:none">{{ sectionFormat(empty) }}</span>
 	<form id="editor" class="animated fadeIn" action="/saveEval" method="POST">
 		<input type="hidden" name="evalId" value={{ evalId }}>
-		<script>addSection(); addQuestion();</script>
-		{% if questions|length > 0 %}
-			{% for question in questions %}
-				{{ questionFormat(question) }}
+		
+		{% if contents|length > 0 %}
+			{% for element in contents %}
+				{% if element.section is defined %}
+					{{ sectionFormat(element) }}
+				{% else %}
+					{{ questionFormat(element) }}
+				{% endif %}
 			{% endfor %}
 		{% else %}
 			<script>addSection(); addQuestion();</script>
@@ -288,7 +292,7 @@
 	</section>
 {% endmacro %}
 
-{% macro sectionFormat() %}
+{% macro sectionFormat(section) %}
 	{% set sectionIdFromBtn = "this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement" %}
 	<section class="section">
 		<div class="card editorCard" style="border-color: #6de8ce;">
@@ -298,12 +302,12 @@
 						<label class="lead">Seccion:</label>
 					</td>
 					<td>
-						<input type="text" class="form-control" name="section" onchange="Saved=false">
+						<input type="text" class="form-control" name="section" onchange="Saved=false" value="{{ section.section }}">
 					</td>
 					<td align="right">
-					<button type="button" class="btn btn-basic btn-sm" onclick="deleteSection({{ sectionIdFromBtn }})">
-						<i class="material-icons">delete</i>
-					</button>
+						<button type="button" class="btn btn-basic btn-sm" onclick="deleteSection({{ sectionIdFromBtn }})">
+							<i class="material-icons">delete</i>
+						</button>
 					</td>
 				</tr>
 			</table>
