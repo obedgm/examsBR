@@ -232,12 +232,12 @@ function save() {
             if (element.name == "section") {
                 s_id = s_id + 1;
                 element.name = s_id + "_" + element.name;
-                q_id = 1;
+                q_id = 0;
             } else {
-                element.name = s_id + "_" + q_id + "_" + element.name;
                 if (element.name == "question") {
                     q_id = q_id + 1;
                 }
+                element.name = s_id + "_" + q_id + "_" + element.name;
             }
         }
         Saved = true;
