@@ -4,13 +4,13 @@ class User:
         self.__name = name
         self.__id = id
         self.__email = email
-        self.__evaluations = {}
+        self.__folders = {}
 
-    def addEvaluation(self, evaluation):
-        self.__evaluations[evaluation.getId()] = evaluation
+    def addFolder(self, folder):
+        self.__folders[folder.getId()] = folder
 
-    def deleteEvaluation(self, evalId):
-        del self.__evaluations[evalId]
+    def deleteFolder(self, folderId):
+        del self.__folders[folderId]
 
     def getName(self):
         return self.__name
@@ -21,16 +21,16 @@ class User:
     def getEmail(self):
         return self.__email
 
-    def getEvaluation(self, evalId):
-        return self.__evaluations[evalId]
+    def getFolder(self, folderId):
+        return self.__folders[folderId]
 
-    def getEvaluations(self):
-        return self.__evaluations.values()
+    def getFolders(self):
+        return self.__folders.values()
 
-    def clearEvaluations(self):
-        self.__evaluations = {}
+    def clearFolders(self):
+        self.__folders = {}
 
-class Evaluation:
+class Folder:
     
     def __init__(self, name, id):
         self.__name = name

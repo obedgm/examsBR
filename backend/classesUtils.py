@@ -1,30 +1,30 @@
-from classes import User, Evaluation, Section, Question
+from classes import User, Folder, Section, Question
 import json
 
-def formatEvaluations(user):
-	evaluations = user.getEvaluations()
-	formattedEvaluations = []
-	for evaluation in evaluations:
-		formattedEvaluations.append({
-			'evalName' : evaluation.getName(),
-			'evalId' : evaluation.getId()
+def formatFolders(user):
+	folderuations = user.getFolders()
+	formattedFolders = []
+	for folder in folderuations:
+		formattedFolders.append({
+			'folderName' : folder.getName(),
+			'folderId' : folder.getId()
 		})
-	return formattedEvaluations
+	return formattedFolders
 
-def formatEvaluationsJSON(user):
-	formattedEvaluations = formatEvaluations(user)
-	formattedEvaluationsJSON = json.dumps(formattedEvaluations)
-	return formattedEvaluationsJSON
+def formatFoldersJSON(user):
+	formattedFolders = formatFolders(user)
+	formattedFoldersJSON = json.dumps(formattedFolders)
+	return formattedFoldersJSON
 
-def getEvalName(user, evalId):
-	evaluation = user.getEvaluation(evalId)
-	return evaluation.getName()
+def getFolderName(user, folderId):
+	folder = user.getFolder(folderId)
+	return folder.getName()
 
-def getFormattedContents(user, evalId):
+def getFormattedContents(user, folderId):
 	formattedContents = []
-	evaluation = user.getEvaluation(evalId)
+	folder = user.getFolder(folderId)
 
-	sections = evaluation.getSections()
+	sections = folder.getSections()
 
 	for s in sections:
 		formattedContents.append({
@@ -50,10 +50,10 @@ def getFormattedContents(user, evalId):
 
 	return formattedContents
 
-def saveEvaluation(form, user, evalId):
+def saveFolder(form, user, folderId):
 	
-	evaluation = user.getEvaluation(evalId)
-	evaluation.clearSections()
+	folder = user.getFolder(folderId)
+	folder.clearSections()
 
 	s = 1
 	while form.has_key(str(s) + '_section'):
@@ -74,5 +74,5 @@ def saveEvaluation(form, user, evalId):
 				question.addDistractor(form[ss+'_'+qq+'_4'])
 			section.addQuestion(question)
 			q = q + 1
-		evaluation.addSection(section);
+		folder.addSection(section);
 		s = s + 1

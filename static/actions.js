@@ -1,31 +1,3 @@
-/*function redirectMain() {
-	var f = document.createElement("form");
-	f.setAttribute('method',"post");
-	f.setAttribute('action',"/login");
-
-    var userName = document.createElement("input");
-    userName.type = "text";
-    userName.name = "userName";
-    userName.value = "usuario";
-
-    var userId = document.createElement("input")
-    userId.type = "text";
-    userId.name = "userId";
-    userId.value = "1";
-
-    var email = document.createElement("input")
-    email.type = "text";
-    email.name = "email";
-    email.value = "hola@hola.com";
-
-    f.appendChild(userName);
-    f.appendChild(userId);
-    f.appendChild(email);
-    f.style.display = "none";
-	document.body.appendChild(f);
-	f.submit();
-}*/
-
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
     document.getElementById("homeNav").style.width = "250px";
@@ -40,11 +12,11 @@ function closeNav() {
     document.getElementById("toggleBtn").onclick = openNav;
 }
 
-function createEval() {
-    var evaluations = $("#createEvalData").data();
-    var form = document.getElementById("createEvalForm");
-    form["evalName"].value = form["evalName"].value.trim();
-    var name = form["evalName"].value;
+function createFolder() {
+    var folder = $("#createFolderData").data();
+    var form = document.getElementById("createFolderForm");
+    form["folderName"].value = form["folderName"].value.trim();
+    var name = form["folderName"].value;
     var errorMssg = document.getElementById("nameError");
     var submit = true;
 
@@ -54,10 +26,10 @@ function createEval() {
         errorMssg.innerHTML = "El nombre debe ser de entre 5 y 30 caracteres";
         submit = false;
     } else {
-        for (var i = 0; i < evaluations.name.length; i++) {
-            if (name == evaluations.name[i].evalName) {
+        for (var i = 0; i < folder.name.length; i++) {
+            if (name == folder.name[i].folderName) {
                 errorMssg.style.display = "block";
-                errorMssg.innerHTML = "Ya hay una evaluacion con ese nombre";
+                errorMssg.innerHTML = "Ya hay una folderuacion con ese nombre";
                 submit = false;
             }
         }
@@ -266,7 +238,7 @@ function save() {
 }
 
 function confirmUndoChanges() {
-    var form = document.getElementById('evalData');
+    var form = document.getElementById('folderData');
     Saved = true;
     form.submit();
 }

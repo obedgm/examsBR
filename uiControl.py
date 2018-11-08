@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, session
-from backend.classes import User, Evaluation, Section, Question
+from backend.classes import User, Folder, Section, Question
 import backend.classesUtils as cu
 from backend.DBController import DBController
 
@@ -30,82 +30,82 @@ def main():
         user = users[userId]
 
         userName = user.getName()
-        db.loadEvaluations(user)
+        db.loadFolders(user)
 
-        evaluations = cu.formatEvaluations(user)
-        evaluationsJSON = cu.formatEvaluationsJSON(user)
+        folders = cu.formatFolders(user)
+        foldersJSON = cu.formatFoldersJSON(user)
 
         return render_template('main.html', userName = userName, 
-            evaluations = evaluations, evaluationsJSON = evaluationsJSON)
+            folders = folders, foldersJSON = foldersJSON)
 
     return render_template('home.html', notLogged = True)
 
-@app.route('/newEval', methods=['POST'])
-def newEval():
+@app.route('/newFolder', methods=['POST'])
+def newFolder():
     if 'userId' in session:
-        evalName = request.form["evalName"]
-        evalId = evalName.strip()
+        folderName = request.form["folderName"]
+        folderId = folderName.strip()
         userId = session['userId']
         user = users[userId]
 
-        db.addEvaluation(user, evalName, evalId)
+        db.addFolder(user, folderName, folderId)
 
-        return redirect(url_for('editor', evalId = evalId, caller = "newEval"), code = 307)
+        return redirect(url_for('editor', folderId = folderId, caller = "newFolder"), code = 307)
 
     return render_template('home.html', notLogged = True)
 
-@app.route('/saveEval', methods=['POST'])
-def saveEval():
+@app.route('/saveFolder', methods=['POST'])
+def saveFolder():
     if 'userId' in session:
         print(str(request.form))
-        evalId = request.form["0_0_evalId"]
+        folderId = request.form["0_0_folderId"]
         userId = session['userId']
         user = users[userId]
-        cu.saveEvaluation(request.form, user, evalId)
+        cu.saveFolder(request.form, user, folderId)
         db.updateUserData(user)
         
-        return redirect(url_for('editor', evalId = evalId, caller = "saveEval"), code = 307)
+        return redirect(url_for('editor', folderId = folderId, caller = "saveFolder"), code = 307)
 
     return render_template('home.html', notLogged = True)
 
-@app.route('/openEval', methods=['POST'])
-def openEval():
+@app.route('/openFolder', methods=['POST'])
+def openFolder():
     if 'userId' in session:
-        evalId = request.form["evalId"]
+        folderId = request.form["folderId"]
         
-        return redirect(url_for('editor', evalId = evalId, caller = "openEval"), code = 307)
+        return redirect(url_for('editor', folderId = folderId, caller = "openFolder"), code = 307)
    
     return render_template('home.html', notLogged = True)
 
-@app.route('/editor/<evalId>/<caller>', methods=['POST'])
-def editor(evalId, caller):
+@app.route('/editor/<folderId>/<caller>', methods=['POST'])
+def editor(folderId, caller):
     if 'userId' in session:
         userId = session['userId']
         user = users[userId]
 
-        db.loadQuestions(user, evalId)
+        db.loadQuestions(user, folderId)
 
         userName = user.getName()
-        evalName = cu.getEvalName(user, evalId)
+        folderName = cu.getFolderName(user, folderId)
 
-        contents = cu.getFormattedContents(user, evalId)
+        contents = cu.getFormattedContents(user, folderId)
 
         return render_template('editor.html', userName = userName,
-                                              evalName = evalName, evalId = evalId,
+                                              folderName = folderName, folderId = folderId,
                                               contents = contents, caller = caller)
 
     return render_template('home.html', notLogged = True)
 
-@app.route('/delEval', methods=['POST'])
-def delEval():
+@app.route('/delFolder', methods=['POST'])
+def delFolder():
     if 'userId' in session:
         userId = session['userId']
         user = users[userId]
-        evalId = request.form['evalId']
+        folderId = request.form['folderId']
         '''
         Enviar a la BD y borrar
         '''
-        user.deleteEvaluation(evalId)
+        user.deleteFolder(folderId)
 
         return redirect(url_for('main'), code = 307)
 

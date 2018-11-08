@@ -16,7 +16,7 @@
 		<table cellpadding="10">
 			<tr>
 				<td>
-					<h2>Editando: {{ evalName }}</h2>
+					<h2>Editando: {{ folderName }}</h2>
 					<p class="lead">Preguntas: <span id="countQuestions"></span></p>
 				</td>
 				<td>
@@ -24,7 +24,7 @@
 						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#undoChangesModal">
 							<i class="material-icons">settings_backup_restore</i>
 						</button>
-						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteEvalModal">
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteFolderModal">
 							<i class="material-icons">delete</i>
 						</button>
 						<button type="button" class="btn btn-primary" onclick="save()">
@@ -40,7 +40,7 @@
 	<div id="messageError" class="alert alert-danger" style="display:none"></div>
 	{{save}}
 	<div id="messageSuccess">
-		{% if caller == "saveEval" %}
+		{% if caller == "saveFolder" %}
 			<div class="alert alert-success">Se han guardado los cambios</div>
 			{% set caller = "F" %}
 		{% endif %}
@@ -49,8 +49,8 @@
 	{% set empty = [] %}
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
 	<span id="sectionFormat" style="display:none">{{ sectionFormat(empty) }}</span>
-	<form id="editor" class="animated fadeIn" action="/saveEval" method="POST">
-		<input type="hidden" name="evalId" value={{ evalId }}>
+	<form id="editor" class="animated fadeIn" action="/saveFolder" method="POST">
+		<input type="hidden" name="folderId" value={{ folderId }}>
 		
 		{% if contents|length > 0 %}
 			{% for element in contents %}
@@ -136,7 +136,7 @@
 						<input type="number" min="1" class="form-control" name="exams">
  						<br>
  						<div id="generateExamsError" class="alert alert-danger" style="display:none"></div>
- 						<input type="hidden" name="evalName" value="{{ evalName }}">
+ 						<input type="hidden" name="folderName" value="{{ folderName }}">
 				  	</div>
 				</form>
 			  	<!-- Modal footer -->
@@ -160,8 +160,8 @@
 			  	<div class="modal-body">
     				<label for="name">¿Desea regresar al estado del ultimo guardado? No se podran recuperar los cambios.</label>
 			  	</div>
-			  	<form id="evalData" action="/openEval" method="POST" style="display:none">
-			  		<input type="hidden" name="evalId" value="{{ evalId }}">
+			  	<form id="folderData" action="/openFolder" method="POST" style="display:none">
+			  		<input type="hidden" name="folderId" value="{{ folderId }}">
 			  	</form>
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
@@ -194,21 +194,21 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="deleteEvalModal">
+	<div class="modal fade" id="deleteFolderModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 			    <!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Crear nueva evaluación</h4>
+					<h4 class="modal-title">Crear nueva carpeta</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div> 
 			  	<!-- Modal body -->
 			  	<div class="modal-body">
 		    		<label>Seguro que desea eliminar la forma?</label>
 			  	</div>
-				<form id="deleteEvalForm" action="/delEval" method="POST" 
+				<form id="deleteFolderForm" action="/delFolder" method="POST" 
 					onkeypress="return event.keyCode != 13;">
-					<input type="hidden" name="evalId" value="{{ evalId }}">
+					<input type="hidden" name="folderId" value="{{ folderId }}">
 				  	<!-- Modal footer -->
 				  	<div class="modal-footer">
 				  		<input type="submit" class="btn btn-danger" value="Eliminar"></input>

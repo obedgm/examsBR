@@ -1,4 +1,4 @@
-from classes import User, Evaluation, Section, Question
+from classes import User, Folder, Section, Question
 import classesUtils as cu
 
 class DBController:
@@ -14,40 +14,40 @@ class DBController:
         
         return user
 
-    def loadEvaluations(self, user):
-        user.clearEvaluations()
+    def loadFolders(self, user):
+        user.clearFolders()
         # Trae desde la base de datos todas las 
-        #   evaluaciones del usuario y las agrega
+        #   carpetas del usuario y las agrega
         #   al usuario
 
         # mock data
-        e1 = Evaluation("Eval 1", "Eval1")
+        e1 = Folder("Historia 1", "Historia1")
         # end mock data
 
-        user.addEvaluation(e1)
+        user.addFolder(e1)
 
-    def addEvaluation(self, user, evalName, evalId):
-        evaluation = Evaluation(evalName, evalId)
-        user.addEvaluation(evaluation)
-        # Guarda la evaluacion en la BD
+    def addFolder(self, user, folderName, folderId):
+        folder = Folder(folderName, folderId)
+        user.addFolder(folder)
+        # Guarda la carpeta en la BD
 
-    def loadEvaluation(self, user, evalId):
-        # Trae la evaluacion de la bd y se la pone
+    def loadFolder(self, user, folderId):
+        # Trae la carpeta de la bd y se la pone
         #   al usuario
 
         # mock data
-        evaluation = Evaluation("nombre", evalId)
+        folder = Folder("nombre", folderId)
         # end mock data
 
-        user.addEvaluation(evaluation)
+        user.addFolder(folder)
 
-    def loadQuestions(self, user, evalId):
-        user.clearEvaluations()
-        self.loadEvaluation(user, evalId)
+    def loadQuestions(self, user, folderId):
+        user.clearFolders()
+        self.loadFolder(user, folderId)
         # Trae las preguntas desde la bd y se las
-        #   pone a la evalaucion y al usuario
+        #   pone a la carpeta y al usuario
         
-        e1 = user.getEvaluation(evalId)
+        e1 = user.getFolder(folderId)
 
         # mock data
         q1 = Question("Que paso?", False)
