@@ -174,7 +174,6 @@ function moveQuestionDown(question) {
     var sections = document.querySelectorAll(".section");
     if (sectionId != String(sections.length)) {
         if (next != null) {
-            console.log(next);
             $(question.id).detach();
             question.parentNode.insertBefore(question, next);
         } else {
@@ -197,6 +196,9 @@ function save() {
     var reject;
 
     errorMssg.style.display = "none";
+
+    var sections = new Set();
+    var duplicatedSections = new Set();
     for (var i = 0, element; element = elements[i++];) {
         element.classList.remove("emptyField");
         if (element.type == "checkbox") {
@@ -210,10 +212,25 @@ function save() {
                    element.value == "" &&
                    !element.classList.contains(reject)) {
             element.classList.add("emptyField");
-            errorMssg.style.display = "block";
-            errorMssg.innerHTML = "Hay campos vacios.";
-            successMssg.style.display = "none";
+            errorMssg.innerHTML = "Hay campos vacios. ";
             save = false;
+        } else if (element.name == "section") {
+            if (!sections.has(element.name)) {
+                duplicatedSections.add(element.name);
+            }
+            sections.add(element.name);
+        }
+    }
+
+    if (duplicatedSections.size > 0) {
+        errorMssg.innerHTML += "Hay nombres de seccion duplicados.";
+        save = false;
+        for (var i = 0, element; element = elements[i++];) {
+            if (element.name == "section") {
+                if (duplicatedSections.has(element.name)) {
+                    element.classList.add("emptyField");
+                }
+            }
         }
     }
 
@@ -234,6 +251,9 @@ function save() {
         }
         Saved = true;
         form.submit();
+    } else {
+        errorMssg.style.display = "block";
+        successMssg.style.display = "none";
     }
 }
 
@@ -256,7 +276,7 @@ function generateExams() {
         errorMssg.innerHTML = "Guarde primero los cambios.";
     } else if (form["reactivos"].value < 1 || form["exams"].value < 1) {
         errorMssg.style.display = "block";
-        errorMssg.innerHTML = "Especifique los valores faltantes.";
+        errorMssg.innerHTML = "Especifique los valores faltantes. ";
         if (form["reactivos"].value < 1) {
             form["reactivos"].classList.add("emptyField");
         }
@@ -264,7 +284,6 @@ function generateExams() {
             form["exams"].classList.add("emptyField");
         }
     } else {
-        // TODO: Poner algun gif de carga en lo que carga la siguiente pagina
         form.submit();
     }
 }

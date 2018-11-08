@@ -90,6 +90,9 @@ def editor(folderId, caller):
 
         contents = cu.getFormattedContents(user, folderId)
 
+        #sections = cu.formatSections(user, folderId)
+        #sections = cu.formatSectionsJSON(user, folderId)
+
         return render_template('editor.html', userName = userName,
                                               folderName = folderName, folderId = folderId,
                                               contents = contents, caller = caller)
