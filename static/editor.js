@@ -1,45 +1,3 @@
-/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
-function openNav() {
-    document.getElementById("homeNav").style.width = "250px";
-    document.getElementById("content").style.marginLeft = "250px";
-    document.getElementById("toggleBtn").onclick = closeNav;
-}
-
-/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-function closeNav() {
-    document.getElementById("homeNav").style.width = "0";
-    document.getElementById("content").style.marginLeft = "0";
-    document.getElementById("toggleBtn").onclick = openNav;
-}
-
-function createFolder() {
-    var folder = $("#createFolderData").data();
-    var form = document.getElementById("createFolderForm");
-    form["folderName"].value = form["folderName"].value.trim();
-    var name = form["folderName"].value;
-    var errorMssg = document.getElementById("nameError");
-    var submit = true;
-
-    errorMssg.style.display = "none";
-    if (name.length < 5 || name.length > 30) {
-        errorMssg.style.display = "block";
-        errorMssg.innerHTML = "El nombre debe ser de entre 5 y 30 caracteres";
-        submit = false;
-    } else {
-        for (var i = 0; i < folder.name.length; i++) {
-            if (name == folder.name[i].folderName) {
-                errorMssg.style.display = "block";
-                errorMssg.innerHTML = "Ya hay una folderuacion con ese nombre";
-                submit = false;
-            }
-        }
-    }
-
-    if (submit) {
-        form.submit();
-    }
-}
-
 function countIds() {
     var s_id = 0;
     var q_id = 0;
@@ -59,11 +17,6 @@ function displayedCounts() {
     var questions = document.querySelectorAll(".question");
     var counter = document.getElementById("countQuestions");
     counter.innerHTML = questions.length -1;
-
-    /*var questionNumbers = document.querySelectorAll(".questionNumber");
-    for (var i = 0, qn; qn = questionNumbers[i++];) {
-        qn.innerHTML = i-1;
-    }*/
 
     var s = 0;
     var q;
@@ -85,6 +38,7 @@ function countElements() {
 }
 
 var Saved = true;
+
 
 function addQuestion() {
     var questionFormat = document.getElementById("questionFormat");
@@ -215,7 +169,7 @@ function save() {
             errorMssg.innerHTML = "Hay campos vacios. ";
             save = false;
         } else if (element.name == "section") {
-            if (!sections.has(element.name)) {
+            if (sections.has(element.name)) {
                 duplicatedSections.add(element.name);
             }
             sections.add(element.name);

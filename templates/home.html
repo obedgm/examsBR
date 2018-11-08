@@ -9,6 +9,8 @@
 
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<meta name="google-signin-client_id" content="1086622454733-i5o4ls2kopn9dtm9npi9gs96u52c2qcq.apps.googleusercontent.com">
+		
+		<script type="text/javascript" src="{{url_for('static', filename='home.js')}}"></script>
 	</head>
 	<body>
 
@@ -30,27 +32,3 @@
 </html>
 
 <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
-<script>
-  	// Initialize Firebase
-  	var config = {
-    	apiKey: "AIzaSyCMs1O70z1q6qIArA36dBX1iuipaNStOYg",
-    	authDomain: "examsbr-2a061.firebaseapp.com",
-    	databaseURL: "https://examsbr-2a061.firebaseio.com",
-    	projectId: "examsbr-2a061",
-    	storageBucket: "",
-    	messagingSenderId: "1086622454733"
-  	};
-  	firebase.initializeApp(config);
-  	var clicked = false;
-  	var f = document.createElement("form");
-  	function onSignIn(googleUser) {
-	    var profile = googleUser.getBasicProfile();
-	    f.setAttribute('method',"post");
-	    f.setAttribute('action',"/login");
-	    f.style.display = "none";
-	    document.body.appendChild(f);
-	    if (clicked) {
-	    	f.submit();
-	    }
-	}
-</script>
