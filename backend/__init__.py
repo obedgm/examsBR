@@ -1,3 +1,3 @@
-from classes import User, Evaluation, Question
+from classes import User, Folder, Section, Question
 import classesUtils
 from DBController import DBController

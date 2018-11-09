@@ -2,76 +2,83 @@
 {% block title %}Main{% endblock %}
 {% block head %}
 	{{ super() }}
+	<script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
 {% endblock %}
 
 {% block options %}
 	<br>
-	<p class="nav-link" data-toggle="modal" data-target="#createEvalModal" href="">Crear Evaluación</p>
-	<p class="nav-link" data-toggle="modal" data-target="#openEvalModal" href="">Abrir Evaluación</p>
+	<p class="nav-link" data-toggle="modal" data-target="#createFolderModal" href="">Crear Carpeta</p>
+	<p class="nav-link" data-toggle="modal" data-target="#openFolderModal" href="">Abrir Carpeta</p>
 {% endblock %}
 
 {% block content %}
 	<center>
+
 		<img src="https://i.imgur.com/CONNV5p.jpg" width="600" height="500">
+		<p style="color:blue; margin-top:170px; font-size:160px; text-align:center;">EBR</p>
+		<p style="color:blue; margin-top:-50px; text-align:center;">Exams Better Reloaded</p>
+
 	</center>
 
-	<div class="modal fade" id="createEvalModal">
+	<div class="modal fade" id="createFolderModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 			    <!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Crear nueva evaluación</h4>
+					<h4 class="modal-title">Crear nueva carpeta</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
-			    <form id="createEvalForm" action="/newEval" method="POST"
+			    <form id="createFolderForm" action="/newFolder" method="POST"
 			    	  onkeypress="return event.keyCode != 13;">
 				  	<!-- Modal body -->
 				  	<div class="modal-body">
 			    		<div class="form-group">
     						<label>Nombre del test:</label>
-    						<input type="text" class="form-control" name="evalName">
+    						<input type="text" class="form-control" name="folderName">
     						<br>
     						<div id="nameError" class="alert alert-danger" style="display:none"></div>
  						</div>
 				  	</div>
 				</form>
-				<script>document.getElementById("createEvalForm").reset();</script>
+				<script>document.getElementById("createFolderForm").reset();</script>
 				
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
-			  		<meta id="createEvalData" data-name="{{ evaluationsJSON }}">
-			  		<button type="button" class="btn btn-primary" onclick="createEval()">Crear</button>
+			  		<meta id="createFolderData" data-name="{{ folderJSON }}">
+			  		<button type="button" class="btn btn-primary" onclick="createFolder()">Crear</button>
 			    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 			  	</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="modal fade" id="openEvalModal">
+	<div class="modal fade" id="openFolderModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 			    <!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Abrir evaluación</h4>
+
+		
+
+					<h4 class="modal-title">Abrir carpeta</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
 			  	<!-- Modal body -->
 			  	<div class="modal-body">
-			  		{% if evaluations|length > 0%}
-				  		<form action="openEval" method="POST">
+			  		{% if folders|length > 0%}
+				  		<form action="openFolder" method="POST">
 				  			<input type="hidden" value="{{ userId }}" name="userId">
 				  			<center>
-					  			{% for evaluation in evaluations %}
-			    					<button type="submit" name="evalId" value="{{ evaluation.evalId }}" class="btn btn-primary evalSelectBtn">{{ evaluation.evalName }}</button>
+					  			{% for folder in folders %}
+			    					<button type="submit" name="folderId" value="{{ folder.folderId }}" class="btn btn-primary folderSelectBtn">{{ folder.folderName }}</button>
 			    				{% endfor %}
 		    				</center>
 				  		</form>
 				  	{% else %}
 				  		<div class="alert alert-danger">
-				  			No hay evaluaciones para este usuario.
+				  			No hay carpetas para este usuario.
 				  		</div>
 				  	{% endif %}
-    				
 			  	</div>
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
