@@ -1,8 +1,7 @@
 class User:
 
-    def __init__(self, name, id, email):
+    def __init__(self, name, email):
         self.__name = name
-        self.__id = id
         self.__email = email
         self.__folders = {}
 
@@ -14,9 +13,6 @@ class User:
 
     def getName(self):
         return self.__name
-
-    def getId(self):
-        return self.__id
 
     def getEmail(self):
         return self.__email

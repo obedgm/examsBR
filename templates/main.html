@@ -64,7 +64,6 @@
 			  	<div class="modal-body">
 			  		{% if folders|length > 0%}
 				  		<form action="openFolder" method="POST">
-				  			<input type="hidden" value="{{ userId }}" name="userId">
 				  			<center>
 					  			{% for folder in folders %}
 			    					<button type="submit" name="folderId" value="{{ folder.folderId }}" class="btn btn-primary folderSelectBtn">{{ folder.folderName }}</button>

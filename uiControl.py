@@ -14,10 +14,10 @@ def login():
     # Trae usuario de la base de datos
 
     # mock data
-    user = User("Juan", "1", "juan@hola.com")
+    user = User("Juan", "juan@hola.com")
     # end mock data
 
-    userId = user.getId()
+    userId = user.getEmail()
     users[userId] = user
     session['userId'] = userId
 
