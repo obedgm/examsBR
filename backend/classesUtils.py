@@ -76,3 +76,19 @@ def saveFolder(form, user, folderId):
 			q = q + 1
 		folder.addSection(section);
 		s = s + 1
+
+def formatSections(user, folderId):
+	folder = user.getFolder(folderId)
+	sections = folder.getSections()
+	formattedSections = []
+	for section in sections:
+		formattedSections.append({
+			'name' : section.getName(),
+			'qLength' : len(section.getQuestions())
+		})
+	return formattedSections
+
+def formatSectionsJSON(user, folderId):
+	formattedSections = formatSections(user, folderId)
+	formattedSectionsJSON = json.dumps(formattedSections)
+	return formattedSectionsJSON
