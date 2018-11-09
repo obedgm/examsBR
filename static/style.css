@@ -62,16 +62,14 @@
     margin-bottom: 10px;
     width: 100%;
 }
-<<<<<<< HEAD
+
 img { 
     display: inline-block;
 }
+
 .nav-link{
     color: white;
 }
-
-
-=======
 
 i {
     vertical-align: middle;
@@ -81,4 +79,3 @@ a, p, label {
     text-align: left;
     float: left;
 }
->>>>>>> cf42b11224354afea87f61424f20ba5bb3b6c252
