@@ -169,10 +169,10 @@ function save() {
             errorMssg.innerHTML = "Hay campos vacios. ";
             save = false;
         } else if (element.name == "section") {
-            if (sections.has(element.name)) {
-                duplicatedSections.add(element.name);
-            }
-            sections.add(element.name);
+            if (sections.has(element.value)) {
+                duplicatedSections.add(element.value);
+            } 
+            sections.add(element.value);
         }
     }
 
@@ -181,7 +181,7 @@ function save() {
         save = false;
         for (var i = 0, element; element = elements[i++];) {
             if (element.name == "section") {
-                if (duplicatedSections.has(element.name)) {
+                if (duplicatedSections.has(element.value)) {
                     element.classList.add("emptyField");
                 }
             }
