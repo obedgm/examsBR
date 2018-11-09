@@ -49,7 +49,10 @@
   		var profile = googleUser.getBasicProfile();
   		var db = firebase.database();
 
-  		firebase.database().ref('users/').set({
+  		var s = profile.getEmail();
+  		s = s.substring(0, s.indexOf('@'));
+
+  		firebase.database().ref(s + "/").set({
   			username: "hola",
   			email: profile.getEmail()
   		})
