@@ -3,6 +3,7 @@
 {% block head %}
 	{{ super() }}
 	<script type="text/javascript" src="{{url_for('static', filename='editor.js')}}"></script>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 {% endblock %}
 
 {% block options %}
@@ -159,7 +160,7 @@
 			    </div>
 			  	<!-- Modal body -->
 			  	<div class="modal-body">
-    				<label for="name">¿Desea regresar al estado del ultimo guardado? No se podran recuperar los cambios.</label>
+    				<label for="name">¿Desea regresar al estado del último guardado? No se podrán recuperar los cambios.</label>
 			  	</div>
 			  	<form id="folderData" action="/openFolder" method="POST" style="display:none">
 			  		<input type="hidden" name="folderId" value="{{ folderId }}">
@@ -178,7 +179,7 @@
 			<div class="modal-content">
 			    <!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Formulas algebraicas</h4>
+					<h4 class="modal-title">Fórmulas algebráicas</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
 			  	<!-- Modal body -->
@@ -253,7 +254,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this, {{ formulaFromAlgebra }}, {{ optionsFromAlgebra }})" {% if question.algebraic %} checked {% endif %}>Algebraico?</label>
+						<label><input type="checkbox" value="T" name="algebra" onchange="toggleQuestion(this, {{ formulaFromAlgebra }}, {{ optionsFromAlgebra }})" {% if question.algebraic %} checked {% endif %}>¿Algebráico?</label>
 					</td>
 				</tr>
 				<tr><td colspan="2" {% if question.algebraic is defined%} style="display:none" {% endif %}><table style="width:100%">
@@ -279,7 +280,7 @@
 				<tr><td colspan="2" {% if question.algebraic is not defined %} style="display:none" {% endif %}><table style="width:100%">
 					<tr>
 						<td>
-							<label class="form-l">Formula:</label>
+							<label class="form-l">Fórmula:</label>
 							<a data-toggle="modal" data-target="#formulaExplainModal" href="">?</a>
 						</td>
 						<td>

@@ -16,17 +16,17 @@
 
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<a href="javascript:void(0)" id="toggleBtn" class="closebtn nav-link material-icons" onclick="closeNav()"><span class="navbar-toggler-icon"><span></a>
-			<a class="navbar-brand" href="#">EBR</a>
+			<a class="navbar-brand" href="#" id="ebrtext">EBR</a>
 		</nav>
 
 		<center>
-			<p style="color:blue; margin-top:10px; font-size:160px">EBR</p>
-			<p style="color:blue; margin-top:-50px">Exams Better Reloaded</p>
+			<img src="https://i.imgur.com/CONNV5p.jpg" width="600" height="500">
 			{% if notLogged is defined%}
-				<div class="alert alert-danger" style="width:250px">No hay una sesion iniciada</div>
+				<div class="alert alert-danger" style="width:250px">No hay una sesión iniciada</div>
 			{% endif %}
-			<p>Iniciar sesion</p>
+
 			<div class="g-signin2" data-onsuccess="onSignIn" onclick="clicked = true"></div>
+
 		</center>
 	</body>
 </html>
