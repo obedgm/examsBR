@@ -18,15 +18,17 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: white;
+    color: #f1f1f1;
+    font-family: 'Raleway', sans-serif;
     display: block;
     transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav p:hover, .sidenav a:hover {
-    color: #f1f1f1;
+    color: #383434;
 }
+
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #content {
@@ -37,7 +39,7 @@
     z-index: 1;
 }
 #ebrtext{
-    color:#7c8482;
+    color:white;
 }
 
 #options {
@@ -62,16 +64,21 @@
     margin-bottom: 10px;
     width: 100%;
 }
-<<<<<<< HEAD
+
 img { 
     display: inline-block;
 }
 .nav-link{
     color: white;
+    font-family: 'Raleway', sans-serif;
+
 }
 
+.navbar-text{
+    color:white;
+    font-family: 'Raleway', sans-serif;
+}
 
-=======
 
 i {
     vertical-align: middle;
