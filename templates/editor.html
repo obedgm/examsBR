@@ -132,13 +132,31 @@
 			          onkeypress="return event.keyCode != 13;">
 				  	<!-- Modal body -->
 				  	<div class="modal-body">
-						<label>Número de reactivos por examen:</label>
-						<input type="number" min="1" class="form-control" name="reactivos">
-						<label>Cantidad de exámenes a generar:</label>
-						<input type="number" min="1" class="form-control" name="exams">
- 						<br>
- 						<div id="generateExamsError" class="alert alert-danger" style="display:none"></div>
- 						<input type="hidden" name="folderName" value="{{ folderName }}">
+						<table align="left">
+				  			<tr>
+				  				<td colspan="2">
+				  					<p>Reactivos por seccion:</p><br>
+				  				</td>
+				  			</tr>
+				  			{% if sections|length > 0 %}
+					  			{% for section in sections %}
+					  				<tr>
+					  					<td>
+					  						<input type="number" min="1" class="form-control" name="{{ section.name }}" style="width:70px; margin-bottom: 10px;">
+					  					</td>
+					  					<td>
+					  						<label>{{ section.name }}</label>
+					  					</td>
+					  				</tr>
+					  			{% endfor %}
+				  			{% else %}
+					  			<tr>
+					  				<td colspan="2">
+					  					<label>Guarda los cambios primero</label>
+					  				</td>
+					  			</tr>
+					  		{% endif %}
+				  		</table>
 				  	</div>
 				</form>
 			  	<!-- Modal footer -->
