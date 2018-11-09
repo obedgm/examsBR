@@ -93,7 +93,7 @@ def editor(folderId, caller):
         sections = cu.formatSections(user, folderId)
         sectionsJSON = cu.formatSectionsJSON(user, folderId)
 
-        return render_template('editor.html', userName = userName, called = caller,
+        return render_template('editor.html', userName = userName, caller = caller,
                                               folderName = folderName, folderId = folderId,
                                               sections = sections, sectionsJSON = sectionsJSON,
                                               contents = contents)

@@ -132,6 +132,7 @@
 			  	<div class="modal-body">
 			  		<form action="/generateExams" method="POST" id="generateExamsForm"
 		          onkeypress="return event.keyCode != 13;">
+		          		<input type="hidden" name="folderId" value="{{ folderId }}">
 						<table align="left">
 				  			<tr>
 				  				<td colspan="2">
