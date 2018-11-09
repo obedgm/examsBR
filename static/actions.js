@@ -114,8 +114,8 @@ function confirmDeleteQuestion() {
     setTimeout(function(){ 
         Question.innerHTML = "";
         Question.classList.remove("question");
+        countQuestions();
     }, 1000);
-    countQuestions();
 }
 
 function moveQuestionUp(question) {
@@ -210,7 +210,6 @@ function generateExams() {
         form.submit();
     }
 }
-
 
 window.onbeforeunload = function() {
     if (Saved){

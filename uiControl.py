@@ -36,7 +36,7 @@ def main():
         return render_template('main.html', userName = userName, 
             evaluations = evaluations, evaluationsJSON = evaluationsJSON)
 
-    return "no haz iniciado sesion"
+    return render_template('home.html', notLogged = True)
 
 @app.route('/newEval', methods=['POST'])
 def newEval():
@@ -50,7 +50,7 @@ def newEval():
 
         return redirect(url_for('editor', evalId = evalId, caller = "newEval"), code = 307)
 
-    return "no haz iniciado sesion"
+    return render_template('home.html', notLogged = True)
 
 @app.route('/saveEval', methods=['POST'])
 def saveEval():
@@ -63,7 +63,7 @@ def saveEval():
         
         return redirect(url_for('editor', evalId = evalId, caller = "saveEval"), code = 307)
 
-    return "no haz iniciado sesion"
+    return render_template('home.html', notLogged = True)
 
 @app.route('/openEval', methods=['POST'])
 def openEval():
@@ -72,14 +72,10 @@ def openEval():
         
         return redirect(url_for('editor', evalId = evalId, caller = "openEval"), code = 307)
    
-    return "no haz iniciado sesion"
+    return render_template('home.html', notLogged = True)
 
 @app.route('/editor/<evalId>/<caller>', methods=['POST'])
 def editor(evalId, caller):
-    '''
-    Este metodo sera llamado por newEval y openEval, que podria abrir una
-        evalaucion nueva o una que ya existia.
-    '''
     if 'userId' in session:
         userId = session['userId']
         user = users[userId]
@@ -94,7 +90,7 @@ def editor(evalId, caller):
                                               evalName = evalName, evalId = evalId,
                                               questions = questions, caller = caller)
 
-    return "no haz iniciado sesion"
+    return render_template('home.html', notLogged = True)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():

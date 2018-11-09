@@ -13,12 +13,14 @@
 
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<a href="javascript:void(0)" id="toggleBtn" class="closebtn nav-link material-icons" onclick="closeNav()"><span class="navbar-toggler-icon"><span></a>
-			<a class="navbar-brand" href="#">EBR</a>
+			<a class="navbar-brand" href="#" id="ebrtext">EBR</a>
 		</nav>
 
 		<center>
-			<img src="logoEBR.png">
-			<p>Iniciar sesion</p>
+			<img src="https://i.imgur.com/CONNV5p.jpg" width="600" height="500">
+			{% if notLogged is defined%}
+				<div class="alert alert-danger" style="width:250px">No hay una sesión iniciada</div>
+			{% endif %}
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			<button onclick="redirectMain()">Acceder</button>
 		</center>
