@@ -74,7 +74,7 @@
 			<i class="material-icons">add</i> Pregunta
 		</button>
 		<button type="button" class="btn btn-success" onclick="addSection()">
-			<i class="material-icons">add</i> Seccion
+			<i class="material-icons">add</i> Sección
 		</button>
 	</center>
 	
@@ -104,12 +104,12 @@
 			<div class="modal-content">
 			    <!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Eliminar seccion</h4>
+					<h4 class="modal-title">Eliminar sección</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
 			  	<!-- Modal body -->
 			  	<div class="modal-body">
-    				<label for="name">¿Desea eliminar la seccion y todas sus preguntas?</label>
+    				<label for="name">¿Desea eliminar la sección y todas sus preguntas?</label>
 			  	</div>
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
@@ -160,7 +160,7 @@
 			    </div>
 			  	<!-- Modal body -->
 			  	<div class="modal-body">
-    				<label for="name">¿Desea regresar al estado del último guardado? No se podrán recuperar los cambios.</label>
+    				<label for="name">¿Desea regresar al último estado guardado? No se podrán recuperar los cambios.</label>
 			  	</div>
 			  	<form id="folderData" action="/openFolder" method="POST" style="display:none">
 			  		<input type="hidden" name="folderId" value="{{ folderId }}">
@@ -179,7 +179,7 @@
 			<div class="modal-content">
 			    <!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Fórmulas algebráicas</h4>
+					<h4 class="modal-title">Fórmulas algebraicas</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
 			  	<!-- Modal body -->
@@ -206,7 +206,7 @@
 			    </div> 
 			  	<!-- Modal body -->
 			  	<div class="modal-body">
-		    		<label>Seguro que desea eliminar la forma?</label>
+		    		<label>¿Seguro que desea eliminar la forma?</label>
 			  	</div>
 				<form id="deleteFolderForm" action="/delFolder" method="POST" 
 					onkeypress="return event.keyCode != 13;">
@@ -301,7 +301,7 @@
 			<table style="width:100%; min-width:500px">
 				<tr>
 					<td>
-						<label class="lead">Seccion <span class="sectionNumber"></span>:</label>
+						<label class="lead">Sección <span class="sectionNumber"></span>:</label>
 					</td>
 					<td>
 						<input type="text" class="form-control" name="section" onchange="Saved=false" value="{{ section.section }}">
