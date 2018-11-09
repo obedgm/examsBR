@@ -128,10 +128,10 @@
 					<h4 class="modal-title">Crear exámenes</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
-			    <form action="/generateExams" method="POST" id="generateExamsForm"
-			          onkeypress="return event.keyCode != 13;">
-				  	<!-- Modal body -->
-				  	<div class="modal-body">
+			  	<!-- Modal body -->
+			  	<div class="modal-body">
+			  		<form action="/generateExams" method="POST" id="generateExamsForm"
+		          onkeypress="return event.keyCode != 13;">
 						<table align="left">
 				  			<tr>
 				  				<td colspan="2">
@@ -141,11 +141,11 @@
 				  			{% if sections|length > 0 %}
 					  			{% for section in sections %}
 					  				<tr>
-					  					<td>
-					  						<input type="number" min="1" class="form-control" name="{{ section.name }}" style="width:70px; margin-bottom: 10px;">
+					  					<td width="15%">
+					  						<input type="number" min="1" class="form-control" name="{{ section.sName }}" style="margin-bottom: 10px;">
 					  					</td>
-					  					<td>
-					  						<label>{{ section.name }}</label>
+					  					<td width="85%">
+					  						<label style="float:left">{{ section.sName }}</label>
 					  					</td>
 					  				</tr>
 					  			{% endfor %}
@@ -156,11 +156,17 @@
 					  				</td>
 					  			</tr>
 					  		{% endif %}
+					  		<tr>
+					  			<td colspan="2">
+					  				<div id="generateExamsError" class="alert alert-danger" style="display:none"></div>
+					  			</td>
+					  		</tr>
 				  		</table>
-				  	</div>
-				</form>
+			  		</form>
+			  	</div>
 			  	<!-- Modal footer -->
 			  	<div class="modal-footer">
+			  		<meta id="sectionsData" data-name="{{ sectionsJSON }}">
 			  		<button type="button" class="btn btn-primary" onclick="generateExams()">Crear</button>
 			    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 			  	</div>

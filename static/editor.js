@@ -218,26 +218,31 @@ function confirmUndoChanges() {
 }
 
 function generateExams() {
+    var sections = $("#sectionsData").data();
     var form = document.getElementById("generateExamsForm");
     var errorMssg = document.getElementById("generateExamsError");
     var successMssg = document.getElementById("generateExamsSuccess");
+    var generate = true;
 
-    form["exams"].classList.remove("emptyField");
-    form["reactivos"].classList.remove("emptyField");
     errorMssg.style.display = "none";
     if (!Saved) {
         errorMssg.style.display = "block";
         errorMssg.innerHTML = "Guarde primero los cambios.";
-    } else if (form["reactivos"].value < 1 || form["exams"].value < 1) {
-        errorMssg.style.display = "block";
-        errorMssg.innerHTML = "Especifique los valores faltantes. ";
-        if (form["reactivos"].value < 1) {
-            form["reactivos"].classList.add("emptyField");
-        }
-        if (form["exams"].value < 1) {
-            form["exams"].classList.add("emptyField");
-        }
+        generate = false;
     } else {
+        for (var i = 0; i < sections.name.length; i++) {
+            element = form.elements[sections.name[i].sName];
+            element.classList.remove("emptyField");
+            if (element.value > sections.name[i].qLength){
+                errorMssg.style.display = "block";
+                errorMssg.innerHTML = "Definiste mas preguntas de las que contiene la seccion.";
+                element.classList.add("emptyField");
+                generate = false;
+            }
+        }
+    }
+
+    if (generate) {
         form.submit();
     }
 }

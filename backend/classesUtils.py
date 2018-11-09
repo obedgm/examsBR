@@ -83,7 +83,7 @@ def formatSections(user, folderId):
 	formattedSections = []
 	for section in sections:
 		formattedSections.append({
-			'name' : section.getName(),
+			'sName' : section.getName(),
 			'qLength' : len(section.getQuestions())
 		})
 	return formattedSections
