@@ -68,7 +68,34 @@ class DBController:
         e1.addSection(s1)
 
     def updateUserData(self, user):
-        # Actualizar al usuario y todo su desmadre
+        
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        id = user.getName(self).split("@")[0]
+        folder = user.getFolder(self, 1234) #placeholder
+        sections = folder.getSections()
+
+        for section in sections:
+            questions = section.getQuestions()
+            count = 0
+            for question in question:
+                data = {
+                    id + "/" + "Folder/" + folder.getName() + "/" + section.getName() + "/" count + "/": {
+                        "pregunta": question.getStatement()
+                        "distractor1": question.getDistractors()[0]
+                        "distractor2": question.getDistractors()[1]
+                        "distractor3": question.getDistractors()[2]
+                        "correcta": question.getCorrect()
+
+                    }
+                }
+
+        data = {
+            id + "/" + folder + "/" + 
+        }
+
+
         return 0
 
 #conectar a la BD
