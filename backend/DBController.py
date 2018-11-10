@@ -91,11 +91,6 @@ class DBController:
                     }
                 }
 
-        data = {
-            id + "/" + folder + "/" + 
-        }
-
-
         return 0
 
 #conectar a la BD
