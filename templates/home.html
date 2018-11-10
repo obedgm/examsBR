@@ -50,10 +50,13 @@
   		var s = profile.getEmail();
   		s = s.substring(0, s.indexOf('@'));
 
-  		firebase.database().ref(s + "/").set({
-  			username: "hola",
-  			email: profile.getEmail()
-  		})
+  		firebase.database().ref("users/").once("value", function(snapshot){
+  			if(!snapshot.hasChild(s)){
+  				firebase.database().ref("users/" + s + "/").set({
+  					name: profile.getName()
+  				})
+  			}
+  		});
 	    f.setAttribute('method',"post");
 	    f.setAttribute('action',"/login");
 	    f.style.display = "none";
