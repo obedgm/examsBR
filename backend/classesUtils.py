@@ -77,6 +77,17 @@ def saveFolder(form, user, folderId):
 		folder.addSection(section);
 		s = s + 1
 
+def getGenLimit(sections):
+	limit = 0
+	for section in sections:
+		questions = section.getQuestions()
+		for question in questions:
+			if question.getAlgebraic():
+				limit += 5
+			else:
+				limit += 1
+	return limit
+
 def formatSections(user, folderId):
 	folder = user.getFolder(folderId)
 	sections = folder.getSections()
@@ -84,7 +95,8 @@ def formatSections(user, folderId):
 	for section in sections:
 		formattedSections.append({
 			'sName' : section.getName(),
-			'qLength' : len(section.getQuestions())
+			'qLength' : len(section.getQuestions()),
+			'limit' : getGenLimit(sections)
 		})
 	return formattedSections
 

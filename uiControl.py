@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session
 from backend.classes import User, Folder, Section, Question
 import backend.classesUtils as cu
 from backend.DBController import DBController
+import backend.generatorUtils as gu
 
 app = Flask(__name__)
 
@@ -77,6 +78,21 @@ def openFolder():
    
     return render_template('home.html', notLogged = True)
 
+@app.route('/delFolder', methods=['POST'])
+def delFolder():
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
+        folderId = request.form['folderId']
+        '''
+        Enviar a la BD y borrar
+        '''
+        user.deleteFolder(folderId)
+
+        return redirect(url_for('main'), code = 307)
+
+    return render_template('home.html', notLogged = True)
+
 @app.route('/editor/<folderId>/<caller>', methods=['POST'])
 def editor(folderId, caller):
     if 'userId' in session:
@@ -100,20 +116,16 @@ def editor(folderId, caller):
 
     return render_template('home.html', notLogged = True)
 
-@app.route('/delFolder', methods=['POST'])
-def delFolder():
+@app.route('/generateExams', methods=['POST'])
+def generateExams():
     if 'userId' in session:
         userId = session['userId']
         user = users[userId]
         folderId = request.form['folderId']
-        '''
-        Enviar a la BD y borrar
-        '''
-        user.deleteFolder(folderId)
 
-        return redirect(url_for('main'), code = 307)
+        #contents = gu.formatForDynamicDisplay(request.form, user, folderId)
 
-    return render_template('home.html', notLogged = True)
+        gu.generateAlgebraics(user, folderId)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():

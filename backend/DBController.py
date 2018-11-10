@@ -56,8 +56,10 @@ class DBController:
         q1.addDistractor("Distractor2")
         q1.addDistractor("Distractor3")
 
-        q2 = Question("Que paso pt2?", True)
-        q2.setFormula("X + Y")
+        q2 = Question("Cuales son las intersecciones en x de la ecuacion [a]x^2 + [b]x + [c]", True)
+        #q2.setFormula("(- b + sqrt(pow(b,2) - (4 * a * c)) / 2 * a) | a = rango(1,2) / b = rango(1,10) / c = rango(1,2)")
+
+        q2.setFormula("(- b + sqrt(pow(b,2) - 4 * a * c)) / (2 * a) | a = rango(1,2) / b = rango(1,10) / c = rango(1,2)")
 
         s1 = Section("Porfiriato")
         s1.addQuestion(q1)
