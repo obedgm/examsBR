@@ -36,7 +36,7 @@ class DBController:
         #   al usuario
 
         # mock data
-        folder = Folder("nombre", folderId)
+        folder = Folder("Historia 1", folderId)
         # end mock data
 
         user.addFolder(folder)

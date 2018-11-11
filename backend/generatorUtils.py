@@ -39,7 +39,7 @@ def generateAlgebraics(user, folderId):
 
 				print('variables\n' + str(variables))
 
-				for x in range(0, 4):
+				for x in range(0, 5):
 					for variable in variables:
 						try:
 							exec(variable.strip(), {"__builtins__":None}, safe_dict_exec)
@@ -64,7 +64,7 @@ def generateAlgebraics(user, folderId):
 					print('statement\n' + q.getStatement())
 
 					try:
-						correct = eval(formula, {"__builtins__":None}, safe_dict_exec)
+						correct = round(eval(formula, {"__builtins__":None}, safe_dict_exec), 3)
 					except:
 						correct = '#'
 						pass
@@ -73,7 +73,7 @@ def generateAlgebraics(user, folderId):
 
 					print('correct\n' + str(q.getCorrect()))
 
-					for y in range(0, 2):
+					for y in range(0, 3):
 
 						for variable in variables:
 							try:
@@ -82,7 +82,7 @@ def generateAlgebraics(user, folderId):
 							except:
 								pass
 						try:
-							distractor = eval(formula, {"__builtins__":None}, safe_dict_exec)
+							distractor = round(eval(formula, {"__builtins__":None}, safe_dict_exec), 3)
 						except:
 							pass
 						
@@ -99,6 +99,7 @@ def formatForDynamicDisplay(form, user, folderId):
 	sections = folder.getSections()
 
 	formatContent = []
+	formatContent.append(form["amount"])
 
 	for section in sections:
 		questions = section.getQuestions()
@@ -107,18 +108,20 @@ def formatForDynamicDisplay(form, user, folderId):
 			formatQuestion = {}
 			distractors = question.getDistractors()
 			formatQuestion['statement'] = question.getStatement()
-			if question.getAlgebraic():
-				formatQuestion['algebraic'] = 'true'
-				formatQuestion['formula'] = question.getFormula()
-			else:
-				formatQuestion['correct'] = question.getCorrect()
-				formatQuestion['distractor1'] = distractors[0],
-				formatQuestion['distractor2'] = distractors[1],
-				formatQuestion['distractor3'] = distractors[2]
+
+			formatAnswer = []
+
+			formatAnswer.append({'correct' : question.getCorrect()})
+			formatAnswer.append({'distractor1' : distractors[0]})
+			formatAnswer.append({'distractor2' : distractors[1]})
+			formatAnswer.append({'distractor3' : distractors[2]})
+
+			formatQuestion['answers'] = formatAnswer
+
 			formatQuestions.append(formatQuestion)
 		formatSection = {
 			'section' : section.getName(),
-			'amount' : form['amount'],
+			'qLength' : form[section.getName()],
 			'questions' : formatQuestions
 		}
 		formatContent.append(formatSection)
@@ -129,4 +132,3 @@ def formatForDynamicDisplay(form, user, folderId):
 	print(formatContentJSON)
 
 	return formatContentJSON
-	

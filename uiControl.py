@@ -123,9 +123,15 @@ def generateExams():
         user = users[userId]
         folderId = request.form['folderId']
 
-        #contents = gu.formatForDynamicDisplay(request.form, user, folderId)
+        success = gu.generateAlgebraics(user, folderId)
+        contents = gu.formatForDynamicDisplay(request.form, user, folderId)
 
-        gu.generateAlgebraics(user, folderId)
+        folderName = cu.getFolderName(user, folderId)
+        amount = request.form['amount']
+
+        return render_template('gen.html', contents = contents, folderName = folderName, amount = amount)
+
+    return render_template('home.html', notLogged = True, success = success)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():

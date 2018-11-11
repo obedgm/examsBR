@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<style>
+		@media print
+		{    
+		    .no-print, .no-print *
+		    {
+		        display: none !important;
+		    }
+		}
+	</style>
+	<title>{{ folderName }} - EBR</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='gen.js')}}"></script>
+</head>
+
+<body>
+	<div id="file">
+
+		<p class="no-print">
+			Para imprimir da click en ctrl+P
+		</p>
+		<p class="no-print">
+			Para guardar da click en ctrl-P y selecciona "Guardar como PDF en la lista de dispositivos"
+		</p>
+		<br>
+
+		{% for n in range(amount|int) %}
+			{% set displayNo = n + 1 %}
+
+			<div id="exam_{{ n }}" style="page-break-after: always">
+
+				<div id="header_{{ n }}">
+					<p>Examen: {{ folderName }}</p>
+					<p>#{{ displayNo }}</p>
+					<p>Nombre:_______________________________________________________</p>
+					<p>Matricula:______________________________________________________</p>
+				</div>
+
+				<div id="questions_{{ n }}">
+
+				</div>
+			</div>
+
+		{% endfor %}
+
+		{% for n in range(amount|int) %}
+			{% set displayNo = n + 1 %}
+
+			<div id="solutions_{{ n }}">
+
+			</div>
+
+		{% endfor %}
+
+	</div>
+
+	<meta id="contents" data-name="{{ contents }}">
+	<script>
+		genExams();
+	</script>
+</body>
+
+</html>

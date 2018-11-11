@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>{{ folderName }} - EBR</title>
+</head>
+j
+<body>
+	<div id="file">
+
+		{% for n in range(amount) %}
+
+			<div id="exam_{{ n }}">
+
+				<div id="header_{{ n }}">
+					<p>Examen: {{ folderName }}</p>
+					<p>Nombre:_______________________________________________________</p>
+					<p>Matricula:____________________________________________________</p>
+				</div>
+
+				<div id="questions_{{ n }}">
+
+				</div>
+
+				<div id="solutions_{{ n }}">
+
+				</div>
+
+			</div>
+
+		{% endfor %}
+
+	</div>
+
+	<meta id="contents" data-name="{{ contents }}">
+	<script>
+		genExam();
+	</script>
+</body>
+
+</html>
