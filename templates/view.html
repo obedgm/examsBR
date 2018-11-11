@@ -13,11 +13,9 @@
 		}
 	</style>
 	<title>{{ folderName }} - EBR</title>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="{{url_for('static', filename='gen.js')}}"></script>
 </head>
 
-<body>
+<body onload="window.print()">
 	{{ content|safe }}
 </body>
 

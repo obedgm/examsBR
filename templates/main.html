@@ -8,8 +8,8 @@
 
 {% block options %}
 	<br>
-	<p class="nav-link" data-toggle="modal" data-target="#createFolderModal" href="">Crear Carpeta</p>
-	<p class="nav-link" data-toggle="modal" data-target="#openFolderModal" href="">Abrir Carpeta</p>
+	<p class="nav-link" data-toggle="modal" data-target="#createFolderModal" href="">Nueva materia</p>
+	<p class="nav-link" data-toggle="modal" data-target="#openFolderModal" href="">Abrir materia</p>
 	<a class="nav-link" href="/displayFiles">Mis Archivos</a>
 {% endblock %}
 
@@ -23,7 +23,7 @@
 			<div class="modal-content">
 			    <!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">Crear nueva carpeta</h4>
+					<h4 class="modal-title">Crear nueva materia</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
 			    <form id="createFolderForm" action="/newFolder" method="POST"
@@ -58,7 +58,7 @@
 
 		
 
-					<h4 class="modal-title">Abrir carpeta</h4>
+					<h4 class="modal-title">Abrir materia</h4>
 			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
 			    </div>
 			  	<!-- Modal body -->
@@ -73,7 +73,7 @@
 				  		</form>
 				  	{% else %}
 				  		<div class="alert alert-danger">
-				  			No hay carpetas para este usuario.
+				  			No hay materias para este usuario.
 				  		</div>
 				  	{% endif %}
 			  	</div>
