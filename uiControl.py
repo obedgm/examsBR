@@ -116,6 +116,20 @@ def editor(folderId, caller):
 
     return render_template('home.html', notLogged = True)
 
+@app.route('/displayFiles', methods=['GET', 'POST'])
+def displayFiles():
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
+
+        files = db.getUserFiles(user).keys()
+
+        print(files)
+
+        return render_template('listFiles.html', files = files)
+
+    return render_template('home.html', notLogged = True)
+
 @app.route('/generateExams', methods=['POST'])
 def generateExams():
     if 'userId' in session:
@@ -123,7 +137,7 @@ def generateExams():
         user = users[userId]
         folderId = request.form['folderId']
 
-        success = gu.generateAlgebraics(user, folderId)
+        error = gu.generateAlgebraics(user, folderId)
         contents = gu.formatForDynamicDisplay(request.form, user, folderId)
 
         folderName = cu.getFolderName(user, folderId)
@@ -131,7 +145,48 @@ def generateExams():
 
         return render_template('gen.html', contents = contents, folderName = folderName, amount = amount)
 
-    return render_template('home.html', notLogged = True, success = success)
+    return render_template('home.html', notLogged = True)
+
+@app.route('/viewFile', methods=['POST'])
+def vieFile():
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
+        fileName = request.form['fileName']
+
+        content = db.getUserFiles(user)[fileName]
+
+        return render_template('view.html', content = content)
+
+    return render_template('home.html', notLogged = True)
+
+@app.route('/saveFile', methods=['POST'])
+def saveFile():
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
+        fileName = request.form['fileName']
+        fileContent = request.form['fileContent']
+
+        # db.saveFile(user, fileName, fileContent)
+        print(fileContent)
+
+        return redirect(url_for('displayFiles'), code = 307)
+
+    return render_template('home.html', notLogged = True)
+
+@app.route('/deleteFile', methods=['POST'])
+def deleteFile():
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
+        fileName = request.form['fileName']
+
+        # db.deleteFile(user, fileName)
+
+        return redirect(url_for('displayFiles'), code = 307)
+
+    return render_template('home.html', notLogged = True)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():

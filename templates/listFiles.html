@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %}Files{% endblock %}
+{% block head %}
+	{{ super() }}
+	<script type="text/javascript" src="{{url_for('static', filename='listFiles.js')}}"></script>
+{% endblock %}
+
+{% block options %}
+	<br>
+	<a class="nav-link" href="/main">Panel principal</a>
+{% endblock %}
+
+{% block content %}
+	<br>
+	<form action="/viewFile" method="POST">
+		{% if files|length > 0 %}
+			{% for file in files %}
+				<div class="card bg-light listFilesCard">
+					<div style="float:left">
+						<button type="submit" name="fileName" value="{{ file }}" class="btn btn-primary"">
+							<i class="material-icons">open_in_browser</i>
+						</button>
+						<button type="button" class="btn btn-danger" onClick="deleteFile('{{ file }}')">
+							<i class="material-icons">delete</i>
+						</button>
+						{{ file }}
+					</div>
+				</div>
+				<br>
+			{% endfor %}
+		{% else %}
+			<div id="messageError" class="alert alert-danger">
+				No hay archivos para este usuario.
+			</div>
+		{% endif %}
+	</form>
+
+	<div class="modal fade" id="deleteFileModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Eliminar archivo</h4>
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+			  	<!-- Modal body -->
+			  	<div class="modal-body">
+    				<label for="name">¿Desea eliminar el archivo?</label>
+			  	</div>
+			  	<!-- Modal footer -->
+			  	<div class="modal-footer">
+			  		<button type="button" class="btn btn-danger" onclick="confirmDeleteFile()" data-dismiss="modal">Eliminar</button>
+			    	<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+			  	</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
