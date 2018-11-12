@@ -25,17 +25,19 @@ def generateAlgebraics(form, user, folderId):
 	folder = user.getFolder(folderId)
 	sections = folder.getSections()
 	used = Set()
+	s = 0
 	for section in sections:
-
+		s = s + 1
 		algebraics = countAlgebraics(section)
-		
+		if algebraics == 0:
+			return ""
 		questions = section.getQuestions()
+		q = 0
 		for question in questions:
-
 			questionsRequested = int(form[section.getName()])
-
 			if question.getAlgebraic():
-				error = 'Hay un error en la pregunta \'' + question.getStatement() + '\' <br>'
+				q = q + 1
+				error = 'Hay un error en la pregunta \'' + s + '.' + q + ": " + question.getStatement() + '\' <br>'
 				data = question.getFormula()
 				if (data.find('|') == -1):
 					error += 'No se encontro el simbolo \'|\' que delimita las preguntas de las variables'
@@ -45,7 +47,6 @@ def generateAlgebraics(form, user, folderId):
 				while rawVariables.find(' ') != -1:
 					rawVariables = rawVariables.replace(' ', '')
 				variables = rawVariables.split('/')
-
 
 				upperLimit = int(ceil((questionsRequested+1 - (len(questions)-algebraics)) / algebraics))*examsRequested
 				if upperLimit <= 0:
@@ -142,8 +143,5 @@ def formatForDynamicDisplay(form, user, folderId):
 		formatContent.append(formatSection)
 
 	formatContentJSON = json.dumps(formatContent)
-
-	print(formatContent)
-	print(formatContentJSON)
 
 	return formatContentJSON

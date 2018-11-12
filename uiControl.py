@@ -58,7 +58,6 @@ def newFolder():
 @app.route('/saveFolder', methods=['POST'])
 def saveFolder():
     if 'userId' in session:
-        print(str(request.form))
         folderId = request.form["0_0_folderId"]
         userId = session['userId']
         user = users[userId]
@@ -124,8 +123,6 @@ def displayFiles():
 
         files = db.getUserFiles(user).keys()
 
-        print(files)
-
         return render_template('listFiles.html', files = files)
 
     return render_template('home.html', notLogged = True)
@@ -169,7 +166,6 @@ def saveFile():
         fileContent = request.form['fileContent']
 
         # db.saveFile(user, fileName, fileContent)
-        print(fileContent)
 
         return redirect(url_for('displayFiles'), code = 307)
 
