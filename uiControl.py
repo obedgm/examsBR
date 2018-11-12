@@ -12,11 +12,11 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    # Trae usuario de la base de datos
-
-    # mock data
-    user = User("Juan", "juan@hola.com")
-    # end mock data
+    email = request.form['email']
+    '''
+        Aqui espero que me mandes al usuario pelon sin folders
+    '''
+    # user = db.getUser(email)
 
     userId = user.getEmail()
     users[userId] = user
@@ -31,6 +31,10 @@ def main():
         user = users[userId]
 
         userName = user.getName()
+        '''
+            Aqui espero que al usuario que te mande le insertes sus folders
+            (Los folders sin secciones)
+        '''
         db.loadFolders(user)
 
         folders = cu.formatFolders(user)
@@ -49,6 +53,11 @@ def newFolder():
         userId = session['userId']
         user = users[userId]
 
+        '''
+            Aqui espero que al usuario que te mande le insertes un folder 
+            con el nombre y ID que te mando 
+            (insertar tanto en la bd como el objeto)
+        '''
         db.addFolder(user, folderName, folderId)
 
         return redirect(url_for('editor', folderId = folderId, caller = "newFolder"), code = 307)
@@ -62,6 +71,11 @@ def saveFolder():
         userId = session['userId']
         user = users[userId]
         cu.saveFolder(request.form, user, folderId)
+
+        '''
+            Aqui espero te mando un usuario que tiene folder, secciones y preguntas
+            Este esta bien implementado
+        '''
         db.updateUserData(user)
         
         return redirect(url_for('editor', folderId = folderId, caller = "saveFolder"), code = 307)
@@ -83,9 +97,12 @@ def delFolder():
         userId = session['userId']
         user = users[userId]
         folderId = request.form['folderId']
+        
         '''
-        Enviar a la BD y borrar
+        Aqui te mando un usuario y el id del folder a borrar (solo de la bd)
         '''
+        # db.deleteFolder(user, folderId)
+
         user.deleteFolder(folderId)
 
         return redirect(url_for('main'), code = 307)
@@ -98,6 +115,10 @@ def editor(folderId, caller):
         userId = session['userId']
         user = users[userId]
 
+        '''
+        Aqui te mando un usuario y el id del folder, ocupo que agregas al 
+        objeto usuario el objeto folder con secciones y preguntas
+        '''
         db.loadQuestions(user, folderId)
 
         userName = user.getName()
@@ -121,6 +142,10 @@ def displayFiles():
         userId = session['userId']
         user = users[userId]
 
+        '''
+        Aqui espero que me mandes un diccionario de nombres de folders a htmls
+        yo saco las llaves para desplegar los nombres en la UI
+        '''
         files = db.getUserFiles(user).keys()
 
         return render_template('listFiles.html', files = files)
@@ -151,6 +176,10 @@ def vieFile():
         user = users[userId]
         fileName = request.form['fileName']
 
+        '''
+        Aqui espero que me mandes un diccionario de nombres de folders a htmls
+        yo saco el html usando el folder
+        '''
         content = db.getUserFiles(user)[fileName]
 
         return render_template('view.html', content = content)
@@ -165,6 +194,10 @@ def saveFile():
         fileName = request.form['fileName']
         fileContent = request.form['fileContent']
 
+        '''
+        te mando un usuario y el nombre del archivo y el html para
+        guardar en la bd
+        '''
         # db.saveFile(user, fileName, fileContent)
 
         return redirect(url_for('displayFiles'), code = 307)
@@ -178,6 +211,10 @@ def deleteFile():
         user = users[userId]
         fileName = request.form['fileName']
 
+        '''
+        te mando el usuario y el nombre del archivo para que lo 
+        borres de la bd
+        '''
         # db.deleteFile(user, fileName)
 
         return redirect(url_for('displayFiles'), code = 307)

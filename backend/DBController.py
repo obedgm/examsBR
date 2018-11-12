@@ -4,7 +4,7 @@ import pyrebase
 
 class DBController:
 
-    def getOrCreateUser(self, userName, userId, email):
+    def getUser(self, userName, userId, email):
         # Busca en la BD el usuario y si no lo crea
         # Toma el output de la BD y en otra funcion
         #   lo restructura a clases

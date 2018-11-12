@@ -61,6 +61,11 @@
 	    f.setAttribute('method',"post");
 	    f.setAttribute('action',"/login");
 	    f.style.display = "none";
+	    var input = document.createElement("input");
+	    input.type = "text";
+	    input.name = "email";
+	    input.value = profile.getEmail();
+	    f.appendChild(input);
 	    document.body.appendChild(f);
 	    if (clicked) {
 	    	f.submit();
