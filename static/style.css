@@ -24,10 +24,6 @@
     transition: 0.3s;
 }
 
-.sidenav a {
-    margin-bottom: 15px
-}
-
 /* When you mouse over the navigation links, change their color */
 .sidenav p:hover, .sidenav a:hover {
     color: #383434;
@@ -93,9 +89,4 @@ i {
 a, p, label {
     text-align: left;
     float: left;
-}
-
-.listFilesCard {
-    padding: 10px;
-    text-align: left;
 }

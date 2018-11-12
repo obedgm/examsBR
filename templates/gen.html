@@ -3,55 +3,46 @@
 <html>
 
 <head>
-	<!--
-		<style>
-			@media print
-			{    
-			    .no-print, .no-print *
-			    {
-			        display: none !important;
-			    }
-			}
-		</style>
-	-->
+	<style>
+		@media print
+		{    
+		    .no-print, .no-print *
+		    {
+		        display: none !important;
+		    }
+		}
+	</style>
 	<title>{{ folderName }} - EBR</title>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="{{url_for('static', filename='gen.js')}}"></script>
 </head>
 
 <body>
-	<div id="file" style="display:none">
-		
+	<div id="file">
 
-		<p class="no-print" style="color:green">
+		<p class="no-print">
 			Para imprimir da click en ctrl+P
 		</p>
-		<p class="no-print" style="color:green">
+		<p class="no-print">
 			Para guardar da click en ctrl-P y selecciona "Guardar como PDF en la lista de dispositivos"
 		</p>
-		{% if error|length > 0 %}
-			<p class="no-print" style="color:red">
-				Se omitio la generacion dinamica de una pregunta algebraica <br>
-				{{ error }}
-			</p>
-		{% endif %}
 		<br>
 
 		{% for n in range(amount|int) %}
 			{% set displayNo = n + 1 %}
 
-			<div style="page-break-after: always">
+			<div id="exam_{{ n }}" style="page-break-after: always">
 
-				<p>Examen: {{ folderName }}</p>
-				<p>#{{ displayNo }}</p>
-				<p>Nombre:_______________________________________________________</p>
-				<p>Matricula:______________________________________________________</p>
-				<br>
+				<div id="header_{{ n }}">
+					<p>Examen: {{ folderName }}</p>
+					<p>#{{ displayNo }}</p>
+					<p>Nombre:_______________________________________________________</p>
+					<p>Matricula:______________________________________________________</p>
+				</div>
 
 				<div id="questions_{{ n }}">
 
 				</div>
-
 			</div>
 
 		{% endfor %}
@@ -59,20 +50,15 @@
 		{% for n in range(amount|int) %}
 			{% set displayNo = n + 1 %}
 
-			<p>Solucion al examen: {{ folderName }}</p>
-			<p>Version #{{ displayNo }}</p>
-
 			<div id="solutions_{{ n }}">
-				
+
 			</div>
-			<br>
 
 		{% endfor %}
 
 	</div>
 
 	<meta id="contents" data-name="{{ contents }}">
-	<meta id="folderName" data-name="{{ folderName }}">
 	<script>
 		genExams();
 	</script>

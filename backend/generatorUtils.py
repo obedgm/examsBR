@@ -2,14 +2,6 @@ from classes import User, Folder, Section, Question
 import json
 from random import *
 from math import *
-from sets import Set
-
-'''
-* que la cantidad de algebraicas generadas sea de acuerdo a lo que pidio el usuario
-* que el limite de preguntas a poner en el examen sea ilimitado si hay al menos
-	una algebraica, si no que sea igual a la cantidad de preguntas en la seccion
-* recibir el numero de la pregunta para desplegar el numero cuando hay error
-'''
 
 def generateAlgebraics(user, folderId):
 
@@ -20,91 +12,99 @@ def generateAlgebraics(user, folderId):
 	safe_dict_exec['pow'] = pow
 
 	folder = user.getFolder(folderId)
+
 	sections = folder.getSections()
-	used = Set()
+
 	for section in sections:
+
 		questions = section.getQuestions()
+
 		for question in questions:
+
 			if question.getAlgebraic():
-				error = 'Hay un error en la pregunta \'' + question.getStatement() + '\' <br>'
+
 				data = question.getFormula()
-				if (data.find('|') == -1):
-					error += 'No se encontro el simbolo \'|\' que delimita las preguntas de las variables'
-					return error
+
+				print('data\n' + data)
+
 				formula = data[: data.find('|') - 1]
+
 				rawVariables = data[data.find('|') + 1 :]
-				while rawVariables.find(' ') != -1:
-					rawVariables = rawVariables.replace(' ', '')
+
+				print('raw variables\n' + rawVariables)
+
+				while rawVariables.find(" ") != -1:
+					rawVariables = rawVariables.replace(" ", "")
 				variables = rawVariables.split('/')
+
+				print('variables\n' + str(variables))
+
 				for x in range(0, 5):
-					try:
-						correct = '#'
-						limit = 100
-						while correct == '#' and limit > 0:
-							for variable in variables:
-								try:
-									exec(variable.strip(), {'__builtins__':None}, safe_dict_exec)
-								except:
-									error += 'Error de sintaxis en la declaracion \'' + variable.strip()
-									return error		
-							statement = question.getStatement()
-							while statement.find('[') != -1:
-								try:
-									var = statement[statement.find('[') + 1 : statement.find(']')]
-									val = str(eval(var, {'__builtins__':None}, safe_dict_exec))
-								except:
-									error += 'Error de sintaxis en la coloccacion de variables'
-									return error	
-								statement = statement.replace('[' + var + ']', 
-									str(eval(val, {'__builtins__':None}, safe_dict_exec)))
-							q = Question(statement, False)
-							limit = limit - 1
-							try:
-								correct = round(eval(formula, {'__builtins__':None}, safe_dict_exec), 3)
-							except:
-								correct = '#'
-								pass
-					except:
-						error += 'Error al ejecutar la formula'
-						return error
-					q.setCorrect(correct)
-					used.add(correct)
-					for y in range(0, 3):
+					for variable in variables:
 						try:
-							distractor = '#'
-							limitD = 100
-							while (distractor == '#' or distractor in used) and limit > 0:
-								limitD = limitD - 1
-								for variable in variables:
-									exec(variable.strip(), {'__builtins__':None}, safe_dict_exec)
-								try:
-									distractor = round(eval(formula, {'__builtins__':None}, safe_dict_exec), 3)
-								except:
-									distractor = '#'
-									pass
+							exec(variable.strip(), {"__builtins__":None}, safe_dict_exec)
 						except:
-							error += 'Selecciona un rango mayor para las variables, el rango proporcionado no puede generar suficientes distractores diferentes'
+							pass			
+
+					statement = question.getStatement()
+
+					while statement.find('[') != -1:
+						var = statement[statement.find('[') + 1 : statement.find(']')]
+						try:
+							val = str(eval(var, {"__builtins__":None}, safe_dict_exec))
+						except:
+							val = '#'
 							pass
+						statement = statement.replace('[' + var + ']', 
+							str(eval(val, {"__builtins__":None}, safe_dict_exec)))
+						print(statement)
+
+					q = Question(statement, False)
+
+					print('statement\n' + q.getStatement())
+
+					try:
+						correct = round(eval(formula, {"__builtins__":None}, safe_dict_exec), 3)
+					except:
+						correct = '#'
+						pass
+
+					q.setCorrect(correct)
+
+					print('correct\n' + str(q.getCorrect()))
+
+					for y in range(0, 3):
+
+						for variable in variables:
+							try:
+								exec(variable.strip(), {"__builtins__":None}, safe_dict_exec)
+								print("ya salio " + str(eval("a", {"__builtins__":None}, safe_dict_exec)))
+							except:
+								pass
+						try:
+							distractor = round(eval(formula, {"__builtins__":None}, safe_dict_exec), 3)
+						except:
+							pass
+						
 						q.addDistractor(distractor)
-						used.add(distractor)
+
+					print(str(q.getDistractors()))
+
 					section.addQuestion(q)
+
 				questions.remove(question)
-	return ''
 
 def formatForDynamicDisplay(form, user, folderId):
 	folder = user.getFolder(folderId)
 	sections = folder.getSections()
 
 	formatContent = []
-	formatContent.append(form['amount'])
+	formatContent.append(form["amount"])
 
 	for section in sections:
 		questions = section.getQuestions()
 		formatQuestions = []
 		for question in questions:
-			if question.getAlgebraic():
-				break;
-
 			formatQuestion = {}
 			distractors = question.getDistractors()
 			formatQuestion['statement'] = question.getStatement()

@@ -71,11 +71,3 @@ class DBController:
     def updateUserData(self, user):
         # Actualizar al usuario y todo su desmadre
         return 0
-
-    def getUserFiles(self, user):
-
-        folders = {}
-
-        folders["Historia 1 - fecha"] = "<p class=\"no-print\" style=\"color:green\">   Para imprimir da click en ctrl+P        </p>        <p class=\"no-print\" style=\"color:green\">            Para guardar da click en ctrl-P y selecciona \"Guardar como PDF en la lista de dispositivos\"     </p>        <br>                                <div style=\"page-break-after: always\">              <p>Examen: Historia 1</p>   <p>#1</p>               <p>Nombre:_______________________________________________________</p>               <p>Matricula:______________________________________________________</p>             <br>    <div id=\"questions_0\">              1. Que paso?<br><blockquote>a. Distractor2<br>b. Distractor3<br>c. Distractor1<br>d. Correcto<br></blockquote><br>2. Cuales son las intersecciones en x de la ecuacion 1x^2 + 4x + 1<br><blockquote>a. -0.268<br>b. -0.234<br>c. -0.258<br>d. -0.209<br></blockquote><br></div></div>                               <div style=\"page-break-after: always\">              <p>Examen: Historia 1</p>   <p>#2</p>               <p>Nombre:_______________________________________________________</p>               <p>Matricula:______________________________________________________</p>             <br>    <div id=\"questions_1\">              1. Cuales son las intersecciones en x de la ecuacion 2x^2 + 4x + 1<br><blockquote>a. -0.293<br>b. -0.5<br>c. -0.586<br>d. -0.219<br></blockquote><br>2. Cuales son las intersecciones en x de la ecuacion 1x^2 + 4x + 1<br><blockquote>a. -0.314<br>b. -0.268<br>c. -0.382<br>d. -0.114<br></blockquote><br></div>          </div>          <p>Solucion al examen: Historia 1</p>           <p>Version #1</p>   <div id=\"solutions_0\">                          1. d<br>2. a<br></div>          <br>                        <p>Solucion al examen: Historia 1</p>           <p>Version #2</p>   <div id=\"solutions_1\">                          1. a<br>2. b<br></div>          <br>"
-
-        return folders
