@@ -15,7 +15,7 @@
 	<form action="/viewFile" method="POST">
 		{% if files|length > 0 %}
 			{% for file in files %}
-				<div class="card bg-light listFilesCard">
+				<div class="card bg-light listFilesCard" style="padding:10px;text-align: left">
 					<div style="float:left">
 						<button type="submit" name="fileName" value="{{ file }}" class="btn btn-primary">
 							<i class="material-icons">open_in_browser</i>

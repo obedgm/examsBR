@@ -24,6 +24,10 @@
     transition: 0.3s;
 }
 
+.sidenav a {
+    margin-bottom: 15px;
+}
+
 /* When you mouse over the navigation links, change their color */
 .sidenav p:hover, .sidenav a:hover {
     color: #383434;
