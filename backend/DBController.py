@@ -72,26 +72,68 @@ class DBController:
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
-        id = user.getName(self).split("@")[0]
-        folder = user.getFolder(self, 1234) #placeholder
+        id = user.getName().split("@")[0]
+        folder = user.getFolders()[0] #placeholder
         sections = folder.getSections()
+
+        db.child(id).child('Folder').child(folder.getName()).remove()
 
         for section in sections:
             questions = section.getQuestions()
             count = 0
-            for question in question:
-                data = {
-                    id + "/" + "Folder/" + folder.getName() + "/" + section.getName() + "/" count + "/": {
-                        "pregunta": question.getStatement()
-                        "distractor1": question.getDistractors()[0]
-                        "distractor2": question.getDistractors()[1]
-                        "distractor3": question.getDistractors()[2]
-                        "correcta": question.getCorrect()
 
+            for question in questions:
+                data = {
+                    id + "/" + "Folder/" + folder.getName() + "/" + section.getName() + "/" + str(count) + "/": {
+                        "pregunta": question.getStatement(),
+                        "distractor1": question.getDistractors()[0],
+                        "distractor2": question.getDistractors()[1],
+                        "distractor3": question.getDistractors()[2],
+                        "correcta": question.getCorrect()
                     }
                 }
+                db.update(data)
+                count += 1
 
         return 0
+
+
+    def getUserData(self, user, folderName, folderId):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        folder = Folder(folderName, folderId)
+
+        folderDict = db.child(user.getId()).child('Folder').child(folderName).val().get()
+
+        folderDict = db.child(id).child('Folder').child(folder.getName()).get().val()
+
+        folder = Folder(folderName, folderId)
+
+        pregunta = Question("", False)
+        for item in folderDict:
+            section = Section(item)
+            print(item)
+            for a in folderDict[item]:
+                for val in a:
+                    if val == 'pregunta':
+                        pregunta = Question(a[val], False)
+                    elif val == 'distractor1':
+                        pregunta.addDistractor(a[val])
+                    elif val == 'distractor2':
+                        pregunta.addDistractor(a[val])
+                    elif val == 'distractor3':
+                        pregunta.addDistractor(a[val])
+                    elif val == 'correcta':
+                        pregunta.setCorrect(a[val])
+
+                section.addQuestion(pregunta)
+
+            folder.addSection(section)
+
+        return folder
+
+
 
 #conectar a la BD
 config = {
