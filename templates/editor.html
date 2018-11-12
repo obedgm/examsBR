@@ -99,8 +99,6 @@
 		</div>
 	</div>
 
-	{{ formulaDescription() }}
-
 	<div class="modal fade" id="deleteSectionModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -212,7 +210,115 @@
 		</div>
 	</div>
 
-	
+	<div class="modal fade" id="formulaExplainModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Fórmulas algebráicas</h4>
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			    </div>
+			  	<!-- Modal body -->
+			  	<div class="modal-body" style="text-align:left">
+    				Escribe el enunciado y entre [ ] ingresa las variables a utilizar.
+    				<br>
+					Para el campo de "Fórmula", ingresa la ecuación a realizar utilizando las variables definidas en el enunciado. A un lado, utiliza el caracter | para definir el rango de las variables definiendo una por una con la siguiente sintaxis.
+					<br>
+					variable1 = rango(valor mínimo, valor máximo) / variable2 = rango(valor mínimo, valor máximo) / variable3 ...
+					<br>
+
+					<hr>
+					Ejemplo: 
+					<br><br>
+					Enunciado: <br>
+					Cual de las siguientes es una de las intersecciones en el eje x de la ecuacion [a]x^2 + [b]x + [c]
+					<br><br>
+					Formula:<br>
+					(- b + sqrt(pow(b,2) - 4 * a * c)) / (2 * a) | a = rango(1,2) / b = rango(1,10) / c = rango(1,2)
+					<br><br>
+					Resultado:<br>
+					Cual de las siguientes es una de las intersecciones en el eje x de la ecuacion 2x^2 + 4x + 1<br>
+					a. -0.268 <br>
+					b. -0.234 <br>
+					c. -0.258 <br>
+					d. -0.209
+					<hr>
+
+					Puedes utilizar los siguientes operadores matematicos: <br>
+					<table>
+						<tr>
+							<td>
+								+
+							</td>
+							<td>
+								suma
+							</td>
+						</tr>
+						<tr>
+							<td>
+								-
+							</td>
+							<td>
+								resta
+							</td>
+						</tr>
+						<tr>
+							<td>
+								*
+							</td>
+							<td>
+								multiplicacion
+							</td>
+						</tr>
+						<tr>
+							<td>
+								/
+							</td>
+							<td>
+								division
+							</td>
+						</tr>
+						<tr>
+							<td>
+								( )
+							</td>
+							<td>
+								definen el orden de las operaciones
+							</td>
+						</tr>
+						<tr>
+							<td>
+								abs(a)
+							</td>
+							<td>
+								valor absoluto de "a"
+							</td>
+						</tr>
+						<tr>
+							<td>
+								sqrt(a)
+							</td>
+							<td>
+								raiz cuadrada de "a"
+							</td>
+						</tr>
+						<tr>
+							<td>
+								pow(a,b)
+							</td>
+							<td>
+								"a" elevado a la potencia "b"
+							</td>
+						</tr>
+					</table>
+			  	</div>
+			  	<!-- Modal footer -->
+			  	<div class="modal-footer">
+			    	<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+			  	</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="modal fade" id="deleteFolderModal">
 		<div class="modal-dialog">
@@ -334,116 +440,4 @@
 		</div>
 		<br>
 	</section>
-{% endmacro %}
-
-{% macro formulaDescription() %}
-	<div class="modal fade" id="formulaExplainModal">
-		<div class="modal-dialog" style="max-width: 60%">
-			<div class="modal-content">
-			    <!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Fórmulas algebráicas</h4>
-			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
-			    </div>
-			  	<!-- Modal body -->
-			  	<div class="modal-body" style="text-align:left">
-    				Escribe el enunciado y entre [ ] ingresa las variables a utilizar.
-    				<br>
-					Para el campo de "Fórmula", ingresa la ecuación a realizar utilizando las variables definidas en el enunciado. A un lado, utiliza el caracter | para definir el rango de las variables definiendo una por una con la siguiente sintaxis.
-					<br>
-					variable1 = rango(valor mínimo, valor máximo) / variable2 = rango(valor mínimo, valor máximo) / variable3 ...
-					<br>
-
-					<hr>
-					Ejemplo: 
-					<br><br>
-					Enunciado: <br>
-					Cual de las siguientes es una de las intersecciones en el eje x de la ecuacion [a]x^2 + [b]x + [c]
-					<br><br>
-					Formula:<br>
-					(- b + sqrt(pow(b,2) - 4 * a * c)) / (2 * a) | a = rango(1,2) / b = rango(1,10) / c = rango(1,2)
-					<br><br>
-					Resultado:<br>
-					Cual de las siguientes es una de las intersecciones en el eje x de la ecuacion 2x^2 + 4x + 1<br>
-					a. -0.268 <br>
-					b. -0.234 <br>
-					c. -0.258 <br>
-					d. -0.209
-					<hr>
-
-					Puedes utilizar los siguientes operadores matematicos: <br>
-					<table>
-						<tr>
-							<td>
-								+
-							</td>
-							<td>
-								suma
-							</td>
-						</tr>
-						<tr>
-							<td>
-								-
-							</td>
-							<td>
-								resta
-							</td>
-						</tr>
-						<tr>
-							<td>
-								*
-							</td>
-							<td>
-								multiplicacion
-							</td>
-						</tr>
-						<tr>
-							<td>
-								/
-							</td>
-							<td>
-								division
-							</td>
-						</tr>
-						<tr>
-							<td>
-								( )
-							</td>
-							<td>
-								definen el orden de las operaciones
-							</td>
-						</tr>
-						<tr>
-							<td>
-								abs(a)
-							</td>
-							<td>
-								valor absoluto de "a"
-							</td>
-						</tr>
-						<tr>
-							<td>
-								sqrt(a)
-							</td>
-							<td>
-								raiz cuadrada de "a"
-							</td>
-						</tr>
-						<tr>
-							<td>
-								pow(a,b)
-							</td>
-							<td>
-								"a" elevado a la potencia "b"
-							</td>
-						</tr>
-					</table>
-			  	</div>
-			  	<!-- Modal footer -->
-			  	<div class="modal-footer">
-			    	<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-			  	</div>
-			</div>
-		</div>
-	</div>
 {% endmacro %}
