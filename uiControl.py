@@ -116,6 +116,21 @@ def editor(folderId, caller):
 
     return render_template('home.html', notLogged = True)
 
+@app.route('/displayFiles', methods=['GET', 'POST'])
+def displayFiles():
+    if 'userId' in session:
+        userId = session['userId']
+        user = users[userId]
+        userName = user.getName()
+
+        files = db.getUserFiles(user).keys()
+
+        print(files)
+
+        return render_template('listFiles.html', files = files, userName = userName)
+
+    return render_template('home.html', notLogged = True)
+
 @app.route('/generateExams', methods=['POST'])
 def generateExams():
     if 'userId' in session:
@@ -123,13 +138,14 @@ def generateExams():
         user = users[userId]
         folderId = request.form['folderId']
 
-        success = gu.generateAlgebraics(user, folderId)
+        error = gu.generateAlgebraics(request.form, user, folderId)
         contents = gu.formatForDynamicDisplay(request.form, user, folderId)
 
         folderName = cu.getFolderName(user, folderId)
         amount = request.form['amount']
 
-        return render_template('gen.html', contents = contents, folderName = folderName, amount = amount)
+        return render_template('gen.html', contents = contents, 
+            folderName = folderName, amount = amount, error = error)
 
     return render_template('home.html', notLogged = True, success = success)
 

@@ -88,16 +88,31 @@ def getGenLimit(sections):
 				limit += 1
 	return limit
 
+def hasAlgebraic(section):
+	questions = section.getQuestions()
+	for question in questions:
+		if (question.getAlgebraic):
+			return True
+	return False
+
 def formatSections(user, folderId):
 	folder = user.getFolder(folderId)
 	sections = folder.getSections()
 	formattedSections = []
 	for section in sections:
-		formattedSections.append({
-			'sName' : section.getName(),
-			'qLength' : len(section.getQuestions()),
-			'limit' : getGenLimit(sections)
-		})
+		if hasAlgebraic(section):
+			formattedSections.append({
+				'sName' : section.getName(),
+				'qLength' : 1000,
+				'limit' : getGenLimit(sections)
+			})
+		else:
+			formattedSections.append({
+				'sName' : section.getName(),
+				'qLength' : len(section.getQuestions()),
+				'limit' : getGenLimit(sections)
+			})
+		
 	return formattedSections
 
 def formatSectionsJSON(user, folderId):

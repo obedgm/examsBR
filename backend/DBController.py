@@ -98,8 +98,6 @@ class DBController:
                 count += 1
 
         return 0
-<<<<<<< HEAD
-=======
 
 
     def getUserFiles(self, user):
@@ -156,4 +154,3 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 
->>>>>>> master

@@ -3,13 +3,21 @@ import json
 from random import *
 from math import *
 
-def generateAlgebraics(user, folderId):
+def countAlgebraics(questions):
+	count = 0
+	for question in questions:
+		if question.algebraic:
+			count = count + 1
+
+def generateAlgebraics(form, user, folderId):
 
 	safe_dict_exec = {}
 	safe_dict_exec['rango'] = randint
 	safe_dict_exec['abs'] = abs
 	safe_dict_exec['sqrt'] = sqrt
 	safe_dict_exec['pow'] = pow
+
+	requested = form['amount']
 
 	folder = user.getFolder(folderId)
 
@@ -18,7 +26,10 @@ def generateAlgebraics(user, folderId):
 	for section in sections:
 
 		questions = section.getQuestions()
-
+		algebraics = countAlgebraics(questions)
+		if algebraics > 0:
+			return ""
+			
 		for question in questions:
 
 			if question.getAlgebraic():
@@ -62,7 +73,7 @@ def generateAlgebraics(user, folderId):
 					q = Question(statement, False)
 
 					print('statement\n' + q.getStatement())
-
+				for x in range(0, ceil((requested - len(questions)) / algebraics)):
 					try:
 						correct = round(eval(formula, {"__builtins__":None}, safe_dict_exec), 3)
 					except:
