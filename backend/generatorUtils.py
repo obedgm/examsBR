@@ -4,14 +4,15 @@ from random import *
 from math import *
 from sets import Set
 
-'''
-* que la cantidad de algebraicas generadas sea de acuerdo a lo que pidio el usuario
-* que el limite de preguntas a poner en el examen sea ilimitado si hay al menos
-	una algebraica, si no que sea igual a la cantidad de preguntas en la seccion
-* recibir el numero de la pregunta para desplegar el numero cuando hay error
-'''
+def countAlgebraics(section):
+	count = 0
+	questions = section.getQuestions()
+	for question in questions:
+		if question.getAlgebraic():
+			count = count + 1
+	return count
 
-def generateAlgebraics(user, folderId):
+def generateAlgebraics(form, user, folderId):
 
 	safe_dict_exec = {}
 	safe_dict_exec['rango'] = randint
@@ -19,12 +20,20 @@ def generateAlgebraics(user, folderId):
 	safe_dict_exec['sqrt'] = sqrt
 	safe_dict_exec['pow'] = pow
 
+	examsRequested = int(form['amount'])
+
 	folder = user.getFolder(folderId)
 	sections = folder.getSections()
 	used = Set()
 	for section in sections:
+
+		algebraics = countAlgebraics(section)
+		
 		questions = section.getQuestions()
 		for question in questions:
+
+			questionsRequested = int(form[section.getName()])
+
 			if question.getAlgebraic():
 				error = 'Hay un error en la pregunta \'' + question.getStatement() + '\' <br>'
 				data = question.getFormula()
@@ -36,7 +45,13 @@ def generateAlgebraics(user, folderId):
 				while rawVariables.find(' ') != -1:
 					rawVariables = rawVariables.replace(' ', '')
 				variables = rawVariables.split('/')
-				for x in range(0, 5):
+
+
+				upperLimit = int(ceil((questionsRequested+1 - (len(questions)-algebraics)) / algebraics))*examsRequested
+				if upperLimit <= 0:
+					upperLimit = 2
+
+				for x in range(0, upperLimit):
 					try:
 						correct = '#'
 						limit = 100

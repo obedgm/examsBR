@@ -137,7 +137,7 @@ def generateExams():
         user = users[userId]
         folderId = request.form['folderId']
 
-        error = gu.generateAlgebraics(user, folderId)
+        error = gu.generateAlgebraics(request.form, user, folderId)
         contents = gu.formatForDynamicDisplay(request.form, user, folderId)
 
         folderName = cu.getFolderName(user, folderId)
