@@ -233,7 +233,7 @@ function generateExams() {
         for (var i = 0; i < sections.name.length; i++) {
             element = form.elements[sections.name[i].sName];
             element.classList.remove("emptyField");
-            if (element.value > sections.name[i].qLength){
+            if (element.value > sections.name[i].limit){
                 errorMssg.style.display = "block";
                 errorMssg.innerHTML = "Definiste mas preguntas de las que contiene la seccion.";
                 element.classList.add("emptyField");
