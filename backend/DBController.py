@@ -21,6 +21,38 @@ class DBController:
         #   carpetas del usuario y las agrega
         #   al usuario
 
+        folderDict = db.child(id).child('Folder').get().val()
+        folder = Folder(folderName, folderId)
+
+        pregunta = Question("", False)
+        for folder in folderDict:
+            userFolder = Folder(folder, folder)
+            for item in folderDict[folder]:
+                section = Section(item)
+                print(item)
+                for a in folderDict[item]:
+                    for val in a:
+                        if val == 'pregunta':
+                            pregunta = Question(a[val], False)
+                        elif val == 'distractor1':
+                            pregunta.addDistractor(a[val])
+                        elif val == 'distractor2':
+                            pregunta.addDistractor(a[val])
+                        elif val == 'distractor3':
+                            pregunta.addDistractor(a[val])
+                        elif val == 'correcta':
+                            pregunta.setCorrect(a[val])
+
+                    section.addQuestion(pregunta)
+
+                userFolder.addSection(section)
+            user.addFolder(userFolder)
+
+        return user
+
+
+
+
         # mock data
         e1 = Folder("Historia 1", "Historia1")
         # end mock data
@@ -32,9 +64,39 @@ class DBController:
         user.addFolder(folder)
         # Guarda la carpeta en la BD
 
-    def loadFolder(self, user, folderId):
+
+    def loadFolder(self, user, folderId, folderName):
         # Trae la carpeta de la bd y se la pone
         #   al usuario
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        folderDict = db.child(id).child('Folder').child(folder.getName()).get().val()
+
+        folder = Folder(folderName, folderId)
+
+        pregunta = Question("", False)
+        for item in folderDict:
+            section = Section(item)
+            print(item)
+            for a in folderDict[item]:
+                for val in a:
+                    if val == 'pregunta':
+                        pregunta = Question(a[val], False)
+                    elif val == 'distractor1':
+                        pregunta.addDistractor(a[val])
+                    elif val == 'distractor2':
+                        pregunta.addDistractor(a[val])
+                    elif val == 'distractor3':
+                        pregunta.addDistractor(a[val])
+                    elif val == 'correcta':
+                        pregunta.setCorrect(a[val])
+
+                section.addQuestion(pregunta)
+
+            folder.addSection(section)
+
+        user.addFolder(folder)
 
         # mock data
         folder = Folder("Historia 1", folderId)
@@ -114,8 +176,6 @@ class DBController:
         db = firebase.database()
 
         folder = Folder(folderName, folderId)
-
-        folderDict = db.child(user.getId()).child('Folder').child(folderName).val().get()
 
         folderDict = db.child(id).child('Folder').child(folder.getName()).get().val()
 
