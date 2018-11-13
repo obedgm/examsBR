@@ -40,41 +40,39 @@ class DBController:
 
         folderDict = db.child(id).child('Folder').get().val()
 
-        pregunta = Question("", False)
-        for folder in folderDict:
-            userFolder = Folder(folder, folder)
-            for item in folderDict[folder]:
-                section = Section(item)
-                for a in folderDict[folder][item]:
-                    for val in a:
-                        if val == 'pregunta':
-                            pregunta = Question(a[val], False)
-                        elif val == 'distractor1':
-                            pregunta.addDistractor(a[val])
-                        elif val == 'distractor2':
-                            pregunta.addDistractor(a[val])
-                        elif val == 'distractor3':
-                            pregunta.addDistractor(a[val])
-                        elif val == 'correcta':
-                            pregunta.setCorrect(a[val])
-                        elif val == 'algebra':
-                            b = a[val]
-                        elif val == 'formula':
-                            c = a[val]
-                    if not pregunta.getStatement():
-                        preguntaAlg = Question(b, True)
-                        preguntaAlg.setFormula(c)
-                        section.addQuestion(preguntaA)
-                    else:
-                        section.addQuestion(pregunta)
+        if folderDict:
+            pregunta = Question("", False)
+            for folder in reversed(folderDict):
+                userFolder = Folder(folder, folder)
+                for item in folderDict[folder]:
+                    section = Section(item)
+                    for a in reversed(folderDict[folder][item]):
+                        for val in a:
+                            if val == 'pregunta':
+                                pregunta = Question(a[val], False)
+                            elif val == 'distractor1':
+                                pregunta.addDistractor(a[val])
+                            elif val == 'distractor2':
+                                pregunta.addDistractor(a[val])
+                            elif val == 'distractor3':
+                                pregunta.addDistractor(a[val])
+                            elif val == 'correcta':
+                                pregunta.setCorrect(a[val])
+                            elif val == 'algebra':
+                                b = a[val]
+                            elif val == 'formula':
+                                c = a[val]
+                        if not pregunta.getStatement():
+                            preguntaAlg = Question(b, True)
+                            preguntaAlg.setFormula(c)
+                            section.addQuestion(preguntaA)
+                        else:
+                            section.addQuestion(pregunta)
 
-                userFolder.addSection(section)
-            user.addFolder(userFolder)
+                    userFolder.addSection(section)
+                user.addFolder(userFolder)
 
         return user
-
-
-
 
         # mock data
         e1 = Folder("Historia 1", "Historia1")
@@ -88,13 +86,13 @@ class DBController:
         # Guarda la carpeta en la BD
 
 
-    def loadFolder(self, user, folderId, folderName):
+    def loadFolder(self, user, folderId):
         # Trae la carpeta de la bd y se la pone
         #   al usuario
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
-        folder = Folder(folderName, folderId)
+        folder = Folder(folderId, folderId)
 
         id = user.getEmail().split("@")[0]
         print(id)
@@ -103,10 +101,10 @@ class DBController:
         print(folderDict)
 
         pregunta = Question("", False)
-        for item in folderDict:
+        for item in reversed(folderDict):
             section = Section(item)
             print(item)
-            for a in folderDict[item]:
+            for a in reversed(folderDict[item]):
                 for val in a:
                     if val == 'pregunta':
                         pregunta = Question(a[val], False)
@@ -142,8 +140,7 @@ class DBController:
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
-        self.loadFolder(user, folderId, id)
-        # Trae las preguntas desde la bd y se las
+        self.loadFolder(user, folderId)
 
     def updateUserData(self, user):
         
@@ -206,10 +203,10 @@ class DBController:
         folder = Folder(folderName, folderId)
 
         pregunta = Question("", False)
-        for item in folderDict:
+        for item in reversed(folderDict):
             section = Section(item)
             print(item)
-            for a in folderDict[item]:
+            for a in reversed(folderDict[item]):
                 for val in a:
                     if val == 'pregunta':
                         pregunta = Question(a[val], False)

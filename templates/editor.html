@@ -264,7 +264,10 @@
 	</div>
 {% endblock %}
 
-{% macro questionFormat(question) %}	
+{% macro questionFormat(question) %}
+	{% if question.statement == "placeholder" %}
+		{% set question = [] %}
+	{% endif %}	
 	{% set questionIdFromHeader = "this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement" %}
 	{% set optionsFromAlgebra = "this.parentElement.parentElement.parentElement.nextElementSibling.firstChild" %}
 	{% set formulaFromAlgebra = "this.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling.firstChild" %}
@@ -337,6 +340,9 @@
 {% endmacro %}
 
 {% macro sectionFormat(section) %}
+	{% if section.section == "placeholder" %}
+		{% set section = [] %}
+	{% endif %}
 	{% set sectionIdFromBtn = "this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement" %}
 	<section class="section">
 		<div class="card editorCard" style="border-color: #6de8ce;">
