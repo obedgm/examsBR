@@ -16,7 +16,7 @@ def login():
     '''
         Aqui espero que me mandes al usuario pelon sin folders
     '''
-    # user = db.getUser(email)
+    user = db.getUser(email)
 
     userId = user.getEmail()
     users[userId] = user
@@ -35,7 +35,10 @@ def main():
             Aqui espero que al usuario que te mande le insertes sus folders
             (Los folders sin secciones)
         '''
-        db.loadFolders(user)
+        email = user.getEmail()
+        id = email.split("@")[0]
+        
+        db.loadFolders(user, id)
 
         folders = cu.formatFolders(user)
         foldersJSON = cu.formatFoldersJSON(user)
@@ -198,7 +201,7 @@ def saveFile():
         te mando un usuario y el nombre del archivo y el html para
         guardar en la bd
         '''
-        # db.saveFile(user, fileName, fileContent)
+        db.saveFile(user, fileName, fileContent)
 
         return redirect(url_for('displayFiles'), code = 307)
 

@@ -4,33 +4,43 @@ import pyrebase
 
 class DBController:
 
-    def getUser(self, userName, userId, email):
+    def getUser(self, email):
         # Busca en la BD el usuario y si no lo crea
         # Toma el output de la BD y en otra funcion
         #   lo restructura a clases
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
 
-        user = User(userName, userId, email)
+        id = email.split("@")[0]
+
+        name = db.child(id).child("name").get().val()
+
+        if(name):
+            user = User(name, email)
+            self.loadFolders(user, id)            
+
 
         # Agrega usuario a la bd
 
         return user
 
-    def loadFolders(self, user):
-        user.clearFolders()
+
+
+    def loadFolders(self, user, id):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
         # Trae desde la base de datos todas las 
         #   carpetas del usuario y las agrega
         #   al usuario
 
         folderDict = db.child(id).child('Folder').get().val()
-        folder = Folder(folderName, folderId)
 
         pregunta = Question("", False)
         for folder in folderDict:
             userFolder = Folder(folder, folder)
             for item in folderDict[folder]:
                 section = Section(item)
-                print(item)
-                for a in folderDict[item]:
+                for a in folderDict[folder][item]:
                     for val in a:
                         if val == 'pregunta':
                             pregunta = Question(a[val], False)
@@ -71,9 +81,13 @@ class DBController:
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
-        folderDict = db.child(id).child('Folder').child(folder.getName()).get().val()
-
         folder = Folder(folderName, folderId)
+
+        id = user.getEmail().split("@")[0]
+        print(id)
+        print(folderId)
+        folderDict = db.child(id).child('Folder').child(folderId).get().val()
+        print(folderDict)
 
         pregunta = Question("", False)
         for item in folderDict:
@@ -96,51 +110,28 @@ class DBController:
 
             folder.addSection(section)
 
-        user.addFolder(folder)
-
-        # mock data
-        folder = Folder("Historia 1", folderId)
-        # end mock data
 
         user.addFolder(folder)
 
     def loadQuestions(self, user, folderId):
         user.clearFolders()
-        self.loadFolder(user, folderId)
+
+        email = user.getEmail()
+        id = email.split("@")[0]
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        self.loadFolder(user, folderId, id)
         # Trae las preguntas desde la bd y se las
-        #   pone a la carpeta y al usuario
-        
-        e1 = user.getFolder(folderId)
-
-        # mock data
-        q1 = Question("Que paso?", False)
-        q1.setCorrect("Correcto")
-        q1.addDistractor("Distractor1")
-        q1.addDistractor("Distractor2")
-        q1.addDistractor("Distractor3")
-
-        q2 = Question("Cuales son las intersecciones en x de la ecuacion [a]x^2 + [b]x + [c]", True)
-        #q2.setFormula("(- b + sqrt(pow(b,2) - (4 * a * c)) / 2 * a) | a = rango(1,2) / b = rango(1,10) / c = rango(1,2)")
-
-        q2.setFormula("(- b + sqrt(pow(b,2) - 4 * a * c)) / (2 * a) | a = rango(1,2) / b = rango(1,10) / c = rango(1,2)")
-
-        s1 = Section("Porfiriato")
-        s1.addQuestion(q1)
-        s1.addQuestion(q2)
-        # end mock data
-
-        e1.addSection(s1)
 
     def updateUserData(self, user):
         
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
-        id = user.getName().split("@")[0]
+        id = user.getEmail().split("@")[0]
         folder = user.getFolders()[0] #placeholder
         sections = folder.getSections()
-
-        db.child(id).child('Folder').child(folder.getName()).remove()
 
         for section in sections:
             questions = section.getQuestions()
@@ -148,7 +139,7 @@ class DBController:
 
             for question in questions:
                 data = {
-                    id + "/" + "Folder/" + folder.getName() + "/" + section.getName() + "/" + str(count) + "/": {
+                    id + "/" + "Folder/" + folder.getId() + "/" + section.getName() + "/" + str(count) + "/": {
                         "pregunta": question.getStatement(),
                         "distractor1": question.getDistractors()[0],
                         "distractor2": question.getDistractors()[1],
@@ -158,6 +149,8 @@ class DBController:
                 }
                 db.update(data)
                 count += 1
+
+        db.child(id).child('Folder').child(folder.getId()).child("placeholder").remove()
 
         return 0
 
@@ -203,6 +196,28 @@ class DBController:
             folder.addSection(section)
 
         return folder
+
+    def addFolder(self, user, folderName, folderId):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+
+        id = user.getEmail().split("@")[0]
+        print("this is the id")
+        print(id)
+
+        data = {
+            id + "/" + "Folder/" + folderId + "/" +  "placeholder/0/": {
+                "pregunta": "placeholder",
+                "distractor1": "placeholder",
+                "distractor2": "placeholder",
+                "distractor3": "placeholder",
+                "correcta": "placeholder"
+            }
+        }
+        db.update(data)
+
+
 
 #conectar a la BD
 config = {
