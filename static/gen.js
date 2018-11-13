@@ -7,7 +7,6 @@ function displayQuestions(qNumber) {
 	for (var x = 1; x < contents.length; x++) {
 			var section = contents[x];
 			var qLength = section["qLength"];
-			console.log(x + " " + qLength)
 			var questions = section["questions"];
 			questions.sort(function() { return 0.5 - Math.random() });
 			for (var i = 0; i < qLength; i++) {
@@ -27,7 +26,6 @@ function displayQuestions(qNumber) {
 				}
 				qDisplay += "</blockquote>";
 				qDisplay += "<br>";
-				print(qDisplay);
 				document.getElementById('questions_'+String(qNumber)).innerHTML += qDisplay;
 			}
 		}
