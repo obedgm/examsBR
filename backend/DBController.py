@@ -52,8 +52,16 @@ class DBController:
                             pregunta.addDistractor(a[val])
                         elif val == 'correcta':
                             pregunta.setCorrect(a[val])
-
-                    section.addQuestion(pregunta)
+                        elif val == 'algebra':
+                            b = a[val]
+                        elif val == 'formula':
+                            c = a[val]
+                    if not pregunta.getStatement():
+                        preguntaAlg = Question(b, True)
+                        preguntaAlg.setFormula(c)
+                        section.addQuestion(preguntaA)
+                    else:
+                        section.addQuestion(pregunta)
 
                 userFolder.addSection(section)
             user.addFolder(userFolder)
@@ -105,8 +113,16 @@ class DBController:
                         pregunta.addDistractor(a[val])
                     elif val == 'correcta':
                         pregunta.setCorrect(a[val])
-
-                section.addQuestion(pregunta)
+                    elif val == 'algebra':
+                        b = a[val]
+                    elif val == 'formula':
+                        c = a[val]
+                if not pregunta.getStatement():
+                    preguntaAlg = Question(b, True)
+                    preguntaAlg.setFormula(c)
+                    section.addQuestion(preguntaAlg)
+                else:
+                    section.addQuestion(pregunta)
 
             folder.addSection(section)
 
@@ -138,16 +154,26 @@ class DBController:
             count = 0
 
             for question in questions:
-                data = {
-                    id + "/" + "Folder/" + folder.getId() + "/" + section.getName() + "/" + str(count) + "/": {
-                        "pregunta": question.getStatement(),
-                        "distractor1": question.getDistractors()[0],
-                        "distractor2": question.getDistractors()[1],
-                        "distractor3": question.getDistractors()[2],
-                        "correcta": question.getCorrect()
+                if(question.getAlgebraic()):
+                    data = {
+                        id + "/" + "Folder/" + folder.getId() + "/" + section.getName() + "/" + str(count) + "/": {
+                            "algebra": question.getStatement(),
+                            "formula": question.getFormula()
+                        }
                     }
-                }
-                db.update(data)
+                    db.update(data)
+                    db.update(data)
+                else:
+                    data = {
+                        id + "/" + "Folder/" + folder.getId() + "/" + section.getName() + "/" + str(count) + "/": {
+                            "pregunta": question.getStatement(),
+                            "distractor1": question.getDistractors()[0],
+                            "distractor2": question.getDistractors()[1],
+                            "distractor3": question.getDistractors()[2],
+                            "correcta": question.getCorrect()
+                        }
+                    }
+                    db.update(data)
                 count += 1
 
         db.child(id).child('Folder').child(folder.getId()).child("placeholder").remove()
@@ -190,8 +216,16 @@ class DBController:
                         pregunta.addDistractor(a[val])
                     elif val == 'correcta':
                         pregunta.setCorrect(a[val])
-
-                section.addQuestion(pregunta)
+                    elif val == 'algebra':
+                        b = a[val]
+                    elif val == 'formula':
+                        c = a[val]
+                if not pregunta.getStatement():
+                    preguntaAlg = Question(b, True)
+                    preguntaAlg.setFormula(c)
+                    section.addQuestion(preguntaAlg)
+                else:
+                    section.addQuestion(pregunta)
 
             folder.addSection(section)
 
