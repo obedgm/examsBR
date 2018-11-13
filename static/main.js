@@ -1,3 +1,5 @@
+// Hssbilita y revisa la creacion de carpetas del usuario.
+
 function createFolder() {
     var folder = $("#createFolderData").data();
     var form = document.getElementById("createFolderForm");

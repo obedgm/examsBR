@@ -1,3 +1,5 @@
+// Funciones para la interaccion con el editor de materias.
+
 function countIds() {
     var s_id = 0;
     var q_id = 0;
@@ -38,7 +40,6 @@ function countElements() {
 }
 
 var Saved = true;
-
 
 function addQuestion() {
     var questionFormat = document.getElementById("questionFormat");

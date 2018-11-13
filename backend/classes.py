@@ -1,3 +1,7 @@
+'''
+Definicion de clases utilizadas por el sistemas
+'''
+
 class User:
 
     def __init__(self, name, email):

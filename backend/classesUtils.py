@@ -1,3 +1,8 @@
+'''
+Modulo de utilidades.
+Formatea los objetos para ser desplegados en la interfaz.
+'''
+
 from classes import User, Folder, Section, Question
 import json
 

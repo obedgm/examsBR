@@ -1,3 +1,8 @@
+'''
+Modulo de utilidades.
+Formatea las preguntas para la generacion de examenes y para su despliegue.
+'''
+
 from classes import User, Folder, Section, Question
 import json
 from random import *

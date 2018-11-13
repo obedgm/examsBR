@@ -1,3 +1,9 @@
+'''
+Servidor del sistema.
+Hace uso del microframework Flask para implementar la clase controladora de 
+interfaz de usuario y el controlador de sesiones, asi como el servidor mismo.
+'''
+
 from flask import Flask, render_template, redirect, url_for, request, session
 from backend.classes import User, Folder, Section, Question
 import backend.classesUtils as cu
@@ -228,6 +234,19 @@ def logout():
 
 if __name__ == '__main__':
     db = DBController()
+    '''
+    Llave de seguridad utilizada por la clase controladora de sesiones
+    de Flask 
+    '''
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+    '''
+    Diccionario que mantiene cargados los objetos de usuario
+    LLave: correo del usuario
+    Valor: instancia de usuario
+    '''
     users = {}
+
+    '''
+    Clase controladora de iterfaz de usuario de Flask
+    '''
     app.run(debug = True)

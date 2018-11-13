@@ -1,3 +1,5 @@
+// Permite la eliminacion de archivos del usuario.
+
 var File;
 function deleteFile(file) {
    	File = file;

@@ -1,19 +1,13 @@
+<!--
+	Plantilla de examanes generados, utiliza el script gen.js para generar
+	examenes.
+-->
+
 <!DOCTYPE html>
 
 <html>
 
 <head>
-	<!--
-		<style>
-			@media print
-			{    
-			    .no-print, .no-print *
-			    {
-			        display: none !important;
-			    }
-			}
-		</style>
-	-->
 	<title>{{ folderName }} - EBR</title>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="{{url_for('static', filename='gen.js')}}"></script>

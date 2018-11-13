@@ -1,3 +1,8 @@
+'''
+Clase controladora de la base de datos.
+Provee de metodos para acceder y modificar la base de datos.
+'''
+
 from classes import User, Folder, Section, Question
 import classesUtils as cu
 import pyrebase
@@ -143,8 +148,9 @@ class DBController:
             folder.addSection(section)
 
         return folder
-
-#conectar a la BD
+'''
+Conectar a la BD
+'''
 config = {
   "apiKey": "AIzaSyCMs1O70z1q6qIArA36dBX1iuipaNStOYg",
   "authDomain": "examsbr-2a061.firebaseapp.com",

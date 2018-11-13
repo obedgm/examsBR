@@ -1,4 +1,5 @@
-// Initialize Firebase
+// Inicializa firebase y habilita el inicio de sesion con Google.
+
 var config = {
   	apiKey: "AIzaSyCMs1O70z1q6qIArA36dBX1iuipaNStOYg",
   	authDomain: "examsbr-2a061.firebaseapp.com",

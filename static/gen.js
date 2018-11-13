@@ -1,3 +1,4 @@
+// Funciones para la generacion de examenes.
 
 var correct = []
 
