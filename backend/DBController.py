@@ -254,6 +254,39 @@ class DBController:
         }
         db.update(data)
 
+    def saveFiles(self, user, fileName, fileContent):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        id = user.getEmail().split("@")[0]
+        data = {
+            id + "/" + "Files/" + fileName + "/": {
+                "content": fileContent
+            }
+        }
+        db.update(data)
+
+
+
+    def getUserFiles(self, user):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        id = user.getEmail().split("@")[0]
+
+        fileDict = db.child(id).child('Files').get().val()
+
+
+        return fileDict
+
+    def deleteFile(user, fileName):
+        firebase = pyrebase.initialize_app(config)
+        db = firebase.database()
+
+        id = user.getEmail().split("@")[0]
+
+        db.child(id).child('Files').child(fileName).remove()
+
 
 
 #conectar a la BD

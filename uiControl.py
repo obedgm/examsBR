@@ -224,7 +224,7 @@ def deleteFile():
         te mando el usuario y el nombre del archivo para que lo 
         borres de la bd
         '''
-        # db.deleteFile(user, fileName)
+        db.deleteFile(user, fileName)
 
         return redirect(url_for('displayFiles'), code = 307)
 
