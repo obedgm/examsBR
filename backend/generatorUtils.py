@@ -29,7 +29,6 @@ def generateAlgebraics(form, user, folderId):
 
 	folder = user.getFolder(folderId)
 	sections = folder.getSections()
-	used = Set()
 	s = 0
 	for section in sections:
 		s = s + 1
@@ -42,7 +41,7 @@ def generateAlgebraics(form, user, folderId):
 			questionsRequested = int(form[section.getName()])
 			if question.getAlgebraic():
 				q = q + 1
-				error = 'Hay un error en la pregunta \'' + s + '.' + q + ": " + question.getStatement() + '\' <br>'
+				error = 'Hay un error en la pregunta \'' + str(s) + '.' + str(q) + ": " + question.getStatement() + '\' <br>'
 				data = question.getFormula()
 				if (data.find('|') == -1):
 					error += 'No se encontro el simbolo \'|\' que delimita las preguntas de las variables'
@@ -54,14 +53,16 @@ def generateAlgebraics(form, user, folderId):
 				variables = rawVariables.split('/')
 
 				upperLimit = int(ceil((questionsRequested+1 - (len(questions)-algebraics)) / algebraics))*examsRequested
+				print("upperLimit " + str(upperLimit))
 				if upperLimit <= 0:
 					upperLimit = 2
 
+				used = Set()
 				for x in range(0, upperLimit):
 					try:
 						correct = '#'
 						limit = 100
-						while correct == '#' and limit > 0:
+						while correct == '#' and limit > 0 and correct not in used:
 							for variable in variables:
 								try:
 									exec(variable.strip(), {'__builtins__':None}, safe_dict_exec)
@@ -107,7 +108,6 @@ def generateAlgebraics(form, user, folderId):
 							error += 'Selecciona un rango mayor para las variables, el rango proporcionado no puede generar suficientes distractores diferentes'
 							pass
 						q.addDistractor(distractor)
-						used.add(distractor)
 					section.addQuestion(q)
 				questions.remove(question)
 	return ''

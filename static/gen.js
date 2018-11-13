@@ -5,14 +5,15 @@ var correct = []
 function displayQuestions(qNumber) {
 	var contents = $("#contents").data().name;
 	for (var x = 1; x < contents.length; x++) {
-			section = contents[x];
-			qLength = section["qLength"];
-			questions = section['questions'];
+			var section = contents[x];
+			var qLength = section["qLength"];
+			console.log(x + " " + qLength)
+			var questions = section["questions"];
 			questions.sort(function() { return 0.5 - Math.random() });
 			for (var i = 0; i < qLength; i++) {
 				question = questions[i];
-				qDisplay = String(i+1) +  ". " + question['statement'] + "<br>";
-				answers = question['answers'];
+				var qDisplay = String(i+1) +  ". " + question['statement'] + "<br>";
+				var answers = question['answers'];
 				answers.sort(function() { return 0.5 - Math.random() });
 				qDisplay += "<blockquote>";
 				for (var j = 0; j < answers.length; j++) {
@@ -33,7 +34,7 @@ function displayQuestions(qNumber) {
 }
 
 function displaySolutions(sNumber) {
-	sDisplay = ""
+	var sDisplay = ""
 	for (var x = 0; x < correct.length; x++) {
 		sDisplay += String(x+1) + ". " + correct[x] + "<br>";
 	}
