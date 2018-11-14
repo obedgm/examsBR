@@ -50,10 +50,10 @@
 
 		{% endfor %}
 
+		<p>Solucion al examen: {{ folderName }}</p><br>
 		{% for n in range(amount|int) %}
 			{% set displayNo = n + 1 %}
-
-			<p>Solucion al examen: {{ folderName }}</p>
+			
 			<p>Version #{{ displayNo }}</p>
 
 			<div id="solutions_{{ n }}">
