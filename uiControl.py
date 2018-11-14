@@ -189,7 +189,7 @@ def vieFile():
         Aqui espero que me mandes un diccionario de nombres de folders a htmls
         yo saco el html usando el folder
         '''
-        content = db.getUserFiles(user)[fileName]
+        content = db.getUserFiles(user)[fileName]['content']
 
         return render_template('view.html', content = content)
 

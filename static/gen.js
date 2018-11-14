@@ -11,7 +11,7 @@ function displayQuestions(qNumber) {
 			questions.sort(function() { return 0.5 - Math.random() });
 			for (var i = 0; i < qLength; i++) {
 				question = questions[i];
-				var qDisplay = String(i+1) +  ". " + question['statement'] + "<br>";
+				var qDisplay = String(correct.length+1) +  ". " + question['statement'] + "<br>";
 				var answers = question['answers'];
 				answers.sort(function() { return 0.5 - Math.random() });
 				qDisplay += "<blockquote>";
@@ -19,7 +19,7 @@ function displayQuestions(qNumber) {
 					var answer = answers[j];
 					for (var key in answer) {
 						if (key == "correct") {
-							correct[i] = String.fromCharCode('a'.charCodeAt(0) + j);
+							correct.push(String.fromCharCode('a'.charCodeAt(0) + j));
 						}
 						qDisplay += String.fromCharCode('a'.charCodeAt(0) + j) + ". " + String(answer[key]) + "<br>";
 					}
@@ -54,7 +54,7 @@ function submitData() {
     var inputD = document.createElement("input");
     inputD.type = "text";
     inputD.name = "fileContent";
-    inputD.value = String(file.innerHTML);
+    inputD.value = String(file.innerHTML.trim());
     f.appendChild(inputD);
     f.style.display = "none";
 	document.body.appendChild(f);
@@ -63,11 +63,9 @@ function submitData() {
 
 function genExams() {
 	var contents = $("#contents").data().name;
-	correct = [];
 	exams = parseInt(contents[0]);
 	for (var k = 0; k < exams; k++){
-		correct = []
-
+		correct = [];
 		displayQuestions(k);
 		displaySolutions(k);
 	}

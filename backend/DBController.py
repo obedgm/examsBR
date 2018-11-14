@@ -46,7 +46,7 @@ class DBController:
                 userFolder = Folder(folder, folder)
                 for item in folderDict[folder]:
                     section = Section(item)
-                    for a in reversed(folderDict[folder][item]):
+                    for a in folderDict[folder][item]:
                         for val in a:
                             if val == 'pregunta':
                                 pregunta = Question(a[val], False)
@@ -104,7 +104,7 @@ class DBController:
         for item in reversed(folderDict):
             section = Section(item)
             print(item)
-            for a in reversed(folderDict[item]):
+            for a in folderDict[item]:
                 for val in a:
                     if val == 'pregunta':
                         pregunta = Question(a[val], False)
@@ -254,7 +254,7 @@ class DBController:
         }
         db.update(data)
 
-    def saveFiles(self, user, fileName, fileContent):
+    def saveFile(self, user, fileName, fileContent):
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
@@ -279,7 +279,7 @@ class DBController:
 
         return fileDict
 
-    def deleteFile(user, fileName):
+    def deleteFile(self, user, fileName):
         firebase = pyrebase.initialize_app(config)
         db = firebase.database()
 
