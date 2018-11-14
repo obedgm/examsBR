@@ -9,7 +9,10 @@ function displayQuestions(qNumber) {
 			var qLength = section["qLength"];
 			var questions = section["questions"];
 			questions.sort(function() { return 0.5 - Math.random() });
-			for (var i = 0; i < questions.length; i++) {
+			if (parseInt(qLength) > questions.length) {
+				qLength = questions.length
+			}
+			for (var i = 0; i < qLength; i++) {
 				question = questions[i];
 				var qDisplay = String(correct.length+1) +  ". " + question['statement'] + "<br>";
 				var answers = question['answers'];
