@@ -130,7 +130,12 @@ def displayFiles():
         userId = session['userId']
         user = users[userId]
 
-        files = db.getUserFiles(user).keys()
+        files = db.getUserFiles(user)
+
+        if files:
+            files = files.keys()
+        else:
+            files = {}
 
         return render_template('listFiles.html', files = files)
 
@@ -149,7 +154,7 @@ def generateExams():
         folderName = cu.getFolderName(user, folderId)
         amount = request.form['amount']
 
-        return render_template('gen.html', contents = contents, folderName = folderName, amount = amount)
+        return render_template('gen.html', contents = contents, folderName = folderName, amount = amount, error = error)
 
     return render_template('home.html', notLogged = True)
 

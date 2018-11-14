@@ -87,7 +87,7 @@ class DBController:
         db = self.__db
 
         id = user.getEmail().split("@")[0]
-        folder = user.getFolders()[0] #placeholder
+        folder = user.getFolder(folderId)
         sections = folder.getSections()
 
         db.child(id).child("Folder").child(folderId).remove()
@@ -105,7 +105,6 @@ class DBController:
                         }
                     }
                     db.update(data)
-                    db.update(data)
                 else:
                     data = {
                         id + "/" + "Folder/" + folder.getId() + "/" + section.getName() + "/" + str(count) + "/": {
@@ -119,7 +118,7 @@ class DBController:
                     db.update(data)
                 count += 1
 
-        db.child(id).child('Folder').child(folder.getId()).child("placeholder").remove()
+        db.child(id).child('Folder').child(folderId).child("placeholder").remove()
 
     def addFolder(self, user, folderName, folderId):
         db = self.__db

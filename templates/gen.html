@@ -26,7 +26,7 @@
 		{% if error|length > 0 %}
 			<p class="no-print" style="color:red">
 				Se omitio la generacion dinamica de una pregunta algebraica <br>
-				{{ error }}
+				{{ error|safe }}
 			</p>
 		{% endif %}
 		<br>
