@@ -71,7 +71,7 @@ def saveFolder():
         user = users[userId]
         cu.saveFolder(request.form, user, folderId)
 
-        db.updateUserData(user)
+        db.updateUserData(user, folderId)
         
         return redirect(url_for('editor', folderId = folderId, caller = "saveFolder"), code = 307)
 

@@ -83,12 +83,14 @@ class DBController:
 
         user.addFolder(folder)
 
-    def updateUserData(self, user):
+    def updateUserData(self, user, folderId):
         db = self.__db
 
         id = user.getEmail().split("@")[0]
         folder = user.getFolders()[0] #placeholder
         sections = folder.getSections()
+
+        db.child(id).child("Folder").child(folderId).remove()
 
         for section in sections:
             questions = section.getQuestions()
@@ -163,6 +165,13 @@ class DBController:
         id = user.getEmail().split("@")[0]
 
         db.child(id).child('Files').child(fileName).remove()
+
+    def deleteFolder(self, user, folderId):
+        db = self.__db
+
+        id = user.getEmail().split("@")[0]
+
+        db.child(id).child('Folder').child(folderId).remove()
 
 config = {
   "apiKey": "AIzaSyCMs1O70z1q6qIArA36dBX1iuipaNStOYg",
