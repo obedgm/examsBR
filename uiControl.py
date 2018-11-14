@@ -107,7 +107,7 @@ def editor(folderId, caller):
         userId = session['userId']
         user = users[userId]
 
-        db.loadQuestions(user, folderId)
+        db.loadFolder(user, folderId)
 
         userName = user.getName()
         folderName = cu.getFolderName(user, folderId)
