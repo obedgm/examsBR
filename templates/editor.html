@@ -137,43 +137,52 @@
 			  		<form action="/generateExams" method="POST" id="generateExamsForm"
 		          onkeypress="return event.keyCode != 13;">
 		          		<input type="hidden" name="folderId" value="{{ folderId }}">
-						<table align="left" style="width: 100%">
-				  			<tr>
-				  				<td colspan="2">
-				  					<p>Reactivos por tema:</p><br>
-				  				</td>
-				  			</tr>
+						<table align="left" style="width: 100%" cellpadding="5">
 				  			{% if sections|length > 0 %}
+				  				<tr>
+				  					<td width="15%">
+				  						<label>Reactivos</label>
+				  					</td>
+				  					<td width="15%">
+				  						<label>Max</label>
+				  					</td>
+				  					<td width="70%">
+				  						<label>Nombre</label>
+				  					</td>
+				  				</tr>
 					  			{% for section in sections %}
 					  				<tr>
 					  					<td width="15%">
 					  						<input type="number" min="1" class="form-control" name="{{ section.sName }}" style="margin-bottom: 10px;">
 					  					</td>
-					  					<td width="85%">
-					  						<label style="float:left">{{ section.sName }}</label>
+					  					<td width="15%">
+					  						<label">{{ section.limit }}</label>
+					  					</td>
+					  					<td width="70%">
+					  						<label>{{ section.sName }}</label>
 					  					</td>
 					  				</tr>
 					  			{% endfor %}
 				  			{% else %}
 					  			<tr>
-					  				<td colspan="2">
+					  				<td colspan="3">
 					  					<label>Guarda los cambios primero</label>
 					  				</td>
 					  			</tr>
 					  		{% endif %}
 					  		<tr>
-					  			<td colspan="2">
+					  			<td colspan="3">
 					  				<label>Cantidad de examenes a generar:</label>
 					  			</td>
 					  			
 					  		</tr>
 					  		<tr>
-					  			<td colspan="2">
+					  			<td colspan="3">
 					  				<input type="number" min="1" class="form-control" name="amount" style="margin-bottom: 10px;">
 					  			</td>
 					  		</tr>
 					  		<tr>
-					  			<td colspan="2">
+					  			<td colspan="3">
 					  				<div id="generateExamsError" class="alert alert-danger" style="display:none"></div>
 					  			</td>
 					  		</tr>

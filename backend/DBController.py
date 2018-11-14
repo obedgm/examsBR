@@ -47,16 +47,12 @@ class DBController:
         folder = Folder(folderId, folderId)
 
         id = user.getEmail().split("@")[0]
-        print(id)
-        print(folderId)
         folderDict = db.child(id).child('Folder').child(folderId).get().val()
-        print(folderDict)
 
         pregunta = Question("", False)
         for item in reversed(folderDict):
             section = Section(item)
-            print(item)
-            for a in folderDict[item]:
+            for a in reversed(folderDict[item]):
                 for val in a:
                     if val == 'pregunta':
                         pregunta = Question(a[val], False)

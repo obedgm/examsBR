@@ -95,10 +95,13 @@ def formatSections(user, folderId):
 	formattedSections = []
 	for section in sections:
 		if hasAlgebraics(section):
+			limit = len(section.getQuestions()) * 10
+			if limit < 100:
+				limit = 100
 			formattedSections.append({
 				'sName' : section.getName(),
 				'qLength' : len(section.getQuestions()),
-				'limit' : len(section.getQuestions()) * 10
+				'limit' : limit
 			})
 		else:
 			formattedSections.append({
