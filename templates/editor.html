@@ -56,7 +56,7 @@
 	<span id="questionFormat" style="display:none">{{ questionFormat(empty) }}</span>
 	<span id="sectionFormat" style="display:none">{{ sectionFormat(empty) }}</span>
 	<form id="editor" class="animated fadeIn" action="/saveFolder" method="POST">
-		<input type="hidden" name="folderId" value={{ folderId }}>
+		<input type="hidden" name="folderId" value="{{ folderId }}">
 		
 		{% if contents|length > 0 %}
 			{% for element in contents %}
@@ -230,7 +230,7 @@
 			  	</div>
 				<form id="deleteFolderForm" action="/delFolder" method="POST" 
 					onkeypress="return event.keyCode != 13;">
-					<input type="hidden" name="folderId" value="{{ folderName }}">
+					<input type="hidden" name="folderId" value="{{ folderId }}">
 				  	<!-- Modal footer -->
 				  	<div class="modal-footer">
 				  		<input type="submit" class="btn btn-danger" value="Eliminar"></input>
