@@ -53,16 +53,18 @@ def generateAlgebraics(form, user, folderId):
 				variables = rawVariables.split('/')
 
 				upperLimit = int(ceil((questionsRequested+1 - (len(questions)-algebraics)) / algebraics))*examsRequested
-				print("upperLimit " + str(upperLimit))
 				if upperLimit <= 0:
-					upperLimit = 2
+					upperLimit = questionsRequested * examsRequested
 
 				used = Set()
 				for x in range(0, upperLimit):
 					try:
 						correct = '#'
 						limit = 100
-						while correct == '#' and limit > 0 and correct not in used:
+						while correct == '#' or correct in used:
+							if limit == 0:
+								error += 'Incrementa el rango de variables para poder crear mas preguntas'
+								return error
 							for variable in variables:
 								try:
 									exec(variable.strip(), {'__builtins__':None}, safe_dict_exec)
@@ -75,17 +77,17 @@ def generateAlgebraics(form, user, folderId):
 									var = statement[statement.find('[') + 1 : statement.find(']')]
 									val = str(eval(var, {'__builtins__':None}, safe_dict_exec))
 								except:
-									error += 'Error de sintaxis en la coloccacion de variables'
+									error += 'Error de sintaxis en la coloccacion de variables entre [ ]'
 									return error	
 								statement = statement.replace('[' + var + ']', 
 									str(eval(val, {'__builtins__':None}, safe_dict_exec)))
 							q = Question(statement, False)
-							limit = limit - 1
 							try:
 								correct = round(eval(formula, {'__builtins__':None}, safe_dict_exec), 3)
 							except:
 								correct = '#'
 								pass
+							limit = limit - 1
 					except:
 						error += 'Error al ejecutar la formula'
 						return error
@@ -95,7 +97,7 @@ def generateAlgebraics(form, user, folderId):
 						try:
 							distractor = '#'
 							limitD = 100
-							while (distractor == '#' or distractor in used) and limit > 0:
+							while (distractor == '#' or distractor in used) and limitD > 0:
 								limitD = limitD - 1
 								for variable in variables:
 									exec(variable.strip(), {'__builtins__':None}, safe_dict_exec)
