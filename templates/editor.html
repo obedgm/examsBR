@@ -216,28 +216,6 @@
 
 	{{ formulaExplain() }}
 
-	<div class="modal fade" id="formulaExplainModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-			    <!-- Modal Header -->
-				<div class="modal-header">
-					<h4 class="modal-title">Fórmulas algebráicas</h4>
-			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
-			    </div>
-			  	<!-- Modal body -->
-			  	<div class="modal-body">
-    				Aqui vamos a explicar el formato con el que deben
-    				de escribir las formulas para que se generen preguntas
-    				dinamicamente
-			  	</div>
-			  	<!-- Modal footer -->
-			  	<div class="modal-footer">
-			    	<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-			  	</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="modal fade" id="deleteFolderModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -252,7 +230,7 @@
 			  	</div>
 				<form id="deleteFolderForm" action="/delFolder" method="POST" 
 					onkeypress="return event.keyCode != 13;">
-					<input type="hidden" name="folderId" value="{{ folderId }}">
+					<input type="hidden" name="folderId" value="{{ folderName }}">
 				  	<!-- Modal footer -->
 				  	<div class="modal-footer">
 				  		<input type="submit" class="btn btn-danger" value="Eliminar"></input>
