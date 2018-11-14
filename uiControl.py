@@ -129,6 +129,7 @@ def displayFiles():
     if 'userId' in session:
         userId = session['userId']
         user = users[userId]
+        userName = user.getName()
 
         files = db.getUserFiles(user)
 
@@ -137,7 +138,7 @@ def displayFiles():
         else:
             files = {}
 
-        return render_template('listFiles.html', files = files)
+        return render_template('listFiles.html', files = files, userName = userName)
 
     return render_template('home.html', notLogged = True)
 
