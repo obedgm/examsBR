@@ -26,7 +26,8 @@ def login():
     users[userId] = user
     session['userId'] = userId
 
-    return redirect(url_for('main'), code = 307)
+    return redirect(url_for('main', 
+        _scheme='https', _external=True), code = 307)
 
 @app.route('/main', methods=['GET', 'POST'])
 def main():
@@ -45,7 +46,8 @@ def main():
         foldersJSON = cu.formatFoldersJSON(user)
 
         return render_template('main.html', userName = userName, 
-            folders = folders, foldersJSON = foldersJSON)
+            folders = folders, foldersJSON = foldersJSON, 
+            _scheme='https', _external=True)
 
     return render_template('home.html', notLogged = True)
 
@@ -59,7 +61,8 @@ def newFolder():
 
         db.addFolder(user, folderName, folderId)
 
-        return redirect(url_for('editor', folderId = folderId, caller = "newFolder"), code = 307)
+        return redirect(url_for('editor', folderId = folderId, caller = "newFolder", 
+            _scheme='https', _external=True), code = 307)
 
     return render_template('home.html', notLogged = True)
 
@@ -73,7 +76,8 @@ def saveFolder():
 
         db.updateUserData(user, folderId)
         
-        return redirect(url_for('editor', folderId = folderId, caller = "saveFolder"), code = 307)
+        return redirect(url_for('editor', folderId = folderId, caller = "saveFolder", 
+            _scheme='https', _external=True), code = 307)
 
     return render_template('home.html', notLogged = True)
 
@@ -82,7 +86,8 @@ def openFolder():
     if 'userId' in session:
         folderId = request.form["folderId"]
         
-        return redirect(url_for('editor', folderId = folderId, caller = "openFolder"), code = 307)
+        return redirect(url_for('editor', folderId = folderId, caller = "openFolder", 
+            _scheme='https', _external=True), code = 307)
    
     return render_template('home.html', notLogged = True)
 
@@ -97,7 +102,8 @@ def delFolder():
 
         user.deleteFolder(folderId)
 
-        return redirect(url_for('main'), code = 307)
+        return redirect(url_for('main', 
+            _scheme='https', _external=True), code = 307)
 
     return render_template('home.html', notLogged = True)
 
@@ -120,7 +126,8 @@ def editor(folderId, caller):
         return render_template('editor.html', userName = userName, caller = caller,
                                               folderName = folderName, folderId = folderId,
                                               sections = sections, sectionsJSON = sectionsJSON,
-                                              contents = contents)
+                                              contents = contents, 
+                                              _scheme='https', _external=True)
 
     return render_template('home.html', notLogged = True)
 
@@ -138,7 +145,8 @@ def displayFiles():
         else:
             files = {}
 
-        return render_template('listFiles.html', files = files, userName = userName)
+        return render_template('listFiles.html', files = files, userName = userName, 
+            _scheme='https', _external=True)
 
     return render_template('home.html', notLogged = True)
 
@@ -155,7 +163,9 @@ def generateExams():
         folderName = cu.getFolderName(user, folderId)
         amount = request.form['amount']
 
-        return render_template('gen.html', contents = contents, folderName = folderName, amount = amount, error = error)
+        return render_template('gen.html', contents = contents, folderName = folderName, 
+            amount = amount, error = error, 
+            _scheme='https', _external=True)
 
     return render_template('home.html', notLogged = True)
 
@@ -168,7 +178,8 @@ def vieFile():
 
         content = db.getUserFiles(user)[fileName]['content']
 
-        return render_template('view.html', content = content)
+        return render_template('view.html', content = content, 
+            _scheme='https', _external=True)
 
     return render_template('home.html', notLogged = True)
 
@@ -182,7 +193,8 @@ def saveFile():
 
         db.saveFile(user, fileName, fileContent)
 
-        return redirect(url_for('displayFiles'), code = 307)
+        return redirect(url_for('displayFiles', 
+            _scheme='https', _external=True), code = 307)
 
     return render_template('home.html', notLogged = True)
 
@@ -195,14 +207,16 @@ def deleteFile():
 
         db.deleteFile(user, fileName)
 
-        return redirect(url_for('displayFiles'), code = 307)
+        return redirect(url_for('displayFiles', 
+            _scheme='https', _external=True), code = 307)
 
     return render_template('home.html', notLogged = True)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('userId', None)
-    return render_template('home.html')
+    return render_template('home.html', 
+        _scheme='https', _external=True)
 
 if __name__ == '__main__':
     db = DBController()
@@ -221,4 +235,4 @@ if __name__ == '__main__':
     '''
     Clase controladora de iterfaz de usuario de Flask
     '''
-    app.run(debug = True)
+    app.run()
